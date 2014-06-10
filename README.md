@@ -1,4 +1,4 @@
-oasp-js
-=======
+oasp-js-sample
+==============
 
-The Open Application Standard Platform for JavaScript
+Sample Application making use of the JavaScript Open Application Standard Platform
