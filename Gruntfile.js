@@ -14,7 +14,7 @@ module.exports = function (grunt) {
             develop: {
                 options: {
                     open: true,
-                    base: ['<%= config.tmp %>', '<%= config.app %>']
+                    base: ['<%= config.tmp %>','<%= config.app %>']
                 }
             },
             dist: {
