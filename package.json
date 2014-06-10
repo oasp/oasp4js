@@ -1,6 +1,6 @@
 {
-    "name": "oasp-js",
-    "description": "The Open Application Standard Platform for JavaScript",
+    "name": "oasp-js-sample",
+    "description": "Sample application making use of The JavaScript Open Application Standard Platform",
     "author": "The OASP Team",
     "version": "0.0.1",
     "dependencies": {
