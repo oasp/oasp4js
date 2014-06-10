@@ -15,8 +15,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="css/oasp.css"/>
+    <!-- build:js js/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <script src="bower_components/respond/respond.min.js"></script>
+    <!-- endbuild -->
 </head>
 <body data-ng-app="demoApp">
 <!--[if lt IE 7]>
@@ -96,11 +98,20 @@
         <p>&copy; Company 2014</p>
     </footer>
 </div>
-<!-- /container -->
+<!-- build:js js/vendor.js -->
+<!-- bower:js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap.js"></script>
+<script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) js/sample-app.js -->
 <script src="js/app.js"></script>
+<script src="js/main/main.js"></script>
+<!-- endbuild -->
+
 </body>
 </html>

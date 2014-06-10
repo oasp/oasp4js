@@ -14,11 +14,12 @@ module.exports = function (grunt) {
             develop: {
                 options: {
                     open: true,
-                    base: ['<%= config.tmp %>','<%= config.app %>']
+                    base: ['<%= config.tmp %>', '<%= config.app %>']
                 }
             },
             dist: {
                 options: {
+                    open: true,
                     base: ['<%= config.dist %>']
                 }
             }
@@ -26,7 +27,7 @@ module.exports = function (grunt) {
         less: {
             develop: {
                 options: {
-                    yuicompress: false
+                    compress: false
                 },
                 files: {
                     '<%= config.tmp %>/css/oasp.css': '<%= config.app %>/css/oasp.less'
@@ -34,10 +35,10 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
-                    yuicompress: true
+                    compress: true
                 },
                 files: {
-                    '<%= config.dist %>/css/oasp.min.css': '<%= config.app %>/css/oasp.less'
+                    '<%= config.dist %>/css/oasp.css': '<%= config.app %>/css/oasp.less'
                 }
             }
         },
@@ -47,6 +48,34 @@ module.exports = function (grunt) {
                 tasks: ['less']
             }
         },
+        copy: {
+            develop: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.app %>',
+                        dest: '<%= config.tmp %>',
+                        src: ['index.html']
+                    }
+                ]
+            },
+            dist: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.app %>',
+                        dest: '<%= config.dist %>',
+                        src: ['index.html']
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= config.app %>/bower_components/bootstrap/dist',
+                        src: 'fonts/*',
+                        dest: '<%= config.dist %>'
+                    }
+                ]
+            }
+        },
         // Empties folders to start fresh
         clean: {
             dist: {
@@ -54,21 +83,63 @@ module.exports = function (grunt) {
                     {
                         dot: true,
                         src: [
-                            '<%= config.dist %>/{,*/}*'
+                            '<%= config.dist %>/{,*/}*', '<%= config.dist %>'
                         ]
                     }
                 ]
             },
-            develop: '<%= config.tmp %>/{,*/}*'
+            develop: {
+                files: [
+                    {
+                        dot: true,
+                        src: [
+                            '<%= config.tmp %>/{,*/}*', '<%= config.tmp %>'
+                        ]
+                    }
+                ]
+            }
+        },
+        wiredep: {
+            develop: {
+                src: ['<%= config.app %>/index.html'],
+                ignorePath: new RegExp('^<%= config.app %>/')
+            }
+        },
+        useminPrepare: {
+            html: '<%= config.app %>/index.html',
+            options: {
+                dest: '<%= config.dist %>',
+                flow: {
+                    html: {
+                        steps: {
+                            js: ['concat', 'uglifyjs']
+                        },
+                        post: {}
+                    }
+                }
+            }
+        },
+
+        // Performs rewrites based on filerev and the useminPrepare configuration
+        // TODO explain it
+        usemin: {
+            html: ['<%= config.dist %>/{,*/}*.html'],
+            css: ['<%= config.dist %>/css/{,*/}*.css'],
+            options: {
+                assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/img']
+            }
         }
     });
     grunt.registerTask('serve', [
         'build:develop', 'connect:develop', 'watch'
     ]);
-    grunt.registerTask('build:develop', [
-        'clean:develop', 'less:develop'
+    grunt.registerTask('serve:dist', [
+        'build:dist', 'connect:dist:keepalive'
     ]);
+    grunt.registerTask('build:develop', [
+        'clean:develop', 'less:develop', 'wiredep', 'copy:develop', ]);
+
     grunt.registerTask('build:dist', [
-        'clean:dist', 'less:dist'
+        'clean:dist', 'less:dist', 'wiredep', 'useminPrepare', 'concat', 'copy:dist', 'uglify', 'usemin'
     ]);
 };
