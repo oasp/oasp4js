@@ -1,0 +1,7 @@
+{
+    "version": "v0.6.6",
+    "tmp": ".tmp",
+    "dist": "dist",
+    "app": "app",
+    "modules": ["main"]
+}
