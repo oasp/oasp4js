@@ -46,6 +46,14 @@ module.exports = function (grunt) {
             less: {
                 files: ['<%= config.app %>/css/*.less'],
                 tasks: ['less']
+            },
+            index: {
+                files: ['<%= config.app %>/index.html'],
+                tasks: ['copy:develop']
+            },
+            cached: {
+                files: ['<%= config.app %>/html/**/cached/**/*.html'],
+                tasks: ['html2js']
             }
         },
         copy: {
@@ -76,7 +84,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        // Empties folders to start fresh
         clean: {
             dist: {
                 files: [
@@ -119,27 +126,102 @@ module.exports = function (grunt) {
                 }
             }
         },
-
+        html2js: {
+            options: {
+                module: 'oasp.templates',
+                singleModule: true,
+                rename: function (moduleName) {
+                    return moduleName.replace('../app/', '').replace('cached/', '');
+                }
+            },
+            main: {
+                src: ['<%= config.app %>/html/**/cached/**/*.html'],
+                dest: '<%= config.tmp %>/js/app-templates.js'
+            }
+        },
         // Performs rewrites based on filerev and the useminPrepare configuration
-        // TODO explain it
         usemin: {
             html: ['<%= config.dist %>/{,*/}*.html'],
             css: ['<%= config.dist %>/css/{,*/}*.css'],
             options: {
                 assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/img']
             }
+        },
+        jslint: {
+            client: {
+                src: [
+                    '<%= config.app %>/js/**/*.js'
+                ],
+                exclude: [
+                    '<%= config.app %>/js/**/*-test.js'
+                ],
+                directives: {
+                    browser: true,
+                    predef: [
+                        'jQuery', 'angular', '$'
+                    ]
+                }
+            },
+            test: {
+                src: [
+                    '<%= config.app %>/js/**/*-test.js'
+                ],
+                directives: {
+                    browser: true,
+                    nomen: 'false',
+                    predef: [
+                        'jQuery', 'angular', '$', 'beforeEach', 'expect', 'it', 'describe', 'module', 'inject'
+                    ]
+                }
+            }
+        },
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js',
+                singleRun: false,
+                browsers: [
+                    'Chrome'
+                ]
+            },
+            ci: {
+                configFile: 'karma.conf.js',
+                singleRun: true
+            }
         }
     });
     grunt.registerTask('serve', [
-        'build:develop', 'connect:develop', 'watch'
+        'build:develop',
+        'connect:develop',
+        'watch'
     ]);
     grunt.registerTask('serve:dist', [
-        'build:dist', 'connect:dist:keepalive'
+        'build:dist',
+        'connect:dist:keepalive'
     ]);
     grunt.registerTask('build:develop', [
-        'clean:develop', 'less:develop', 'wiredep', 'copy:develop', ]);
-
+        'clean:develop',
+        'less:develop',
+        'html2js',
+        'wiredep',
+        'copy:develop'
+    ]);
     grunt.registerTask('build:dist', [
-        'clean:dist', 'less:dist', 'wiredep', 'useminPrepare', 'concat', 'copy:dist', 'uglify', 'usemin'
+        'clean:dist',
+        'less:dist',
+        'html2js',
+        'wiredep',
+        'useminPrepare',
+        'concat',
+        'copy:dist',
+        'uglify',
+        'usemin'
+    ]);
+    grunt.registerTask('test', [
+        'jslint',
+        'karma:ci'
+    ]);
+    grunt.registerTask('default', [
+        'jslint:client',
+        'build:dist'
     ]);
 };
