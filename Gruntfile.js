@@ -40,6 +40,7 @@ module.exports = function (grunt) {
                 files: {
                     '<%= config.dist %>/css/oasp.css': '<%= config.app %>/css/oasp.less'
                 }
+
             }
         },
         watch: {
@@ -74,6 +75,12 @@ module.exports = function (grunt) {
                         cwd: '<%= config.app %>',
                         dest: '<%= config.dist %>',
                         src: ['index.html']
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= config.tmp %>/img',
+                        dest: '<%= config.dist %>/img',
+                        src: ['*.png']
                     },
                     {
                         expand: true,
@@ -187,6 +194,24 @@ module.exports = function (grunt) {
                 configFile: 'karma.conf.js',
                 singleRun: true
             }
+        },
+        sprite: {
+            all: {
+                src: '<%= config.app %>/img/*.png',
+                destImg: '<%= config.tmp %>/img/images.png',
+                destCSS: '<%= config.tmp %>/css/images.less',
+                engine: 'pngsmith'
+            }
+        },
+        ngmin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.tmp %>/concat/js',
+                    src: 'sample-app.js',
+                    dest: '<%= config.tmp %>/concat/js'
+                }]
+            }
         }
     });
     grunt.registerTask('serve', [
@@ -200,6 +225,7 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('build:develop', [
         'clean:develop',
+        'sprite',
         'less:develop',
         'html2js',
         'wiredep',
@@ -207,11 +233,13 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('build:dist', [
         'clean:dist',
+        'sprite',
         'less:dist',
         'html2js',
         'wiredep',
         'useminPrepare',
         'concat',
+        'ngmin',
         'copy:dist',
         'uglify',
         'usemin'
@@ -224,4 +252,5 @@ module.exports = function (grunt) {
         'jslint:client',
         'build:dist'
     ]);
-};
+}
+;
