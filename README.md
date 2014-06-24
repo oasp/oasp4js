@@ -1,7 +1,7 @@
 Sample Application
 ==============
 
-The Sample Application is built on top of the [Application Template](https://github.com/oasp/oasp4js-app-template) and [oasp4js extensions](https://github.com/oasp/oasp4js) showing their usage scenarios.
+The sample application is built on top of the [application template](https://github.com/oasp/oasp4js-app-template) and [oasp4js extensions](https://github.com/oasp/oasp4js) showing their usage scenarios.
 
 Getting Started
 -----------------------
