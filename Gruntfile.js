@@ -78,6 +78,12 @@ module.exports = function (grunt) {
                     },
                     {
                         expand: true,
+                        cwd: '<%= config.app %>/html',
+                        dest: '<%= config.dist %>/html',
+                        src: ['**']
+                    },
+                    {
+                        expand: true,
                         cwd: '<%= config.tmp %>/img',
                         dest: '<%= config.dist %>/img',
                         src: ['*.png']
@@ -247,6 +253,9 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'jslint',
         'karma:ci'
+    ]);
+    grunt.registerTask('test:tdd', [
+        'karma:unit'
     ]);
     grunt.registerTask('default', [
         'jslint:client',

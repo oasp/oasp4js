@@ -11,6 +11,6 @@ describe('sign-in', function () {
         //given //when
         $controller('SignInCntl', {$scope: $scope});
         //then
-        expect($scope.sample).toBeTruthy();
+        expect($scope.credentials).toEqual({});
     }));
 });
