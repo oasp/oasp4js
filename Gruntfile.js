@@ -11,16 +11,66 @@ module.exports = function (grunt) {
                 port: 9000,
                 hostname: 'localhost'
             },
+            server: {
+                proxies: [
+                    {
+                        context: '/',
+                        host: 'localhost',
+                        port: 8888,
+                        https: false,
+                        changeOrigin: true,
+                        rewrite: {
+                            '^/services': '/oasp/services'
+                        }
+                    }
+                ]
+            },
             develop: {
                 options: {
+                    port: 9000,
                     open: true,
-                    base: ['<%= config.tmp %>', '<%= config.app %>']
+                    base: ['<%= config.tmp %>', '<%= config.app %>'],
+                    middleware: function (connect, options) {
+                        if (!Array.isArray(options.base)) {
+                            options.base = [options.base];
+                        }
+                        var middlewares = [];
+                        // Serve static files.
+                        options.base.forEach(function (base) {
+                            middlewares.push(connect.static(base));
+                        });
+                        // Setup the proxy
+                        middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
+                        // Make directory browse-able.
+                        var directory = options.directory || options.base[options.base.length - 1];
+                        middlewares.push(connect.directory(directory));
+
+                        return middlewares;
+                    }
                 }
             },
             dist: {
                 options: {
+                    port: 9000,
                     open: true,
-                    base: ['<%= config.dist %>']
+                    base: ['<%= config.dist %>'],
+                    middleware: function (connect, options) {
+                        if (!Array.isArray(options.base)) {
+                            options.base = [options.base];
+                        }
+                        var middlewares = [];
+                        // Serve static files.
+                        options.base.forEach(function (base) {
+                            middlewares.push(connect.static(base));
+                        });
+                        // Setup the proxy
+                        middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
+                        // Make directory browse-able.
+                        var directory = options.directory || options.base[options.base.length - 1];
+                        middlewares.push(connect.directory(directory));
+
+                        return middlewares;
+                    }
                 }
             }
         },
@@ -222,6 +272,7 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('serve', [
         'build:develop',
+        'configureProxies:server',
         'connect:develop',
         'watch'
     ]);
