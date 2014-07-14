@@ -3,5 +3,6 @@
     "tmp": ".tmp",
     "dist": "dist",
     "app": "app",
-    "modules": ["main"]
+    "modules": ["main"],
+    "context":"oasp"
 }

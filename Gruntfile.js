@@ -14,13 +14,20 @@ module.exports = function (grunt) {
             server: {
                 proxies: [
                     {
-                        context: '/',
+                        context: '/<%= config.context %>/services',
                         host: 'localhost',
                         port: 8888,
                         https: false,
+                        changeOrigin: true
+                    },
+                    {
+                        context: '/<%= config.context %>',
+                        host: 'localhost',
+                        port: 9000,
+                        https: false,
                         changeOrigin: true,
                         rewrite: {
-                            '^/services': '/oasp/services'
+                            '^/oasp': '/'
                         }
                     }
                 ]
@@ -28,7 +35,9 @@ module.exports = function (grunt) {
             develop: {
                 options: {
                     port: 9000,
-                    open: true,
+                    open: {
+                        target: 'http://localhost:9000/<%= config.context %>/'
+                    },
                     base: ['<%= config.tmp %>', '<%= config.app %>'],
                     middleware: function (connect, options) {
                         if (!Array.isArray(options.base)) {
@@ -52,7 +61,9 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     port: 9000,
-                    open: true,
+                    open: {
+                        target: 'http://localhost:9000/<%= config.context %>/'
+                    },
                     base: ['<%= config.dist %>'],
                     middleware: function (connect, options) {
                         if (!Array.isArray(options.base)) {
