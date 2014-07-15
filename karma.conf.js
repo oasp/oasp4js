@@ -30,7 +30,7 @@ module.exports = function (config) {
         exclude: [],
 
         // web server port
-        port: 8888,
+        port: 7777,
 
         // Start these browsers, currently available:
         // - Chrome

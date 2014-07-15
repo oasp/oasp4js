@@ -1,3 +1,4 @@
+/*globals angular*/
 angular.module('oasp.main', ['ngRoute'])
     .config(function ($routeProvider) {
         "use strict";
@@ -6,7 +7,7 @@ angular.module('oasp.main', ['ngRoute'])
     .controller('MainCntl', function ($scope, $location, security) {
         "use strict";
         security.initializeUser()
-            .error(function (errorCode) {
+            .error(function () {
                 $location.path('/main/sign-in');
             });
 
@@ -24,7 +25,9 @@ angular.module('oasp.main', ['ngRoute'])
         return {
             get : function () {
                 var contextPathNotInitializedYet = contextPath ? false : true,
-                    path, splitPath, parsedContextPath;
+                    path,
+                    splitPath,
+                    parsedContextPath;
                 if (contextPathNotInitializedYet) {
                     contextPath = '/';
                     path = $window.location.pathname;

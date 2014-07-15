@@ -1,4 +1,4 @@
-//angular.module('ui-bootstrap', ['ui.bootstrap.modal']);
+/*globals angular*/
 angular.module('oasp', ['oasp.templates', 'oasp.main', 'table-mgmt']);
 angular.module('demoApp', ['ui.bootstrap', 'ngRoute', 'oasp'])
     .config(function ($routeProvider, $locationProvider) {

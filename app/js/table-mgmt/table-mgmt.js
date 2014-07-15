@@ -1,3 +1,4 @@
+/*globals angular*/
 angular.module('table-mgmt', [])
     .config(function ($routeProvider) {
         "use strict";

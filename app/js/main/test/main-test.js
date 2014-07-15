@@ -1,4 +1,4 @@
-/*globals describe, beforeEach, module, afterEach, it, inject, spyOn, expect*/
+/*globals describe, beforeEach, module, afterEach, it, inject, spyOn, expect, angular, jasmine*/
 describe('Module: main', function () {
     "use strict";
     describe('Controller: MainCntl', function () {
@@ -90,10 +90,8 @@ describe('Module: main', function () {
     describe('Service: security', function () {
         var security, $httpBackend, currentContextPath,
             contextPath = '/oasp-app/',
-            callbacks = {
-                success : function () {},
-                failure : function () {}
-            };
+            successCallback = jasmine.createSpy('success'),
+            failureCallback = jasmine.createSpy('failure');
 
         beforeEach(module('oasp.main'));
 
@@ -114,10 +112,6 @@ describe('Module: main', function () {
                 $httpBackend = $injector.get('$httpBackend');
                 security = $injector.get('security');
             });
-
-            // register callbacks
-            spyOn(callbacks, 'success');
-            spyOn(callbacks, 'failure');
         });
 
         afterEach(function () {
@@ -125,7 +119,7 @@ describe('Module: main', function () {
             $httpBackend.verifyNoOutstandingRequest();
         });
 
-        it('gets anonymous current user when no security.initialize() called before', inject(function (security) {
+        it('gets anonymous current user when no security.initialize() called before', function () {
             // given
             var user;
             // when
@@ -133,9 +127,9 @@ describe('Module: main', function () {
             // then
             expect(user.isLoggedIn()).toBeFalsy();
             expect(user.getUserName()).toEqual('');
-        }));
+        });
 
-        it('logs in the user', inject(function (security) {
+        it('logs in the user', function () {
             // given
             var currentUser = security.getCurrentUser();
             $httpBackend.whenPOST(contextPath + 'services/rest/login').respond(200);
@@ -145,15 +139,15 @@ describe('Module: main', function () {
             });
             // when
             security.logIn({j_username : 'joe', j_password : 'pass'})
-                .success(callbacks.success).error(callbacks.failure);
+                .success(successCallback).error(failureCallback);
             $httpBackend.flush();
             // then
             expect(currentUser.isLoggedIn()).toBeTruthy();
             expect(currentUser.getUserName()).toEqual('joe');
-            expect(callbacks.success).toHaveBeenCalled();
-            expect(callbacks.failure).not.toHaveBeenCalled();
-        }));
-        it('logs off the user', inject(function (security) {
+            expect(successCallback).toHaveBeenCalled();
+            expect(failureCallback).not.toHaveBeenCalled();
+        });
+        it('logs off the user', function () {
             // given
             var currentUser = security.getCurrentUser();
             // for simulating logging in
@@ -169,7 +163,7 @@ describe('Module: main', function () {
             $httpBackend.flush(2);
             // when
             security.logOff()
-                .success(callbacks.success).error(callbacks.failure);
+                .success(successCallback).error(failureCallback);
             // then
             // here the log off response has not been received yet
             expect(currentUser.isLoggedIn()).toBeTruthy();
@@ -178,20 +172,20 @@ describe('Module: main', function () {
             $httpBackend.flush();
             expect(currentUser.isLoggedIn()).toBeFalsy();
             expect(currentUser.getUserName()).toEqual('');
-            expect(callbacks.success).toHaveBeenCalled();
-            expect(callbacks.failure).not.toHaveBeenCalled();
-        }));
-        it('initializes user', inject(function (security) {
+            expect(successCallback).toHaveBeenCalled();
+            expect(failureCallback).not.toHaveBeenCalled();
+        });
+        it('initializes user', function () {
             // given
             $httpBackend.whenGET(contextPath + 'services/rest/security/currentUser').respond(200);
             // when
             security.initializeUser()
-                .success(callbacks.success).error(callbacks.failure);
+                .success(successCallback).error(failureCallback);
             $httpBackend.flush();
             // then
-            expect(callbacks.success).toHaveBeenCalled();
-            expect(callbacks.failure).not.toHaveBeenCalled();
-        }));
+            expect(successCallback).toHaveBeenCalled();
+            expect(failureCallback).not.toHaveBeenCalled();
+        });
 
     });
 
@@ -219,8 +213,7 @@ describe('Module: main', function () {
                 currentContextPath = $injector.get('currentContextPath');
             });
         });
-
-        it('extracts context path when location path has 2 elements', inject(function (currentContextPath, $location) {
+        it('extracts context path when location path has 2 elements', function () {
             //given
             var path;
             $window.letLocationPathnameBe('/myContext/some-other-elements');
@@ -228,8 +221,8 @@ describe('Module: main', function () {
             path = currentContextPath.get();
             //then
             expect(path).toEqual('/myContext/');
-        }));
-        it('returns // when no path contained in the location', inject(function (currentContextPath, $location) {
+        });
+        it('returns // when no path contained in the location', function () {
             //given
             var path;
             $window.letLocationPathnameBe('/');
@@ -237,14 +230,14 @@ describe('Module: main', function () {
             path = currentContextPath.get();
             //then
             expect(path).toEqual('/');
-        }));
-        it('returns // when path contained in the location is undefined', inject(function (currentContextPath, $location) {
+        });
+        it('returns // when path contained in the location is undefined', function () {
             //given
             var path;
             //when
             path = currentContextPath.get();
             //then
             expect(path).toEqual('/');
-        }));
+        });
     });
 });
