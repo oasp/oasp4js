@@ -38,7 +38,7 @@
             <a class="navbar-brand" href="#">Restaurant Sample Application</a>
         </div>
         <div class="navbar-collapse collapse">
-            <div class="navbar-form navbar-right" data-ng-show="currentUser.isLoggedIn">
+            <div class="navbar-form navbar-right" data-ng-show="currentUser.isLoggedIn()">
                 <span class="label label-info">Logged in as:&nbsp;
                     <span data-ng-bind="currentUser.getUserName()"></span>
                 </span>
