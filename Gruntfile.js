@@ -241,6 +241,10 @@ module.exports = function (grunt) {
         karma: {
             unit: {
                 configFile: 'karma.conf.js',
+                singleRun: false
+            },
+            unit_chrome: {
+                configFile: 'karma.conf.js',
                 singleRun: false,
                 browsers: [
                     'Chrome'
@@ -307,6 +311,9 @@ module.exports = function (grunt) {
     ]);
     grunt.registerTask('test:tdd', [
         'karma:unit'
+    ]);
+    grunt.registerTask('test:tdd:debug', [
+        'karma:unit_chrome'
     ]);
     grunt.registerTask('default', [
         'jslint:client',

@@ -5,30 +5,15 @@ angular.module('oasp.main', ['ngRoute'])
     })
     .controller('MainCntl', function ($scope, $location, security) {
         "use strict";
-        $scope.currentUser = {
-            isLoggedIn: false,
-            getUserName : function () {
-                var name = '';
-                if (this.profile) {
-                    name = this.profile.userName;
-                }
-                return name;
-            },
-            onSuccessfulLogin : function (userProfile) {
-                this.isLoggedIn = true;
-                this.profile = userProfile;
-            }
-        };
-        security.getCurrentUser()
-            .success(function (userProfile) {
-                $scope.currentUser.onSuccessfulLogin(userProfile);
-            }).error(function (errorCode) {
+        security.initializeUser()
+            .error(function (errorCode) {
                 $location.path('/main/sign-in');
             });
+
+        $scope.currentUser = security.getCurrentUser();
+
         $scope.logOff = function () {
             security.logOff().success(function () {
-                $scope.currentUser.isLoggedIn = false;
-                delete $scope.currentUser.profile;
                 $location.path('/main/sign-in');
             });
         };
@@ -59,15 +44,51 @@ angular.module('oasp.main', ['ngRoute'])
     })
     .factory('security', function ($http, currentContextPath) {
         "use strict";
+        var currentUserInternal = {
+                isLoggedIn: false
+            },
+            currentUserExternal = (function (currentUser) {
+                return {
+                    isLoggedIn: function () {
+                        return currentUser.isLoggedIn;
+                    },
+                    getUserName: function () {
+                        return (currentUser.profile && currentUser.profile.userName) || '';
+                    }
+                };
+            }(currentUserInternal)),
+            onUserProfileChange = function (userProfile) {
+                currentUserInternal.isLoggedIn = true;
+                currentUserInternal.profile = userProfile;
+            },
+            onLoggingOff = function () {
+                currentUserInternal.isLoggedIn = false;
+                currentUserInternal.profile = undefined;
+            },
+            initializeUser = function () {
+                return $http.get(currentContextPath.get() + 'services/rest/security/currentUser')
+                    .success(function (userProfile) {
+                        onUserProfileChange(userProfile);
+                    });
+            };
         return {
+            getCurrentUser: function () {
+                return currentUserExternal;
+            },
             logIn: function (credentials) {
-                return $http.post(currentContextPath.get() + 'services/rest/login', credentials);
+                return $http.post(currentContextPath.get() + 'services/rest/login', credentials)
+                    .success(function () {
+                        return initializeUser();
+                    });
             },
             logOff: function () {
-                return $http.get(currentContextPath.get() + 'services/rest/logout');
+                return $http.get(currentContextPath.get() + 'services/rest/logout')
+                    .success(function () {
+                        onLoggingOff();
+                    });
             },
-            getCurrentUser: function () {
-                return $http.get(currentContextPath.get() + 'services/rest/security/currentUser');
+            initializeUser: function () {
+                return initializeUser();
             }
         };
     });

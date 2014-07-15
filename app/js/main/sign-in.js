@@ -1,42 +1,44 @@
 angular.module('oasp.main')
     .controller('SignInCntl', function ($scope, $location, security) {
         "use strict";
-        $scope.errorMessage = '';
-        $scope.hasErrorMessage = function () {
-            return $scope.errorMessage ? true : false;
-        };
-        $scope.clearMessage = function () {
-            $scope.errorMessage = '';
+        $scope.errorMessage = {
+            text: '',
+            hasOne: function () {
+                return this.text ? true : false;
+            },
+            clear: function () {
+                this.text = '';
+            }
         };
 
         $scope.credentials = {};
-        $scope.forceShowingValidationErrors = false;
-        $scope.userNameNotProvided = function () {
-            return ($scope.loginForm.userName.$dirty || $scope.forceShowingValidationErrors) && $scope.loginForm.userName.$error.required;
+
+        $scope.validation = {
+            userNameNotProvided: function () {
+                return ($scope.loginForm.userName.$dirty || this.forceShowingValidationErrors) &&
+                    $scope.loginForm.userName.$error.required;
+            },
+            passwordNotProvided: function () {
+                return ($scope.loginForm.password.$dirty || this.forceShowingValidationErrors) &&
+                    $scope.loginForm.password.$error.required;
+            },
+            forceShowingValidationErrors: false
         };
-        $scope.passwordNotProvided = function () {
-            return ($scope.loginForm.password.$dirty || $scope.forceShowingValidationErrors) && $scope.loginForm.password.$error.required;
-        };
+
         $scope.signIn = function () {
-            var addErrorMessage = function (message) {
-                $scope.errorMessage = message;
+            var addErrorMessageAndClearForm = function (message) {
+                $scope.errorMessage.text = message;
                 $scope.credentials = {};
-                $scope.forceShowingValidationErrors = false;
+                $scope.validation.forceShowingValidationErrors = false;
                 $scope.loginForm.$setPristine();
             };
             if ($scope.loginForm.$invalid) {
-                $scope.forceShowingValidationErrors = true;
+                $scope.validation.forceShowingValidationErrors = true;
             } else {
                 security.logIn($scope.credentials).success(function () {
-                    security.getCurrentUser()
-                        .success(function (userProfile) {
-                            $scope.currentUser.onSuccessfulLogin(userProfile);
-                            $location.url('/table-mgmt/table-search');
-                        }).error(function (errorCode) {
-                            addErrorMessage('Error occurred while getting user data. Please refresh the page!');
-                        });
+                    $location.url('/table-mgmt/table-search');
                 }).error(function () {
-                    addErrorMessage('Authentication failed. Please try again!');
+                    addErrorMessageAndClearForm('Authentication failed. Please try again!');
                 });
             }
         };
