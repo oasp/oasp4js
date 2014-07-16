@@ -43,7 +43,12 @@ module.exports = function (grunt) {
                         if (!Array.isArray(options.base)) {
                             options.base = [options.base];
                         }
-                        var middlewares = [];
+                        var cacheClear = function (req, res, next) {
+                            res.setHeader('Expires', 'Thu, 01 Jan 1970 00:00:00 GMT');
+                            res.setHeader('Pragma', 'no-cache');
+                            res.setHeader('Cache-Control', 'no-store');
+                            next();
+                        }, middlewares = [cacheClear], directory = (options.directory || options.base[options.base.length - 1]);
                         // Serve static files.
                         options.base.forEach(function (base) {
                             middlewares.push(connect.static(base));
@@ -51,7 +56,6 @@ module.exports = function (grunt) {
                         // Setup the proxy
                         middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
                         // Make directory browse-able.
-                        var directory = options.directory || options.base[options.base.length - 1];
                         middlewares.push(connect.directory(directory));
 
                         return middlewares;
@@ -69,7 +73,7 @@ module.exports = function (grunt) {
                         if (!Array.isArray(options.base)) {
                             options.base = [options.base];
                         }
-                        var middlewares = [];
+                        var middlewares = [], directory = options.directory || options.base[options.base.length - 1];
                         // Serve static files.
                         options.base.forEach(function (base) {
                             middlewares.push(connect.static(base));
@@ -77,9 +81,7 @@ module.exports = function (grunt) {
                         // Setup the proxy
                         middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
                         // Make directory browse-able.
-                        var directory = options.directory || options.base[options.base.length - 1];
                         middlewares.push(connect.directory(directory));
-
                         return middlewares;
                     }
                 }
@@ -105,6 +107,7 @@ module.exports = function (grunt) {
             }
         },
         watch: {
+            options: { livereload: true },
             less: {
                 files: ['<%= config.app %>/css/*.less'],
                 tasks: ['less']
@@ -164,7 +167,8 @@ module.exports = function (grunt) {
                     {
                         dot: true,
                         src: [
-                            '<%= config.dist %>/{,*/}*', '<%= config.dist %>'
+                            '<%= config.dist %>/{,*/}*', '<%= config.dist %>',
+                            '<%= config.test %>/{,*/}*', '<%= config.test %>'
                         ]
                     }
                 ]
@@ -174,7 +178,8 @@ module.exports = function (grunt) {
                     {
                         dot: true,
                         src: [
-                            '<%= config.tmp %>/{,*/}*', '<%= config.tmp %>'
+                            '<%= config.tmp %>/{,*/}*', '<%= config.tmp %>',
+                            '<%= config.test %>/{,*/}*', '<%= config.test %>'
                         ]
                     }
                 ]
@@ -252,14 +257,16 @@ module.exports = function (grunt) {
         karma: {
             unit: {
                 configFile: 'karma.conf.js',
-                singleRun: false
+                singleRun: false,
+                reporters: []
             },
             unit_chrome: {
                 configFile: 'karma.conf.js',
                 singleRun: false,
                 browsers: [
                     'Chrome'
-                ]
+                ],
+                reporters: []
             },
             ci: {
                 configFile: 'karma.conf.js',
@@ -276,12 +283,14 @@ module.exports = function (grunt) {
         },
         ngmin: {
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= config.tmp %>/concat/js',
-                    src: 'sample-app.js',
-                    dest: '<%= config.tmp %>/concat/js'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.tmp %>/concat/js',
+                        src: 'sample-app.js',
+                        dest: '<%= config.tmp %>/concat/js'
+                    }
+                ]
             }
         }
     });
@@ -330,5 +339,4 @@ module.exports = function (grunt) {
         'jslint:client',
         'build:dist'
     ]);
-}
-;
+};
