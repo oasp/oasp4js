@@ -270,7 +270,11 @@ module.exports = function (grunt) {
             },
             ci: {
                 configFile: 'karma.conf.js',
-                singleRun: true
+                singleRun: true,
+                reporters: ['progress', 'junit'],
+                junitReporter: {
+                    outputFile: 'test/test-results.xml'
+                }
             }
         },
         sprite: {
@@ -324,6 +328,10 @@ module.exports = function (grunt) {
         'copy:dist',
         'uglify',
         'usemin'
+    ]);
+    grunt.registerTask('build:ci', [
+        'build:dist',
+        'karma:ci'
     ]);
     grunt.registerTask('test', [
         'jslint',
