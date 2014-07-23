@@ -317,7 +317,7 @@ module.exports = function (grunt) {
                         exclusions: ['app/bower_components/**/*', '**/*-test.js'].join(','),
                         language: 'js',
                         sourceEncoding: 'UTF-8',
-                        'javascript.lcov.reportPath': 'test/coverage/PhantomJS 1.9.7 (Windows 7)/lcov.info'
+                        'javascript.lcov.reportPath': 'test/coverage/PhantomJS 1.9.7 (Linux)/lcov.info'
                     }
                 }
             }
