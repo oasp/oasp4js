@@ -1,6 +1,6 @@
 /*globals describe, beforeEach, module, afterEach, it, inject, spyOn, expect, angular, jasmine*/
 describe('Module: main', function () {
-    "use strict";
+    'use strict';
     describe('Controller: MainCntl', function () {
         var $scope, $location, initializeUserHttpDeferredMock, logOffHttpDeferredMock;
         beforeEach(module('oasp.main'));

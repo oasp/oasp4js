@@ -1,6 +1,6 @@
 /*globals describe, beforeEach, module, afterEach, it, inject, spyOn, expect*/
 describe('Module: main, Controller: sign-in', function () {
-    "use strict";
+    'use strict';
     var $scope, $location, logInHttpDeferredMock;
 
     beforeEach(module('oasp.main'));

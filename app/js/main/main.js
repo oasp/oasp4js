@@ -1,11 +1,11 @@
 /*globals angular*/
 angular.module('oasp.main', ['ngRoute'])
     .config(function ($routeProvider) {
-        "use strict";
+        'use strict';
         $routeProvider.when('/main/sign-in', {templateUrl: 'html/main/sign-in.html'});
     })
     .controller('MainCntl', function ($scope, $location, security) {
-        "use strict";
+        'use strict';
         security.initializeUser()
             .error(function () {
                 $location.path('/main/sign-in');
@@ -20,7 +20,7 @@ angular.module('oasp.main', ['ngRoute'])
         };
     })
     .factory('currentContextPath', function ($window) {
-        "use strict";
+        'use strict';
         var contextPath = '';
         return {
             get : function () {
@@ -46,7 +46,7 @@ angular.module('oasp.main', ['ngRoute'])
         };
     })
     .factory('security', function ($http, currentContextPath) {
-        "use strict";
+        'use strict';
         var currentUserInternal = {
                 isLoggedIn: false
             },
