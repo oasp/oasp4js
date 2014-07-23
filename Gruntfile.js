@@ -271,10 +271,7 @@ module.exports = function (grunt) {
             ci: {
                 configFile: 'karma.conf.js',
                 singleRun: true,
-                reporters: ['progress', 'junit'],
-                junitReporter: {
-                    outputFile: 'test/test-results.xml'
-                }
+                reporters: ['progress', 'coverage', 'junit']
             }
         },
         sprite: {
@@ -295,6 +292,34 @@ module.exports = function (grunt) {
                         dest: '<%= config.tmp %>/concat/js'
                     }
                 ]
+            }
+        },
+        sonarRunner: {
+            analysis: {
+                options: {
+                    debug: true,
+                    separator: '\n',
+                    dryRun: false,
+                    sonar: {
+                        host: {
+                            url: 'http://localhost:9000/sonarqube'
+                        },
+                        jdbc: {
+                            url: 'jdbc:mysql://localhost:3306/sonar',
+                            username: 'sonar',
+                            password: 'sonar'
+                        },
+
+                        projectKey: 'org.oasp.js:oasp4js:0.0.1',
+                        projectName: 'oasp4js',
+                        projectVersion: '0.0.1',
+                        sources: ['app'].join(','),
+                        exclusions: ['app/bower_components/**/*', '**/*-test.js'].join(','),
+                        language: 'js',
+                        sourceEncoding: 'UTF-8',
+                        'javascript.lcov.reportPath': 'test/coverage/PhantomJS 1.9.7 (Windows 7)/lcov.info'
+                    }
+                }
             }
         }
     });
