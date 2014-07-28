@@ -4,6 +4,7 @@
 // generator-karma 0.8.2
 
 module.exports = function (config) {
+    'use strict';
     config.set({
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
@@ -20,8 +21,9 @@ module.exports = function (config) {
             'app/bower_components/angular-mocks/angular-mocks.js',
             'app/bower_components/angular-route/angular-route.js',
             'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
+            'app/js/*/*.js',
             'app/js/**/*.js',
-            'app/js/**/*-test.js'
+            'app/js/**/*.spec.js'
         ],
 
         // list of files / patterns to exclude
@@ -44,11 +46,7 @@ module.exports = function (config) {
 
         // Which plugins to enable
         plugins: [
-            'karma-phantomjs-launcher',
-            'karma-chrome-launcher',
-            'karma-junit-reporter',
-            'karma-jasmine',
-            'karma-coverage'
+            'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-junit-reporter', 'karma-jasmine', 'karma-coverage'
         ],
 
         // Continuous Integration mode
@@ -65,13 +63,13 @@ module.exports = function (config) {
         reporters: ['progress', 'coverage'],
 
         preprocessors: {
-            'app/js/**/!(*test).js': ['coverage']
+            'app/js/**/!(*spec).js': ['coverage']
         },
 
         // optionally, configure the reporter
         coverageReporter: {
-            type : 'lcov',
-            dir : 'test/coverage'
+            type: 'lcov',
+            dir: 'test/coverage'
         },
         junitReporter: {
             outputFile: 'test/test-results.xml'

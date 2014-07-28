@@ -4,6 +4,41 @@
 <div class="row">
     <div class="col-md-12">
         <h2>Tables</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Table number</th>
+                <th>State</th>
+                <th>Waiter</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="table in tables">
+                <td>{{table.id}}</td>
+                <td>{{table.state}}</td>
+                <td>{{table.waiter}}</td>
+                <td>
+                    <div class="btn-group" data-dropdown="">
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a data-dropdown-toggle="" data-ng-show="actionReserveAllowed(table)" data-ng-click="actionReserve(table)">Reserve</a>
+                            </li>
+                            <li><a data-dropdown-toggle="" data-ng-show="actionFreeAllowed(table)" data-ng-click="actionFree(table)">Free</a></li>
+                            <li><a data-dropdown-toggle="" data-ng-show="actionCancelReservationAllowed(table)"
+                                   data-ng-click="actionCancelReservation(table)">Cancel reservation</a></li>
+                            <li><a data-dropdown-toggle="" data-ng-show="actionOccupyAllowed(table)" data-ng-click="actionOccupy(table)">Occupy</a>
+                            </li>
+                            <li><a data-dropdown-toggle="" data-ng-show="actionTakeOrderAllowed(table)" data-ng-click="actionTakeOrder(table)">Take
+                                order</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

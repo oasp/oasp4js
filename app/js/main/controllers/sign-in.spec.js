@@ -1,4 +1,3 @@
-/*globals describe, beforeEach, module, afterEach, it, inject, spyOn, expect*/
 describe('Module: main, Controller: sign-in', function () {
     'use strict';
     var $scope, $location, logInHttpDeferredMock;
@@ -58,7 +57,7 @@ describe('Module: main, Controller: sign-in', function () {
     it('exposes signIn() on $scope which changes to the default location /table-mgmt/table-search on success', function () {
         // given
         $scope.loginForm = {
-            $invalid : false
+            $invalid: false
         };
         $scope.validation.forceShowingValidationErrors = true;
         // when
@@ -71,10 +70,10 @@ describe('Module: main, Controller: sign-in', function () {
     it('exposes validation.userNameNotProvided() on $scope which returns true if field dirty and empty', function () {
         // given // when
         $scope.loginForm = {
-            userName : {
-                $dirty : true,
-                $error : {
-                    required : true
+            userName: {
+                $dirty: true,
+                $error: {
+                    required: true
                 }
             }
         };
@@ -85,10 +84,10 @@ describe('Module: main, Controller: sign-in', function () {
     it('exposes validation.userNameNotProvided() on $scope which returns true if field empty and forced validation', function () {
         // given // when
         $scope.loginForm = {
-            userName : {
-                $dirty : false,
-                $error : {
-                    required : true
+            userName: {
+                $dirty: false,
+                $error: {
+                    required: true
                 }
             }
         };
@@ -99,10 +98,10 @@ describe('Module: main, Controller: sign-in', function () {
     it('exposes validation.userNameNotProvided() on $scope which returns false if field empty and neither validation forced nor filed dirty', function () {
         // given // when
         $scope.loginForm = {
-            userName : {
-                $dirty : false,
-                $error : {
-                    required : true
+            userName: {
+                $dirty: false,
+                $error: {
+                    required: true
                 }
             }
         };
@@ -113,10 +112,10 @@ describe('Module: main, Controller: sign-in', function () {
     it('exposes validation.passwordNotProvided() on $scope which returns true if field dirty and empty', function () {
         // given // when
         $scope.loginForm = {
-            password : {
-                $dirty : true,
-                $error : {
-                    required : true
+            password: {
+                $dirty: true,
+                $error: {
+                    required: true
                 }
             }
         };
@@ -127,10 +126,10 @@ describe('Module: main, Controller: sign-in', function () {
     it('exposes validation.passwordNotProvided() on $scope which returns true if field empty and forced validation', function () {
         // given // when
         $scope.loginForm = {
-            password : {
-                $dirty : false,
-                $error : {
-                    required : true
+            password: {
+                $dirty: false,
+                $error: {
+                    required: true
                 }
             }
         };
@@ -141,10 +140,10 @@ describe('Module: main, Controller: sign-in', function () {
     it('exposes validation.passwordNotProvided() on $scope which returns false if field empty and neither validation forced nor filed dirty', function () {
         // given // when
         $scope.loginForm = {
-            password : {
-                $dirty : false,
-                $error : {
-                    required : true
+            password: {
+                $dirty: false,
+                $error: {
+                    required: true
                 }
             }
         };

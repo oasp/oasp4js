@@ -1,4 +1,7 @@
+
 module.exports = function (grunt) {
+    'use strict';
+
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
     // Time how long tasks take. Can help when optimizing build times
@@ -167,8 +170,7 @@ module.exports = function (grunt) {
                     {
                         dot: true,
                         src: [
-                            '<%= config.dist %>/{,*/}*', '<%= config.dist %>',
-                            '<%= config.test %>/{,*/}*', '<%= config.test %>'
+                            '<%= config.dist %>/{,*/}*', '<%= config.dist %>', '<%= config.test %>/{,*/}*', '<%= config.test %>'
                         ]
                     }
                 ]
@@ -178,8 +180,7 @@ module.exports = function (grunt) {
                     {
                         dot: true,
                         src: [
-                            '<%= config.tmp %>/{,*/}*', '<%= config.tmp %>',
-                            '<%= config.test %>/{,*/}*', '<%= config.test %>'
+                            '<%= config.tmp %>/{,*/}*', '<%= config.tmp %>', '<%= config.test %>/{,*/}*', '<%= config.test %>'
                         ]
                     }
                 ]
@@ -232,24 +233,24 @@ module.exports = function (grunt) {
                     '<%= config.app %>/js/**/*.js'
                 ],
                 exclude: [
-                    '<%= config.app %>/js/**/*-test.js'
+                    '<%= config.app %>/js/**/*.spec.js'
                 ],
                 directives: {
                     browser: true,
                     predef: [
-                        'jQuery', 'angular', '$'
+                        'jQuery', 'angular', '$', 'describe', 'beforeEach', 'module', 'afterEach', 'it', 'inject', 'spyOn', 'expect', 'jasmine'
                     ]
                 }
             },
             test: {
                 src: [
-                    '<%= config.app %>/js/**/*-test.js'
+                    '<%= config.app %>/js/**/*.spec.js'
                 ],
                 directives: {
                     browser: true,
                     nomen: 'false',
                     predef: [
-                        'jQuery', 'angular', '$', 'beforeEach', 'expect', 'it', 'describe', 'module', 'inject'
+                        'jQuery', 'angular', '$', 'describe', 'beforeEach', 'module', 'afterEach', 'it', 'inject', 'spyOn', 'expect', 'jasmine'
                     ]
                 }
             }
@@ -258,7 +259,7 @@ module.exports = function (grunt) {
             unit: {
                 configFile: 'karma.conf.js',
                 singleRun: false,
-                reporters: []
+                reporters: ['progress']
             },
             unit_chrome: {
                 configFile: 'karma.conf.js',
@@ -266,7 +267,7 @@ module.exports = function (grunt) {
                 browsers: [
                     'Chrome'
                 ],
-                reporters: []
+                reporters: ['progress']
             },
             ci: {
                 configFile: 'karma.conf.js',
@@ -314,7 +315,7 @@ module.exports = function (grunt) {
                         projectName: 'oasp4js',
                         projectVersion: '0.0.1',
                         sources: ['app'].join(','),
-                        exclusions: ['app/bower_components/**/*', '**/*-test.js'].join(','),
+                        exclusions: ['app/bower_components/**/*', '**/*.spec.js'].join(','),
                         language: 'js',
                         sourceEncoding: 'UTF-8',
                         'javascript.lcov.reportPath': 'test/coverage/PhantomJS 1.9.7 (Linux)/lcov.info'
@@ -324,43 +325,22 @@ module.exports = function (grunt) {
         }
     });
     grunt.registerTask('serve', [
-        'build:develop',
-        'configureProxies:server',
-        'connect:develop',
-        'watch'
+        'build:develop', 'configureProxies:server', 'connect:develop', 'watch'
     ]);
     grunt.registerTask('serve:dist', [
-        'build:dist',
-        'connect:dist:keepalive'
+        'build:dist', 'connect:dist:keepalive'
     ]);
     grunt.registerTask('build:develop', [
-        'clean:develop',
-        'sprite',
-        'less:develop',
-        'html2js',
-        'wiredep',
-        'copy:develop'
+        'clean:develop', 'sprite', 'less:develop', 'html2js', 'wiredep', 'copy:develop'
     ]);
     grunt.registerTask('build:dist', [
-        'clean:dist',
-        'sprite',
-        'less:dist',
-        'html2js',
-        'wiredep',
-        'useminPrepare',
-        'concat',
-        'ngmin',
-        'copy:dist',
-        'uglify',
-        'usemin'
+        'clean:dist', 'sprite', 'less:dist', 'html2js', 'wiredep', 'useminPrepare', 'concat', 'ngmin', 'copy:dist', 'uglify', 'usemin'
     ]);
     grunt.registerTask('build:ci', [
-        'build:dist',
-        'karma:ci'
+        'build:dist', 'karma:ci'
     ]);
     grunt.registerTask('test', [
-        'jslint',
-        'karma:ci'
+        'jslint', 'karma:ci'
     ]);
     grunt.registerTask('test:tdd', [
         'karma:unit'
@@ -369,7 +349,6 @@ module.exports = function (grunt) {
         'karma:unit_chrome'
     ]);
     grunt.registerTask('default', [
-        'jslint:client',
-        'build:dist'
+        'jslint:client', 'build:dist'
     ]);
 };

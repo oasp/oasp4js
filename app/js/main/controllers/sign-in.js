@@ -1,4 +1,3 @@
-/*globals angular*/
 angular.module('oasp.main')
     .controller('SignInCntl', function ($scope, $location, security) {
         'use strict';
