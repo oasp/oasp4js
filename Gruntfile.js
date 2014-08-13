@@ -280,7 +280,8 @@ module.exports = function (grunt) {
                 src: '<%= config.app %>/img/*.png',
                 destImg: '<%= config.tmp %>/img/images.png',
                 destCSS: '<%= config.tmp %>/css/images.less',
-                engine: 'pngsmith'
+                engine: 'pngsmith',
+                cssFormat: 'css'
             }
         },
         ngmin: {
