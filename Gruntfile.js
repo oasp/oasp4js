@@ -19,7 +19,7 @@ module.exports = function (grunt) {
                     {
                         context: '/<%= config.context %>/services',
                         host: 'localhost',
-                        port: 8888,
+                        port: 8081,
                         https: false,
                         changeOrigin: true
                     },
@@ -30,7 +30,7 @@ module.exports = function (grunt) {
                         https: false,
                         changeOrigin: true,
                         rewrite: {
-                            '^/oasp': '/'
+                            '^/oasp4j-example-application': '/'
                         }
                     }
                 ]
@@ -154,6 +154,12 @@ module.exports = function (grunt) {
                         cwd: '<%= config.tmp %>/img',
                         dest: '<%= config.dist %>/img',
                         src: ['*.png']
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= config.app %>/i18n',
+                        dest: '<%= config.dist %>/i18n',
+                        src: ['*.json']
                     },
                     {
                         expand: true,
@@ -284,7 +290,7 @@ module.exports = function (grunt) {
                 cssFormat: 'css'
             }
         },
-        ngmin: {
+        ngAnnotate: {
             dist: {
                 files: [
                     {
@@ -329,13 +335,13 @@ module.exports = function (grunt) {
         'build:develop', 'configureProxies:server', 'connect:develop', 'watch'
     ]);
     grunt.registerTask('serve:dist', [
-        'build:dist', 'connect:dist:keepalive'
+        'build:dist', 'configureProxies:server', 'connect:dist:keepalive'
     ]);
     grunt.registerTask('build:develop', [
         'clean:develop', 'sprite', 'less:develop', 'html2js', 'wiredep', 'copy:develop'
     ]);
     grunt.registerTask('build:dist', [
-        'clean:dist', 'sprite', 'less:dist', 'html2js', 'wiredep', 'useminPrepare', 'concat', 'ngmin', 'copy:dist', 'uglify', 'usemin'
+        'clean:dist', 'sprite', 'less:dist', 'html2js', 'wiredep', 'useminPrepare', 'concat', 'ngAnnotate', 'copy:dist', 'uglify', 'usemin'
     ]);
     grunt.registerTask('build:ci', [
         'build:dist', 'karma:ci'

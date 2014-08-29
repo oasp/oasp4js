@@ -5,5 +5,5 @@
     "app": "app",
     "test":"test",
     "modules": ["main"],
-    "context":"oasp"
+    "context":"oasp4j-example-application"
 }
