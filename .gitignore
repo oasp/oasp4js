@@ -5,3 +5,5 @@ dist
 .idea/
 *.iml
 java/target
+.settings
+.project
