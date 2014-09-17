@@ -1,9 +1,9 @@
-/*globals describe, beforeEach, it, module, inject, expect, spyOn*/
+/*globals angular, describe, beforeEach, it, module, inject, expect, spyOn, $*/
 describe('oasp-grid directive specs', function () {
     "use strict";
     var $compile, $rootScope,
         elementHasRowsContainingLabels = function (element, rowNumber, labels) {
-            var row = element.find('tr').eq(rowNumber), cells = row.find('td'), i, currentLabel;
+            var row = element.find('tbody tr').eq(rowNumber), cells = row.find('td'), i, currentLabel;
             expect(cells.length).toEqual(labels.length);
             for (i = 0; i < labels.length; i += 1) {
                 currentLabel = cells.eq(i).text();
@@ -37,7 +37,7 @@ describe('oasp-grid directive specs', function () {
         var element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows"></div>')($rootScope);
         $rootScope.$digest();
         // then
-        elementHasRowsContainingLabels(element, 1, ['']);
+        elementHasRowsContainingLabels(element, 0, ['']);
     });
 
     it('renders rows', function () {
@@ -68,25 +68,42 @@ describe('oasp-grid directive specs', function () {
         $rootScope.$digest();
         // then
         elementHasHeaderRowContainingLabels(element, [firstNameLabel, lastNameLabel]);
-        elementHasRowsContainingLabels(element, 1, [person1.firstName, person1.lastName]);
-        elementHasRowsContainingLabels(element, 2, [person2.firstName, person2.lastName]);
+        elementHasRowsContainingLabels(element, 0, [person1.firstName, person1.lastName]);
+        elementHasRowsContainingLabels(element, 1, [person2.firstName, person2.lastName]);
     });
 
     it('selects a row', function () {
         // given
-        var row = {attr : 'My value'}, element, isolatedScope;
+        $rootScope.columnDefs = [
+            {field: 'attr', label: 'My attr'}
+        ];
+        $rootScope.rows = [{attr : 'My value'}];
+        // when
+        var element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows"></div>')($rootScope);
+        $rootScope.$digest();
+        element.find('tbody tr').click();
+        $rootScope.$digest();
+        // then
+        expect(element.find('tbody tr').hasClass('selected-row')).toBeTruthy();
+    });
+
+    it('calls a function back on a double click', function () {
+        // given
+        var row = {attr : 'My value'}, element;
         $rootScope.columnDefs = [
             {field: 'attr', label: 'My attr'}
         ];
         $rootScope.rows = [row];
+        $rootScope.myCallback = function (row) {
+        };
+        spyOn($rootScope, 'myCallback');
         // when
-        element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows"></div>')($rootScope);
+        element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows" data-dblclick-callback="myCallback(row)"></div>')($rootScope);
         $rootScope.$digest();
-        isolatedScope = element.isolateScope();
-        isolatedScope.rowSelection.select(row);
+        element.find('tbody tr').dblclick();
         $rootScope.$digest();
         // then
-        expect(isolatedScope.rowSelection.isSelected(row)).toBeTruthy();
+        expect($rootScope.myCallback).toHaveBeenCalledWith(row);
     });
 
     it('renders a button', function () {
@@ -107,5 +124,76 @@ describe('oasp-grid directive specs', function () {
         // then
         renderedButtonLabel = element.find('button').eq(0).text();
         expect(renderedButtonLabel.trim()).toEqual(buttonLabel);
+    });
+    it('deactivates a button when no row selected', function () {
+        // given
+        var element;
+        $rootScope.columnDefs = [
+            {field: 'attr', label: 'My attr'}
+        ];
+        $rootScope.rows = [{attr : 'My value'}];
+        $rootScope.buttonDefs = [
+            {
+                label: 'View Details',
+                isNotActive : function (selectedRow) {
+                    return selectedRow === null;
+                }
+            }
+        ];
+        // when
+        element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows" data-button-defs="buttonDefs"></div>')($rootScope);
+        $rootScope.$digest();
+        // then
+        expect(element.find('button').is(':disabled')).toBeTruthy();
+    });
+    it('activates a button when a row selected', function () {
+        // given
+        var element;
+        $rootScope.columnDefs = [
+            {field: 'attr', label: 'My attr'}
+        ];
+        $rootScope.rows = [{attr : 'My value'}];
+        $rootScope.buttonDefs = [
+            {
+                label: 'View Details',
+                isActive : function (selectedRow) {
+                    return angular.isDefined(selectedRow);
+                }
+            }
+        ];
+        // when
+        element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows" data-button-defs="buttonDefs"></div>')($rootScope);
+        $rootScope.$digest();
+        element.find('tbody tr').click();
+        $rootScope.$digest();
+        // then
+        expect(element.find('button').is(':disabled')).toBeFalsy();
+    });
+    it('calls onClick callback when button clicked', function () {
+        // given
+        var row = {attr : 'My value'}, element;
+        $rootScope.columnDefs = [
+            {field: 'attr', label: 'My attr'}
+        ];
+        $rootScope.rows = [row];
+        $rootScope.buttonDefs = [
+            {
+                label: 'View Details',
+                isNotActive : function (selectedRow) {
+                    return selectedRow === null;
+                },
+                onClick: function (selectedRow) {
+                }
+            }
+        ];
+        spyOn($rootScope.buttonDefs[0], 'onClick');
+        // when
+        element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows" data-button-defs="buttonDefs"></div>')($rootScope);
+        $rootScope.$digest();
+        element.find('tbody tr').click();
+        $rootScope.$digest();
+        element.find('button').click();
+        // then
+        expect($rootScope.buttonDefs[0].onClick).toHaveBeenCalledWith(row);
     });
 });
