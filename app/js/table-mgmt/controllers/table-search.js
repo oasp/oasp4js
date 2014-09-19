@@ -1,9 +1,19 @@
-angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($scope, $location, tables) {
+angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($scope, $location, tables, $modal) {
     'use strict';
-    $scope.openEditDialog = function (tableRow) {
-        alert('Hello ' + tableRow.id);
-    };
     $scope.tables = tables.getAllTables();
+    $scope.openEditDialog = function (tableRow) {
+        var modalInstance = $modal.open({
+            templateUrl: 'html/table-mgmt/table-details.html',
+            backdrop: 'static',
+            keyboard: false,
+            controller: 'TableDetailsCntl',
+            resolve: {
+                tableDetails: function () {
+                    return tables.loadTableDetails(tableRow);
+                }
+            }
+        });
+    };
     $scope.columnDefs = [
         {field: 'id', label: 'Table number'},
         {field: 'state', label: 'State'},
@@ -68,34 +78,4 @@ angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($
             }
         }
     ];
-    $scope.actionReserve = function (table) {
-        tables.reserve(table);
-    };
-    $scope.actionCancelReservation = function (table) {
-        tables.cancelReservation(table);
-    };
-    $scope.actionOccupy = function (table) {
-        tables.occupy(table);
-    };
-    $scope.actionFree = function (table) {
-        tables.free(table);
-    };
-    $scope.actionTakeOrder = function (table) {
-        $location.url('/table-mgmt/order-details/' + table.id);
-    };
-    $scope.actionReserveAllowed = function (table) {
-        return table.state === 'FREE';
-    };
-    $scope.actionFreeAllowed = function (table) {
-        return table.state === 'OCCUPIED';
-    };
-    $scope.actionCancelReservationAllowed = function (table) {
-        return table.state === 'RESERVED';
-    };
-    $scope.actionOccupyAllowed = function (table) {
-        return table.state === 'RESERVED' || table.state === 'FREE';
-    };
-    $scope.actionTakeOrderAllowed = function (table) {
-        return table.state === 'OCCUPIED';
-    };
 });

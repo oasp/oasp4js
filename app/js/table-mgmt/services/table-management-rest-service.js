@@ -21,6 +21,9 @@ angular.module('gastronomy.tableMgmt').factory('tableManagementRestService', fun
         },
         isTableReleasable: function (id) {
             return $http.get(servicePath + '/table/' + id + '/isTableReleasable/');
+        },
+        getOrder: function (id) {
+            return $http.get(currentContextPath.get() + 'services/rest/salesmanagement/order/' + id);
         }
     };
 });

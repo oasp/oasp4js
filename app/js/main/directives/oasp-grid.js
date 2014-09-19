@@ -8,7 +8,7 @@ angular.module('oasp.main').
             replace: true,
             templateUrl: 'html/main/oasp-grid.html',
             scope: {
-                title: '@',
+                title: '@?',
                 rows: '=',
                 columnDefs: '=',
                 buttonDefs: '=?',
@@ -30,6 +30,9 @@ angular.module('oasp.main').
                         }
                     };
                 }());
+                scope.noTitleDefined = function () {
+                    return !scope.title;
+                };
                 scope.onButtonClick = function (buttonDef) {
                     if (buttonDef && angular.isFunction(buttonDef.onClick)) {
                         buttonDef.onClick(scope.rowSelection.getSelected());

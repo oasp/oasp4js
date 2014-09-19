@@ -1,0 +1,58 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Details for Table #<span data-ng-bind="table.id"></span></h3>
+    </div>
+    <div class="modal-body">
+        <form name="forms.tableForm" novalidate>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Status:</label>&nbsp;
+                    <span data-ng-bind="table.state"></span>&nbsp;
+                    <button class="btn btn-sm btn-success" ng-click="ok()">Free</button>
+                </div>
+            </div>
+
+
+            <div class="page-header">
+                <h4>Order</h4>
+            </div>
+
+            <div class="row" data-ng-show="noOrderAssigned()">
+                <div class="col-md-12" >
+                    <div class="alert alert-info" role="alert">
+                        No order currently assigned to this table. <a data-ng-click="assignNewOrder()">Assign a new order...</a>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-show="orderAssigned()">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>State:</label>&nbsp;
+                        <span data-ng-bind="table.order.orderState"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Order Positions:</label>&nbsp;
+                    </div>
+                    <div class="col-md-6">
+                        <label>+Add:</label>&nbsp;
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div data-oasp-grid=""
+                             data-column-defs="columnDefs"
+                             data-rows="table.order.positions">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">Submit</button>
+        <button class="btn btn-warning" ng-click="$close()">Cancel</button>
+    </div>
+</div>
