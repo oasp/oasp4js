@@ -1,4 +1,4 @@
-angular.module('oasp.main').factory('security', function (securityRestService) {
+angular.module('oasp.main').factory('security', function (securityRestService, $http) {
     'use strict';
     var currentUserInternal = {
             isLoggedIn: false
@@ -21,9 +21,16 @@ angular.module('oasp.main').factory('security', function (securityRestService) {
             currentUserInternal.isLoggedIn = false;
             currentUserInternal.profile = undefined;
         },
+        enableCsrf = function () {
+            return securityRestService.getCsrfToken().then(function (response) {
+                var csrf = response.data;
+                $http.defaults.headers.common[csrf.headerName] = csrf.token;
+            });
+        },
         initializeUser = function () {
             return securityRestService.getCurrentUser().success(function (userProfile) {
                 onUserProfileChange(userProfile);
+                enableCsrf();
             });
         };
     return {

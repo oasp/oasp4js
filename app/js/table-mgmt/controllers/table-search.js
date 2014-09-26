@@ -1,15 +1,22 @@
-angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($scope, $location, tables, $modal) {
+/*jslint todo: true */
+angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($scope, tables, $modal, offers, sales) {
     'use strict';
     $scope.tables = tables.getAllTables();
     $scope.openEditDialog = function (tableRow) {
-        var modalInstance = $modal.open({
+        $modal.open({
             templateUrl: 'html/table-mgmt/table-details.html',
             backdrop: 'static',
             keyboard: false,
             controller: 'TableDetailsCntl',
             resolve: {
                 tableDetails: function () {
-                    return tables.loadTableDetails(tableRow);
+                    return tables.loadTable(tableRow.id);
+                },
+                allOffers: function () {
+                    return offers.loadAllOffers();
+                },
+                currentOrder: function () {
+                    return sales.loadOrderForTable(1);
                 }
             }
         });

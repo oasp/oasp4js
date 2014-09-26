@@ -12,15 +12,14 @@ describe('Module: tableMgmt, Controller: table-search', function () {
         free: jasmine.createSpy(),
         occupy: jasmine.createSpy(),
         cancelReservation: jasmine.createSpy()
-    }, $location;
+    };
 
     beforeEach(module('ui.bootstrap'));
     beforeEach(module('gastronomy.tableMgmt'));
 
-    beforeEach(inject(function ($rootScope, $controller, _$location_) {
+    beforeEach(inject(function ($rootScope, $controller) {
         //given
         $scope = $rootScope.$new();
-        $location = _$location_;
         $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock });
     }));
 

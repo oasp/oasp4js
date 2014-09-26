@@ -1,12 +1,17 @@
-angular.module('gastronomy.tableMgmt').factory('tables', function (tableManagementRestService, $q) {
+angular.module('gastronomy.tableMgmt').factory('tables', function (tableManagementRestService) {
     'use strict';
-    var tables = [], tableDetails = null;
+    var tables = [];
     return {
         getAllTables: function () {
             tableManagementRestService.getAllTables().then(function (response) {
                 angular.copy(response.data, tables);
             });
             return tables;
+        },
+        loadTable: function (tableId) {
+            return tableManagementRestService.getTable(tableId).then(function (response) {
+                return response.data;
+            });
         },
         reserve: function (table) {
             tableManagementRestService.markTableAs(table.id, 'RESERVED').then(function () {
@@ -38,13 +43,6 @@ angular.module('gastronomy.tableMgmt').factory('tables', function (tableManageme
                 if (tableIndex >= 0) {
                     tables[tableIndex].state = 'FREE';
                 }
-            });
-        },
-        loadTableDetails: function (table) {
-            return tableManagementRestService.getOrder(123).then(function (order) {
-                tableDetails = {};
-                angular.copy(table, tableDetails);
-                return tableDetails;
             });
         }
     };

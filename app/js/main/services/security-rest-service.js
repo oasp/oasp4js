@@ -7,6 +7,9 @@ angular.module('oasp.main').factory('securityRestService', function ($http, curr
         getCurrentUser: function () {
             return $http.get(servicePath + '/security/currentUser');
         },
+        getCsrfToken: function () {
+            return $http.get(servicePath + '/security/csrfToken/');
+        },
         login: function (credentials) {
             return $http.post(servicePath + '/login', credentials);
         },

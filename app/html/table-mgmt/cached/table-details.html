@@ -36,15 +36,23 @@
                     <div class="col-md-6">
                         <label>Order Positions:</label>&nbsp;
                     </div>
-                    <div class="col-md-6">
-                        <label>+Add:</label>&nbsp;
+                    <div class="col-md-4">
+                        <ui-select ng-model="model.selected">
+                            <ui-select-match placeholder="Select offer...">{{$select.selected.description}}</ui-select-match>
+                            <ui-select-choices repeat="o in allOffers | filter: $select.search">
+                                <div ng-bind-html="trustAsHtml((o.description | highlight: $select.search))"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-sm btn-primary" data-ng-click="addPosition(model.selected)">+Add</button>&nbsp;
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div data-oasp-grid=""
                              data-column-defs="columnDefs"
-                             data-rows="table.order.positions">
+                             data-rows="model.order.positions">
                         </div>
                     </div>
                 </div>

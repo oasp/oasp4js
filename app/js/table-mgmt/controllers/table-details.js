@@ -1,48 +1,66 @@
 /* angular */
-angular.module('gastronomy.tableMgmt')
-    .controller('TableDetailsCntl', function ($scope, $modalInstance, tableDetails) {
-        'use strict';
-        $scope.table = tableDetails;
-        $scope.noOrderAssigned = function () {
-            return !$scope.table.order;
-        };
-        $scope.orderAssigned = function () {
-            return !$scope.noOrderAssigned();
-        };
-        $scope.assignNewOrder = function () {
-            $scope.table.order = {
-                tableId: $scope.table.id,
-                orderState: 'INIT',
-                positions: []
-            };
-        };
-        $scope.columnDefs = [
-            {
-                field: 'id',
-                label: 'Number'
-            },
-            {
-                field: 'offername',
-                label: 'Title'
-            },
-            {
-                field: 'state',
-                label: 'Status'
-            },
-            {
-                field: 'price',
-                label: 'Price'
-            },
-            {
-                field: 'comment',
-                label: 'Comment'
-            }
-        ];
+angular.module('gastronomy.tableMgmt').controller('TableDetailsCntl', function ($scope, $sce, tableDetails, allOffers, currentOrder) {
+    'use strict';
+    $scope.table = tableDetails;
+    $scope.allOffers = allOffers;
+    $scope.model = {};
+    $scope.model.order = currentOrder;
+    $scope.model.selected = allOffers.length ? allOffers[0] : undefined;
 
-        // form container to access forms added in parent scopes
-        $scope.forms = {};
+    $scope.trustAsHtml = function (value) {
+        return $sce.trustAsHtml(value);
+    };
 
-        $scope.ok = function () {
-            $modalInstance.close();
+    $scope.noOrderAssigned = function () {
+        return !$scope.model.order;
+    };
+    $scope.orderAssigned = function () {
+        return !$scope.noOrderAssigned();
+    };
+    $scope.assignNewOrder = function () {
+        $scope.model.order = {
+            tableId: $scope.table.id,
+            orderState: 'INIT',
+            positions: []
         };
-    });
+    };
+    $scope.columnDefs = [
+        {
+            field: 'orderId',
+            label: 'Number'
+        },
+        {
+            field: 'offerName',
+            label: 'Title'
+        },
+        {
+            field: 'state',
+            label: 'Status'
+        },
+        {
+            field: 'price',
+            label: 'Price'
+        },
+        {
+            field: 'comment',
+            label: 'Comment'
+        }
+    ];
+
+    // form container to access forms added in parent scopes
+    $scope.forms = {};
+
+    $scope.ok = function () {
+        $scope.$close();
+    };
+    $scope.addPosition = function (offer) {
+        $scope.model.order.positions.push({
+            orderId: $scope.model.order.positions.length + 1,
+            offerId: offer.id,
+            offerName: offer.description,
+            state: 'ORDERED',
+            price: offer.price,
+            comment: ''
+        });
+    };
+});

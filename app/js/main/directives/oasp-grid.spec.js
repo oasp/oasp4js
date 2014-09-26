@@ -94,8 +94,7 @@ describe('oasp-grid directive specs', function () {
             {field: 'attr', label: 'My attr'}
         ];
         $rootScope.rows = [row];
-        $rootScope.myCallback = function (row) {
-        };
+        $rootScope.myCallback = angular.noop;
         spyOn($rootScope, 'myCallback');
         // when
         element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows" data-dblclick-callback="myCallback(row)"></div>')($rootScope);
@@ -182,8 +181,7 @@ describe('oasp-grid directive specs', function () {
                 isNotActive : function (selectedRow) {
                     return selectedRow === null;
                 },
-                onClick: function (selectedRow) {
-                }
+                onClick: angular.noop
             }
         ];
         spyOn($rootScope.buttonDefs[0], 'onClick');

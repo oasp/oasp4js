@@ -1,4 +1,3 @@
-
 module.exports = function (grunt) {
     'use strict';
 
@@ -91,22 +90,13 @@ module.exports = function (grunt) {
             }
         },
         less: {
-            develop: {
+            all: {
                 options: {
                     compress: false
                 },
                 files: {
                     '<%= config.tmp %>/css/oasp.css': '<%= config.app %>/css/oasp.less'
                 }
-            },
-            dist: {
-                options: {
-                    compress: true
-                },
-                files: {
-                    '<%= config.dist %>/css/oasp.css': '<%= config.app %>/css/oasp.less'
-                }
-
             }
         },
         watch: {
@@ -205,7 +195,8 @@ module.exports = function (grunt) {
                 flow: {
                     html: {
                         steps: {
-                            js: ['concat', 'uglifyjs']
+                            js: ['concat', 'uglifyjs'],
+                            css: ['concat', 'cssmin']
                         },
                         post: {}
                     }
@@ -338,10 +329,10 @@ module.exports = function (grunt) {
         'build:dist', 'configureProxies:server', 'connect:dist:keepalive'
     ]);
     grunt.registerTask('build:develop', [
-        'clean:develop', 'sprite', 'less:develop', 'html2js', 'wiredep', 'copy:develop'
+        'clean:develop', 'sprite', 'less', 'html2js', 'wiredep', 'copy:develop'
     ]);
     grunt.registerTask('build:dist', [
-        'clean:dist', 'sprite', 'less:dist', 'html2js', 'wiredep', 'useminPrepare', 'concat', 'ngAnnotate', 'copy:dist', 'uglify', 'usemin'
+        'clean:dist', 'sprite', 'less', 'html2js', 'wiredep', 'useminPrepare', 'concat', 'ngAnnotate', 'copy:dist', 'uglify', 'cssmin', 'usemin'
     ]);
     grunt.registerTask('build:ci', [
         'build:dist', 'karma:ci'

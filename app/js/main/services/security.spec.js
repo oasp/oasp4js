@@ -3,7 +3,13 @@ describe('Service: security', function () {
     var security, $httpBackend, currentContextPath,
         contextPath = '/oasp-app/',
         successCallback = jasmine.createSpy('success'),
-        failureCallback = jasmine.createSpy('failure');
+        failureCallback = jasmine.createSpy('failure'),
+        mockCsrf = function () {
+            $httpBackend.whenGET(contextPath + 'services/rest/security/csrfToken/').respond({
+                headerName: 'CSRF-TOKEN',
+                token: 'token'
+            });
+        };
 
     beforeEach(module('oasp.main'));
 
@@ -49,6 +55,7 @@ describe('Service: security', function () {
             userName: 'joe',
             languageTag: 'en-US'
         });
+        mockCsrf();
         // when
         security.logIn({j_username: 'joe', j_password: 'pass'})
             .success(successCallback).error(failureCallback);
@@ -68,6 +75,7 @@ describe('Service: security', function () {
             userName: 'joe',
             languageTag: 'en-US'
         });
+        mockCsrf();
         $httpBackend.whenGET(contextPath + 'services/rest/logout').respond(200);
         // simulate logging in
         security.logIn({j_username: 'joe', j_password: 'pass'});
@@ -90,6 +98,7 @@ describe('Service: security', function () {
     it('initializes user', function () {
         // given
         $httpBackend.whenGET(contextPath + 'services/rest/security/currentUser').respond(200);
+        mockCsrf();
         // when
         security.initializeUser()
             .success(successCallback).error(failureCallback);
