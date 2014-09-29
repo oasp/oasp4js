@@ -39,7 +39,10 @@ angular.module('gastronomy.tableMgmt').controller('TableDetailsCntl', function (
         },
         {
             field: 'price',
-            label: 'Price'
+            label: 'Price',
+            renderer: function (row) {
+                return row.price ? '<span>' + row.price.amount + ' ' + row.price.currency + '</span>' : '';
+            }
         },
         {
             field: 'comment',

@@ -1,5 +1,5 @@
 angular.module('oasp.main').
-    directive('oaspGrid', function () {
+    directive('oaspGrid', function ($sce) {
         'use strict';
 
         return {
@@ -11,7 +11,7 @@ angular.module('oasp.main').
                 rows: '=',
                 columnDefs: '=',
                 buttonDefs: '=?',
-                dblclickCallback : '&?'
+                dblclickCallback: '&?'
             },
             link: function (scope) {
                 scope.rowSelection = (function () {
@@ -48,6 +48,15 @@ angular.module('oasp.main').
                 };
                 scope.onRowDblClick = function (row) {
                     scope.dblclickCallback({row: row});
+                };
+                scope.render = function (row, column) {
+                    var result;
+                    if (angular.isFunction(column.renderer)) {
+                        result = column.renderer(row, column);
+                    } else {
+                        result = '<span>' + (row[column.field] || '') + '</span>';
+                    }
+                    return $sce.trustAsHtml(result);
                 };
             }
         };

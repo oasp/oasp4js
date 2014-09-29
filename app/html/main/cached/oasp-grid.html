@@ -11,7 +11,7 @@
             data-ng-click="rowSelection.select(row)"
             data-ng-dblclick="onRowDblClick(row)"
             data-ng-class="{'selected-row': rowSelection.isSelected(row)}">
-            <td data-ng-repeat="columnDef in columnDefs"><span data-ng-bind="row[columnDef.field]"></span></td>
+            <td data-ng-repeat="columnDef in columnDefs" data-ng-bind-html="render(row,columnDef)"></td>
         </tr>
         </tbody>
     </table>
