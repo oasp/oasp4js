@@ -137,7 +137,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: '<%= config.app %>/html',
                         dest: '<%= config.dist %>/html',
-                        src: ['**']
+                        src: ['**', '!**/cached/**']
                     },
                     {
                         expand: true,
@@ -179,6 +179,16 @@ module.exports = function (grunt) {
                             '<%= config.tmp %>/{,*/}*', '<%= config.tmp %>', '<%= config.test %>/{,*/}*', '<%= config.test %>'
                         ]
                     }
+                ]
+            }
+        },
+        filerev: {
+            dist: {
+                src: [
+                    '<%= config.dist %>/js/{,*/}*.js',
+                    '<%= config.dist %>/css/{,*/}*.css',
+                    '<%= config.dist %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+                    '<%= config.dist %>/fonts/*'
                 ]
             }
         },
@@ -332,7 +342,7 @@ module.exports = function (grunt) {
         'clean:develop', 'sprite', 'less', 'html2js', 'wiredep', 'copy:develop'
     ]);
     grunt.registerTask('build:dist', [
-        'clean:dist', 'sprite', 'less', 'html2js', 'wiredep', 'useminPrepare', 'concat', 'ngAnnotate', 'copy:dist', 'uglify', 'cssmin', 'usemin'
+        'clean:dist', 'sprite', 'less', 'html2js', 'wiredep', 'useminPrepare', 'concat', 'ngAnnotate', 'copy:dist', 'uglify', 'cssmin', 'filerev', 'usemin'
     ]);
     grunt.registerTask('build:ci', [
         'build:dist', 'karma:ci'
