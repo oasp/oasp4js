@@ -16,7 +16,7 @@ angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($
                     return offers.loadAllOffers();
                 },
                 currentOrder: function () {
-                    return sales.loadOrderForTable(1);
+                    return sales.loadOrderForTable(tableRow.id);
                 }
             }
         });

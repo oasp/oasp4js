@@ -1,4 +1,3 @@
-/*globals angular*/
 angular.module('oasp.main').
     directive('oaspGrid', function () {
         "use strict";

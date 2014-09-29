@@ -24,6 +24,8 @@ module.exports = function (config) {
             'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
             'app/bower_components/angular-translate/angular-translate.js',
             'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+            'app/bower_components/spin.js/spin.js',
+            'app/bower_components/angular-spinner/angular-spinner.js',
             '.tmp/js/app-templates.js',
             'app/js/*/*.js',
             'app/js/**/*.js',

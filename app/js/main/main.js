@@ -1,4 +1,4 @@
-angular.module('oasp.main', ['ngRoute', 'pascalprecht.translate'], function ($routeProvider, $translateProvider) {
+angular.module('oasp.main', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'angularSpinner'], function ($routeProvider, $translateProvider) {
     'use strict';
     $routeProvider.when('/main/sign-in', {templateUrl: 'html/main/sign-in.html'});
     $translateProvider.useStaticFilesLoader({

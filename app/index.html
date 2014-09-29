@@ -85,6 +85,8 @@
 <script src="bower_components/angular-translate/angular-translate.js"></script>
 <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
 <script src="bower_components/angular-ui-select/dist/select.js"></script>
+<script src="bower_components/spin.js/spin.js"></script>
+<script src="bower_components/angular-spinner/angular-spinner.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -97,7 +99,10 @@
 <script src="js/main/controllers/main.js"></script>
 <script src="js/main/controllers/language-change.js"></script>
 <script src="js/main/directives/oasp-grid.js"></script>
+<script src="js/main/directives/spinner.js"></script>
 <script src="js/main/services/current-context-path.js"></script>
+<script src="js/main/services/modal.js"></script>
+<script src="js/main/services/global-spinner.js"></script>
 <script src="js/main/services/security.js"></script>
 <script src="js/main/services/security-rest-service.js"></script>
 
@@ -119,5 +124,6 @@
 <!-- build:remove -->
 <script src="//localhost:35729/livereload.js"></script>
 <!-- endbuild -->
+<div data-spinner="globalSpinner"></div>
 </body>
 </html>

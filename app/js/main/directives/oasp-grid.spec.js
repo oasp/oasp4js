@@ -1,4 +1,3 @@
-/*globals angular, describe, beforeEach, it, module, inject, expect, spyOn, $*/
 describe('oasp-grid directive specs', function () {
     "use strict";
     var $compile, $rootScope,
