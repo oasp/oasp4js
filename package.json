@@ -1,41 +1,42 @@
 {
-    "name": "oasp-js-sample",
-    "description": "Sample application making use of The JavaScript Open Application Standard Platform",
-    "author": "The OASP Team",
-    "version": "0.0.1",
-    "dependencies": {
-        "connect": "2.19.4"
-    },
-    "devDependencies": {
-        "grunt": "~0.4.5",
-        "grunt-connect-proxy": "^0.1.10",
-        "grunt-contrib-clean": "^0.5.0",
-        "grunt-contrib-concat": "^0.4.0",
-        "grunt-contrib-connect": "~0.7.1",
-        "grunt-contrib-copy": "^0.5.0",
-        "grunt-contrib-cssmin": "^0.9.0",
-        "grunt-contrib-jshint": "~0.10.0",
-        "grunt-contrib-less": "~0.11.1",
-        "grunt-contrib-uglify": "^0.4.0",
-        "grunt-contrib-watch": "~0.6.1",
-        "grunt-ng-annotate": "^0.3.2",
-        "grunt-html2js": "^0.2.7",
-        "grunt-jslint": "^1.1.12",
-        "grunt-karma": "^0.8.3",
-        "grunt-spritesmith": "^2.1.0",
-        "grunt-usemin": "^2.1.1",
-        "grunt-wiredep": "^1.7.0",
-        "grunt-sonar-runner": "~2.3.1",
-        "karma-chrome-launcher": "^0.1.4",
-        "karma-jasmine": "^0.1.5",
-        "karma-phantomjs-launcher": "^0.1.4",
-        "karma-coverage": "~0.1",
-        "karma-junit-reporter": "~0.2.2",
-        "load-grunt-tasks": "^0.4.0",
-        "time-grunt": "^0.3.1"
-    },
-    "engine": "node >= 0.6.6",
-    "scripts": {
-        "postinstall": "bower install -F"
-    }
+  "name": "oasp-js-sample",
+  "description": "Sample application making use of The JavaScript Open Application Standard Platform",
+  "author": "The OASP Team",
+  "version": "0.0.1",
+  "dependencies": {
+    "connect": "2.19.4"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-connect-proxy": "^0.1.10",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-concat": "^0.4.0",
+    "grunt-contrib-connect": "~0.7.1",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.9.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-less": "~0.11.1",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-filerev": "^2.0.0",
+    "grunt-ng-annotate": "^0.3.2",
+    "grunt-html2js": "^0.2.7",
+    "grunt-jslint": "^1.1.12",
+    "grunt-karma": "^0.8.3",
+    "grunt-spritesmith": "^2.1.0",
+    "grunt-usemin": "^2.1.1",
+    "grunt-wiredep": "^1.7.0",
+    "grunt-sonar-runner": "~2.3.1",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-jasmine": "^0.1.5",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-coverage": "~0.1",
+    "karma-junit-reporter": "~0.2.2",
+    "load-grunt-tasks": "^0.4.0",
+    "time-grunt": "^0.3.1"
+  },
+  "engine": "node >= 0.6.6",
+  "scripts": {
+    "postinstall": "bower install -F"
+  }
 }
