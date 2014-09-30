@@ -14,7 +14,7 @@ angular.module('gastronomy.tableMgmt').factory('tables', function (tableManageme
             });
         },
         reserve: function (table) {
-            tableManagementRestService.markTableAs(table.id, 'RESERVED').then(function () {
+            return tableManagementRestService.markTableAs(table.id, 'RESERVED').then(function () {
                 var tableIndex = tables.indexOf(table);
                 if (tableIndex >= 0) {
                     tables[tableIndex].state = 'RESERVED';
@@ -22,7 +22,7 @@ angular.module('gastronomy.tableMgmt').factory('tables', function (tableManageme
             });
         },
         free: function (table) {
-            tableManagementRestService.markTableAs(table.id, 'FREE').then(function () {
+            return tableManagementRestService.markTableAs(table.id, 'FREE').then(function () {
                 var tableIndex = tables.indexOf(table);
                 if (tableIndex >= 0) {
                     tables[tableIndex].state = 'FREE';
@@ -30,7 +30,7 @@ angular.module('gastronomy.tableMgmt').factory('tables', function (tableManageme
             });
         },
         occupy: function (table) {
-            tableManagementRestService.markTableAs(table.id, 'OCCUPIED').then(function () {
+            return tableManagementRestService.markTableAs(table.id, 'OCCUPIED').then(function () {
                 var tableIndex = tables.indexOf(table);
                 if (tableIndex >= 0) {
                     tables[tableIndex].state = 'OCCUPIED';
@@ -38,7 +38,7 @@ angular.module('gastronomy.tableMgmt').factory('tables', function (tableManageme
             });
         },
         cancelReservation: function (table) {
-            tableManagementRestService.markTableAs(table.id, 'FREE').then(function () {
+            return tableManagementRestService.markTableAs(table.id, 'FREE').then(function () {
                 var tableIndex = tables.indexOf(table);
                 if (tableIndex >= 0) {
                     tables[tableIndex].state = 'FREE';

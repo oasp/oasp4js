@@ -1,6 +1,17 @@
 /*jslint todo: true */
-angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($scope, tables, $modal, offers, sales) {
+angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($scope, tables, $modal, globalSpinner, offers, sales) {
     'use strict';
+    // TODO implement it as a utility service
+    var wrapFunctionCallInSpinner = function (fn, args) {
+        var promise;
+        globalSpinner.show();
+        promise = fn.apply(null, args);
+        promise.then(function () {
+            globalSpinner.hide();
+        }, function () {
+            globalSpinner.hide();
+        });
+    };
     $scope.tables = tables.getAllTables();
     $scope.openEditDialog = function (tableRow) {
         $modal.open({
@@ -40,8 +51,7 @@ angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($
             label: 'Reserve',
             onClick: function (selectedTable) {
                 if (selectedTable) {
-                    // todo wrap up in spinner
-                    tables.reserve(selectedTable);
+                    wrapFunctionCallInSpinner(tables.reserve, [selectedTable]);
                 }
             },
             isActive: function (selectedTable) {
@@ -52,8 +62,7 @@ angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($
             label: 'Cancel Reservation',
             onClick: function (selectedTable) {
                 if (selectedTable) {
-                    // todo wrap up in spinner
-                    tables.cancelReservation(selectedTable);
+                    wrapFunctionCallInSpinner(tables.cancelReservation, [selectedTable]);
                 }
             },
             isActive: function (selectedTable) {
@@ -64,8 +73,7 @@ angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($
             label: 'Occupy',
             onClick: function (selectedTable) {
                 if (selectedTable) {
-                    // todo wrap up in spinner
-                    tables.occupy(selectedTable);
+                    wrapFunctionCallInSpinner(tables.occupy, [selectedTable]);
                 }
             },
             isActive: function (selectedTable) {
@@ -76,8 +84,7 @@ angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($
             label: 'Free',
             onClick: function (selectedTable) {
                 if (selectedTable) {
-                    // todo wrap up in spinner
-                    tables.free(selectedTable);
+                    wrapFunctionCallInSpinner(tables.free, [selectedTable]);
                 }
             },
             isActive: function (selectedTable) {
