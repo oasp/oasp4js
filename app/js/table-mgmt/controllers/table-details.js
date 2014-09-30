@@ -1,5 +1,4 @@
-/* angular */
-angular.module('gastronomy.tableMgmt').controller('TableDetailsCntl', function ($scope, $sce, tableDetails, allOffers, currentOrder) {
+angular.module('gastronomy.tableMgmt').controller('TableDetailsCntl', function ($scope, $sce, tableDetails, allOffers, currentOrder, sales) {
     'use strict';
     $scope.table = tableDetails;
     $scope.allOffers = allOffers;
@@ -54,16 +53,30 @@ angular.module('gastronomy.tableMgmt').controller('TableDetailsCntl', function (
     $scope.forms = {};
 
     $scope.ok = function () {
-        $scope.$close();
+        sales.saveOrUpdateOrder($scope.model.order).then(function () {
+            $scope.$close();
+        });
     };
     $scope.addPosition = function (offer) {
         $scope.model.order.positions.push({
-            orderId: $scope.model.order.positions.length + 1,
-            offerId: offer.id,
+            revision: null,
+            orderId: $scope.model.order.order.id,
+            offerId: null,
             offerName: offer.description,
             state: 'ORDERED',
-            price: offer.price,
+            price: offer.currentPrice,
             comment: ''
         });
     };
+    $scope.buttonDefs = [
+        {
+            label: 'Remove',
+            onClick: function (selectedPosition) {
+                $scope.model.order.positions.splice($scope.model.order.positions.indexOf(selectedPosition), 1);
+            },
+            isNotActive: function (selectedRow) {
+                return selectedRow === null;
+            }
+        }
+    ];
 });
