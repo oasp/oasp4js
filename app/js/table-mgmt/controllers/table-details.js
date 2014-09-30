@@ -54,7 +54,7 @@ angular.module('gastronomy.tableMgmt').controller('TableDetailsCntl', function (
     // form container to access forms added in parent scopes
     $scope.forms = {};
 
-    $scope.ok = function () {
+    $scope.submit = function () {
         sales.saveOrUpdateOrder($scope.model.order).then(function () {
             $scope.$close();
         });

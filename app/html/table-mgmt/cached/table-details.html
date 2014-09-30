@@ -8,8 +8,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <label>Status:</label>&nbsp;
-                    <span data-ng-bind="table.state"></span>&nbsp;
-                    <button class="btn btn-sm btn-success" ng-click="ok()">Free</button>
+                    <span data-ng-bind="table.state"></span>
                 </div>
             </div>
 
@@ -61,7 +60,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" data-ng-disabled="!model.order" ng-click="ok()">Submit</button>
+        <button class="btn btn-primary" data-ng-disabled="!model.order" ng-click="submit()">Submit</button>
         <button class="btn btn-warning" ng-click="$close()">Cancel</button>
     </div>
 </div>
