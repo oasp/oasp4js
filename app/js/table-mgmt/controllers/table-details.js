@@ -18,14 +18,16 @@ angular.module('gastronomy.tableMgmt').controller('TableDetailsCntl', function (
     };
     $scope.assignNewOrder = function () {
         $scope.model.order = {
-            tableId: $scope.table.id,
-            orderState: 'INIT',
+            order: {
+                tableId: $scope.table.id,
+                state: 'OPEN'
+            },
             positions: []
         };
     };
     $scope.columnDefs = [
         {
-            field: 'orderId',
+            field: 'id',
             label: 'Number'
         },
         {

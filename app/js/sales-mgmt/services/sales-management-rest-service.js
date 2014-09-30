@@ -11,6 +11,9 @@ angular.module('gastronomy.salesMgmt').factory('salesManagementRestService', fun
         },
         updateOrder: function (order, orderId) {
             return $http.put(servicePath + '/order/' + orderId, order);
+        },
+        createOrder: function (order) {
+            return $http.post(servicePath + '/order', order);
         }
     };
 });
