@@ -44,14 +44,14 @@
                 <li><a href="#table-mgmt/table-search">Tables</a></li>
             </ul>
             <div class="navbar-right" data-ng-show="currentUser.isLoggedIn()">
-                <span class="navbar-text">{{'OASP.LOGGED_IN_AS' | translate}}:&nbsp;<span
+                <span class="navbar-text"><span data-ng-bind="'OASP.LOGGED_IN_AS' | translate"></span>:&nbsp;<span
                         data-ng-bind="currentUser.getUserName()"></span></span>
                 <button data-ng-click="logOff()" class="btn navbar-btn btn-sm btn-info">Log Off</button>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown language-dropdown" ng-controller="LanguageChangeCntl">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-container"><span
-                            class="icon icon-{{getCurrentLanguage()}}-24"></span></span>{{'OASP.LANGUAGE' | translate}} <span
+                            class="icon icon-{{getCurrentLanguage()}}-24"></span></span><span data-ng-bind="'OASP.LANGUAGE' | translate"></span><span
                             class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
@@ -87,6 +87,7 @@
 <script src="bower_components/angular-ui-select/dist/select.js"></script>
 <script src="bower_components/spin.js/spin.js"></script>
 <script src="bower_components/angular-spinner/angular-spinner.js"></script>
+<script src="bower_components/autofill-event/src/autofill-event.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
