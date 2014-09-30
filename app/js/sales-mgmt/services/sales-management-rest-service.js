@@ -8,6 +8,9 @@ angular.module('gastronomy.salesMgmt').factory('salesManagementRestService', fun
             return $http.get(servicePath + '/order', {
                 params: params
             });
+        },
+        updateOrder: function (order, orderId) {
+            return $http.put(servicePath + '/order/' + orderId, order);
         }
     };
 });

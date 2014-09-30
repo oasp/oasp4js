@@ -14,6 +14,6 @@ angular.module('oasp.main').config(function ($provide) {
             }
         };
     };
-    $provide.decorator("$modal", $modalDecorator);
+    $provide.decorator('$modal', $modalDecorator);
 
 });
