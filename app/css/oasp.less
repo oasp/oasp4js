@@ -6,6 +6,14 @@ body {
   padding-top: 50px;
   padding-bottom: 20px;
 }
+.user-select (@val) {
+  -webkit-touch-callout:  @val;
+  -webkit-user-select:    @val;
+  -khtml-user-select:     @val;
+  -moz-user-select:       @val;
+  -ms-user-select:        @val;
+  user-select:            @val;
+}
 
 .language-dropdown {
   .icon-container {
@@ -32,6 +40,9 @@ body {
     > tr.selected-row > td {
       background-color: @brand-info;
     }
+  }
+  & *{
+    .user-select(none);
   }
 }
 

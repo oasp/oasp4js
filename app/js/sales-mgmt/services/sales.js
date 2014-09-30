@@ -7,9 +7,17 @@ angular.module('gastronomy.salesMgmt').factory('sales', function (salesManagemen
             });
         },
         saveOrUpdateOrder: function (order) {
-            return salesManagementRestService.updateOrder(order, order.order.id).then(function (response) {
-                return response.data;
-            });
+            var promise;
+            if (order.order.id) {
+                promise = salesManagementRestService.updateOrder(order, order.order.id).then(function (response) {
+                    return response.data;
+                });
+            } else {
+                promise = salesManagementRestService.createOrder(order).then(function (response) {
+                    return response.data;
+                });
+            }
+            return promise;
         }
     };
 });
