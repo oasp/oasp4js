@@ -4,9 +4,9 @@ angular.module('gastronomy.tableMgmt', ['ngRoute', 'gastronomy.offerMgmt', 'gast
         templateUrl: 'html/table-mgmt/table-search.html',
         controller: 'TableSearchCntl',
         resolve: {
-            initialTableList: function (tables) {
+            initialTableList: ['tables', function (tables) {
                 return tables.getAllTables();
-            }
+            }]
         }
     });
 });
