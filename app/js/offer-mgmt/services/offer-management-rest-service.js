@@ -5,7 +5,7 @@ angular.module('gastronomy.offerMgmt').factory('offerManagementRestService', fun
 
     return {
         getAllOffers: function () {
-            return $http.get(servicePath + '/');
+            return $http.get(servicePath + '/offer');
         }
     };
 });
