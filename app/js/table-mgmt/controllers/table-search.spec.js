@@ -20,7 +20,7 @@ describe('Module: tableMgmt, Controller: table-search', function () {
     beforeEach(inject(function ($rootScope, $controller) {
         //given
         $scope = $rootScope.$new();
-        $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock });
+        $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock, initialTableList: [table] });
     }));
 
     it('exposes tables referencing tables from service on $scope', function () {

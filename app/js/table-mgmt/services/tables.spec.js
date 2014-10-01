@@ -43,7 +43,9 @@ describe('Service: tables', function () {
     beforeEach(function () {
         // given // when
         mockAllTableResponse();
-        listOfTables = tables.getAllTables();
+        tables.getAllTables().then(function (allTables) {
+            listOfTables = allTables;
+        });
         $httpBackend.flush();
 
     });

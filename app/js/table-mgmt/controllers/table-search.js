@@ -1,5 +1,5 @@
 /*jslint todo: true */
-angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($scope, tables, $modal, globalSpinner, offers, sales) {
+angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($scope, tables, initialTableList, $modal, globalSpinner, offers, sales) {
     'use strict';
     // TODO implement it as a utility service
     var wrapFunctionCallInSpinner = function (fn, args) {
@@ -12,7 +12,8 @@ angular.module('gastronomy.tableMgmt').controller('TableSearchCntl', function ($
             globalSpinner.hide();
         });
     };
-    $scope.tables = tables.getAllTables();
+//    $scope.tables = tables.getAllTables();
+    $scope.tables = initialTableList;
     $scope.openEditDialog = function (tableRow) {
         $modal.open({
             templateUrl: 'html/table-mgmt/table-details.html',

@@ -3,10 +3,10 @@ angular.module('gastronomy.tableMgmt').factory('tables', function (tableManageme
     var tables = [];
     return {
         getAllTables: function () {
-            tableManagementRestService.getAllTables().then(function (response) {
+            return tableManagementRestService.getAllTables().then(function (response) {
                 angular.copy(response.data, tables);
+                return tables;
             });
-            return tables;
         },
         loadTable: function (tableId) {
             return tableManagementRestService.getTable(tableId).then(function (response) {

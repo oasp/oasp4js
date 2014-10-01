@@ -2,6 +2,11 @@ angular.module('gastronomy.tableMgmt', ['ngRoute', 'gastronomy.offerMgmt', 'gast
     'use strict';
     $routeProvider.when('/table-mgmt/table-search', {
         templateUrl: 'html/table-mgmt/table-search.html',
-        controller: 'TableSearchCntl'
+        controller: 'TableSearchCntl',
+        resolve: {
+            initialTableList: function (tables) {
+                return tables.getAllTables();
+            }
+        }
     });
 });
