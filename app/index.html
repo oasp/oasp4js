@@ -40,10 +40,10 @@
             <a class="navbar-brand" href="#">Restaurant Sample Application</a>
         </div>
         <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav" data-ng-show="currentUser.isLoggedIn()">
+            <ul class="ng-cloak nav navbar-nav" data-ng-show="currentUser.isLoggedIn()">
                 <li><a href="#table-mgmt/table-search">Tables</a></li>
             </ul>
-            <div class="navbar-right" data-ng-show="currentUser.isLoggedIn()">
+            <div class="ng-cloak navbar-right" data-ng-show="currentUser.isLoggedIn()">
                 <span class="navbar-text"><span data-ng-bind="'OASP.LOGGED_IN_AS' | translate"></span>:&nbsp;<span
                         data-ng-bind="currentUser.getUserName()"></span></span>
                 <button data-ng-click="logOff()" class="btn navbar-btn btn-sm btn-info">Log Off</button>
