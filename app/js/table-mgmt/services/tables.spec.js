@@ -20,7 +20,7 @@ describe('Service: tables', function () {
         mockTableStatusChange = function (tableId, status) {
             $httpBackend.whenPOST(contextPath + 'services/rest/tablemanagement/table/' + tableId + '/markTableAs' + status).respond(200);
         };
-    beforeEach(module('gastronomy.tableMgmt'));
+    beforeEach(module('app.tableMgmt'));
 
     beforeEach(function () {
         currentContextPath = (function () {

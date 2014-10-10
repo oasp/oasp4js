@@ -1,4 +1,4 @@
-angular.module('oasp.main').factory('securityRestService', function ($http, currentContextPath) {
+angular.module('app.main').factory('securityRestService', function ($http, currentContextPath) {
     'use strict';
 
     var servicePath = currentContextPath.get() + 'services/rest';

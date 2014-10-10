@@ -1,4 +1,4 @@
-angular.module('gastronomy.offerMgmt').factory('offerManagementRestService', function ($http, currentContextPath) {
+angular.module('app.offerMgmt').factory('offerManagementRestService', function ($http, currentContextPath) {
     'use strict';
 
     var servicePath = currentContextPath.get() + 'services/rest/offermanagement';

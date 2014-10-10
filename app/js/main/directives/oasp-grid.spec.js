@@ -11,7 +11,7 @@ describe('oasp-grid directive specs', function () {
         };
 
     beforeEach(module('oasp.templates'));
-    beforeEach(module('oasp.main'));
+    beforeEach(module('app.main'));
 
     beforeEach(inject(function (_$compile_, _$rootScope_) {
         $compile = _$compile_;

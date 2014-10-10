@@ -1,4 +1,4 @@
-angular.module('oasp.main')
+angular.module('app.main')
     .controller('SignInCntl', function ($scope, $location, security) {
         'use strict';
         $scope.errorMessage = {
@@ -35,11 +35,12 @@ angular.module('oasp.main')
             if ($scope.loginForm.$invalid) {
                 $scope.validation.forceShowingValidationErrors = true;
             } else {
-                security.logIn($scope.credentials).success(function () {
-                    $location.url('/table-mgmt/table-search');
-                }).error(function () {
-                    addErrorMessageAndClearForm('Authentication failed. Please try again!');
-                });
+                security.logIn($scope.credentials)
+                    .then(function (currentUser) {
+                        $location.url(currentUser.getHomeDialogPath());
+                    }, function () {
+                        addErrorMessageAndClearForm('Authentication failed. Please try again!');
+                    });
             }
         };
     });

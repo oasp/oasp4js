@@ -1,4 +1,4 @@
-angular.module('gastronomy.salesMgmt').factory('salesManagementRestService', function ($http, currentContextPath) {
+angular.module('app.salesMgmt').factory('salesManagementRestService', function ($http, currentContextPath) {
     'use strict';
 
     var servicePath = currentContextPath.get() + 'services/rest/salesmanagement';

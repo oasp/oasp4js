@@ -1,4 +1,4 @@
-angular.module('oasp.main')
+angular.module('app.main')
     .factory('globalSpinner', function ($rootScope) {
         'use strict';
         return {

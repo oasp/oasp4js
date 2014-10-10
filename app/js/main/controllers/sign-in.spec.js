@@ -1,31 +1,12 @@
 describe('Module: main, Controller: sign-in', function () {
     'use strict';
-    var $scope, $location, logInHttpDeferredMock;
+    var $scope, $location, security;
 
-    beforeEach(module('oasp.main'));
+    beforeEach(module('app.main'));
 
     beforeEach(inject(function ($rootScope, $controller, _$location_, $q) {
-        var httpDeferredMockFactory = function ($q) {
-            var httpDeferredMock = $q.defer(),
-                httpPromiseMock = httpDeferredMock.promise;
-            httpPromiseMock.success = function (fn) {
-                httpPromiseMock.then(function () {
-                    fn();
-                });
-                return httpPromiseMock;
-            };
-
-            httpPromiseMock.error = function (fn) {
-                httpPromiseMock.then(null, function () {
-                    fn();
-                });
-                return httpPromiseMock;
-            };
-            return httpDeferredMock;
-        }, security = {
+        security = {
             logIn: function () {
-                logInHttpDeferredMock = httpDeferredMockFactory($q);
-                return logInHttpDeferredMock.promise;
             }
         };
         $location = _$location_;
@@ -54,19 +35,26 @@ describe('Module: main, Controller: sign-in', function () {
         // then
         expect($scope.errorMessage.text).toEqual('');
     });
-    it('exposes signIn() on $scope which changes to the default location /table-mgmt/table-search on success', function () {
+    it('exposes signIn() on $scope which changes to the user\'s home dialog on success', inject(function ($q) {
         // given
+        var userHomeDialogPath = '/some-module/some-dialog';
+        spyOn(security, 'logIn').andCallFake(function () {
+            return $q.when({
+                getHomeDialogPath : function () {
+                    return userHomeDialogPath;
+                }
+            });
+        });
         $scope.loginForm = {
             $invalid: false
         };
         $scope.validation.forceShowingValidationErrors = true;
         // when
         $scope.signIn();
-        logInHttpDeferredMock.resolve();
         $scope.$apply();
         // then
-        expect($location.path()).toEqual('/table-mgmt/table-search');
-    });
+        expect($location.path()).toEqual(userHomeDialogPath);
+    }));
     it('exposes validation.userNameNotProvided() on $scope which returns true if field dirty and empty', function () {
         // given // when
         $scope.loginForm = {

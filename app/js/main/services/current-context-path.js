@@ -1,4 +1,4 @@
-angular.module('oasp.main').factory('currentContextPath', function ($window) {
+angular.module('app.main').factory('currentContextPath', function ($window) {
     'use strict';
     var contextPath = '';
     return {

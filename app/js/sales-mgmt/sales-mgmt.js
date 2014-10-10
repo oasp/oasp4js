@@ -1,2 +1,2 @@
-angular.module('gastronomy.salesMgmt', ['oasp.main']);
+angular.module('app.salesMgmt', ['app.main']);
 

@@ -1,4 +1,4 @@
-angular.module('oasp.main').controller('LanguageChangeCntl', function ($scope, $translate) {
+angular.module('app.main').controller('LanguageChangeCntl', function ($scope, $translate) {
     'use strict';
     $scope.supportedLanguages = [
         {

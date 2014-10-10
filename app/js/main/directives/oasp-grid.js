@@ -1,4 +1,4 @@
-angular.module('oasp.main').
+angular.module('app.main').
     directive('oaspGrid', function ($sce) {
         'use strict';
 

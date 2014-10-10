@@ -15,7 +15,7 @@ describe('Module: tableMgmt, Controller: table-search', function () {
     };
 
     beforeEach(module('ui.bootstrap'));
-    beforeEach(module('gastronomy.tableMgmt'));
+    beforeEach(module('app.tableMgmt'));
 
     beforeEach(inject(function ($rootScope, $controller) {
         //given

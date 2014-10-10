@@ -1,4 +1,4 @@
-angular.module('oasp.main').config(function ($provide) {
+angular.module('app.main').config(function ($provide) {
     'use strict';
     var $modalDecorator = function ($delegate, globalSpinner) {
         return {

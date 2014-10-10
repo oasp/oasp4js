@@ -3,7 +3,7 @@ describe('spinner directive specs', function () {
     var $compile, $rootScope;
 
     beforeEach(module('oasp.templates'));
-    beforeEach(module('oasp.main'));
+    beforeEach(module('app.main'));
 
     beforeEach(inject(function (_$compile_, _$rootScope_) {
         $compile = _$compile_;

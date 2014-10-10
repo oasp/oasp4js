@@ -1,5 +1,4 @@
-/*globals angular*/
-angular.module('oasp.main')
+angular.module('app.main')
     .directive('spinner', function () {
         'use strict';
 

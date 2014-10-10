@@ -1,2 +1,2 @@
-angular.module('gastronomy.offerMgmt', ['oasp.main']);
+angular.module('app.offerMgmt', ['app.main']);
 

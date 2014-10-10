@@ -1,4 +1,4 @@
-angular.module('oasp.main').factory('security', function (securityRestService, $http) {
+angular.module('app.main').factory('security', function (securityRestService, $http, $q) {
     'use strict';
     var currentUserInternal = {
             isLoggedIn: false
@@ -10,42 +10,69 @@ angular.module('oasp.main').factory('security', function (securityRestService, $
                 },
                 getUserName: function () {
                     return (currentUser.profile && currentUser.profile.userName) || '';
+                },
+                getHomeDialogPath: function () {
+                    return (currentUser.profile && currentUser.profile.homeDialogPath) || '';
                 }
             };
         }(currentUserInternal)),
-        onUserProfileChange = function (userProfile) {
+        updateUserProfile = function (userProfile) {
             currentUserInternal.isLoggedIn = true;
             currentUserInternal.profile = userProfile;
+            // TODO remove it once implemented on the server
+            if (angular.isUndefined(userProfile.homeDialogPath)) {
+                currentUserInternal.profile.homeDialogPath = '/table-mgmt/table-search';
+            }
         },
-        onLoggingOff = function () {
+        switchToAnonymousUser = function () {
             currentUserInternal.isLoggedIn = false;
             currentUserInternal.profile = undefined;
         },
-        enableCsrf = function () {
+        enableCsrfProtection = function () {
             return securityRestService.getCsrfToken().then(function (response) {
-                var csrf = response.data;
-                $http.defaults.headers.common[csrf.headerName] = csrf.token;
+                var csrfProtection = response.data;
+                // from now on a CSRF token will be added to all HTTP requests
+                $http.defaults.headers.common[csrfProtection.headerName] = csrfProtection.token;
             });
         },
         initializeUser = function () {
-            return securityRestService.getCurrentUser().success(function (userProfile) {
-                onUserProfileChange(userProfile);
-                enableCsrf();
-            });
+            var userInitializationDeferred = $q.defer();
+            securityRestService.getCurrentUser()
+                .then(function (response) {
+                    updateUserProfile(response.data);
+                    return enableCsrfProtection();
+                }, function () {
+                    userInitializationDeferred.reject('Requesting a user profile failed');
+                })
+                .then(function () {
+                    userInitializationDeferred.resolve(currentUserExternal);
+                });
+            return userInitializationDeferred.promise;
         };
     return {
         getCurrentUser: function () {
             return currentUserExternal;
         },
         logIn: function (credentials) {
-            return securityRestService.login(credentials).success(function () {
-                return initializeUser();
-            });
+            var logInDeferred = $q.defer();
+            securityRestService.login(credentials)
+                .then(function () {
+                    initializeUser()
+                        .then(function (currentUser) {
+                            logInDeferred.resolve(currentUser);
+                        }, function (reason) {
+                            logInDeferred.reject(reason);
+                        });
+                }, function () {
+                    logInDeferred.reject('Authentication failed');
+                });
+            return logInDeferred.promise;
         },
         logOff: function () {
-            return securityRestService.logout().success(function () {
-                onLoggingOff();
-            });
+            return securityRestService.logout()
+                .then(function () {
+                    switchToAnonymousUser();
+                });
         },
         initializeUser: function () {
             return initializeUser();

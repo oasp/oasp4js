@@ -2,7 +2,7 @@ describe('Service: currentContextPath', function () {
     'use strict';
     var currentContextPath, $window;
 
-    beforeEach(module('oasp.main'));
+    beforeEach(module('app.main'));
 
     beforeEach(function () {
         $window = (function () {

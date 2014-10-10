@@ -1,4 +1,4 @@
-angular.module('gastronomy.tableMgmt').factory('tables', function (tableManagementRestService) {
+angular.module('app.tableMgmt').factory('tables', function (tableManagementRestService) {
     'use strict';
     var tables = [];
     return {

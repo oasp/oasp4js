@@ -1,4 +1,4 @@
-angular.module('oasp.main').factory('$translateStaticFilesLoader', function ($q) {
+angular.module('app.main').factory('$translateStaticFilesLoader', function ($q) {
     'use strict';
     return function () {
         var deferred = $q.defer();

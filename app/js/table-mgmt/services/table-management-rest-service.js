@@ -1,4 +1,4 @@
-angular.module('gastronomy.tableMgmt').factory('tableManagementRestService', function ($http, currentContextPath) {
+angular.module('app.tableMgmt').factory('tableManagementRestService', function ($http, currentContextPath) {
     'use strict';
 
     var servicePath = currentContextPath.get() + 'services/rest/tablemanagement';

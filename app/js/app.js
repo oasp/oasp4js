@@ -1,16 +1,21 @@
-angular.module('oasp', ['oasp.templates', 'oasp.main']);
-angular.module('gastronomy',
-    ['ui.select', 'ngRoute', 'oasp', 'gastronomy.tableMgmt', 'gastronomy.offerMgmt', 'gastronomy.salesMgmt'])
+angular.module('app',
+    ['ui.select', 'ngRoute', 'oasp', 'app.main', 'app.tableMgmt', 'app.offerMgmt', 'app.salesMgmt'])
     .config(function ($routeProvider, $locationProvider, uiSelectConfig) {
         'use strict';
         $locationProvider.html5Mode(false);
-        $routeProvider.otherwise({
-            templateUrl: 'html/main/sign-in.html'
-        });
         uiSelectConfig.theme = 'bootstrap';
+        $routeProvider
+            .when('/', {templateUrl: 'html/main/blank.html'})
+            .otherwise({templateUrl: 'html/main/page-not-found.html'});
     })
-    .run(function ($rootScope, globalSpinner) {
+    .run(function (SIGN_IN_DLG_PATH, $rootScope, globalSpinner, $location, security) {
         'use strict';
+        security.initializeUser()
+            .then(function (currentUser) {
+                $location.path(currentUser.getHomeDialogPath());
+            }, function () {
+                $location.path(SIGN_IN_DLG_PATH);
+            });
         $rootScope.$on('$routeChangeStart', function (e, curr, prev) {
             if (curr.$$route && curr.$$route.resolve) {
                 globalSpinner.show();
