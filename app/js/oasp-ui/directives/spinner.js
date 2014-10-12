@@ -1,4 +1,4 @@
-angular.module('app.main')
+angular.module('oasp-ui')
     .directive('spinner', function () {
         'use strict';
 

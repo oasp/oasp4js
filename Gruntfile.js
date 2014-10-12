@@ -319,7 +319,7 @@ module.exports = function (grunt) {
                             password: 'sonar'
                         },
 
-                        projectKey: 'org.oasp.js:oasp4js:0.0.1',
+                        projectKey: 'io.oasp:oasp4js:0.0.1',
                         projectName: 'oasp4js',
                         projectVersion: '0.0.1',
                         sources: ['app'].join(','),
