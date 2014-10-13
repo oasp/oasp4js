@@ -23,16 +23,8 @@ describe('Service: tables', function () {
     beforeEach(module('app.tableMgmt'));
 
     beforeEach(function () {
-        currentContextPath = (function () {
-            return {
-                get: function () {
-                    return contextPath;
-                }
-            };
-        }());
-
         module(function ($provide) {
-            $provide.value('currentContextPath', currentContextPath);
+            $provide.value('currentContextPath', oasp.mock.currentContextPathReturning(contextPath));
         });
 
         inject(function ($injector) {
@@ -59,6 +51,23 @@ describe('Service: tables', function () {
         expect(listOfTables.length).toBe(2);
         expect(listOfTables[0].id).toEqual('1');
 
+    });
+    it('loads a table', function () {
+        // given
+        var table = {
+            id: '1',
+            state: 'FREE',
+            waiter: ''
+        }, loadedTable;
+        $httpBackend.whenGET(contextPath + 'services/rest/tablemanagement/table/1').respond(table);
+        // when
+        tables.loadTable(1)
+            .then(function (table) {
+                loadedTable = table;
+            });
+        $httpBackend.flush();
+        // then
+        expect(loadedTable).toEqual(table);
     });
     it('frees one table', function () {
         //given

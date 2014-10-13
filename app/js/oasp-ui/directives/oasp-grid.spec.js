@@ -70,6 +70,26 @@ describe('oasp-grid directive specs', function () {
         elementHasRowsContainingLabels(element, 1, [person2.firstName, person2.lastName]);
     });
 
+    it('renders using a renderer supplied', function () {
+        // given
+        var itemLabel = 'Item', priceLabel = 'Price',
+            banana = {item: 'Banana', price: {amount: 2, currency: 'EUR'}},
+            element;
+        $rootScope.columnDefs = [
+            {field: 'item', label: itemLabel},
+            {field: 'price', label: priceLabel, renderer: function (row, column) {
+                var currentPrice = row[column.field];
+                return currentPrice.amount + ' ' + currentPrice.currency;
+            }}
+        ];
+        $rootScope.rows = [banana];
+        // when
+        element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows"></div>')($rootScope);
+        $rootScope.$digest();
+        // then
+        elementHasRowsContainingLabels(element, 0, ['Banana', '2 EUR']);
+    });
+
     it('selects a row', function () {
         // given
         $rootScope.columnDefs = [

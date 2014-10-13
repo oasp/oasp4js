@@ -55,6 +55,36 @@ describe('Module: main, Controller: sign-in', function () {
         // then
         expect($location.path()).toEqual(userHomeDialogPath);
     }));
+    it('exposes signIn() on $scope which adds an error message and clears the form on failure', inject(function ($q) {
+        // given
+        spyOn(security, 'logIn').andCallFake(function () {
+            return $q.reject();
+        });
+        $scope.loginForm = {
+            $invalid: false,
+            $setPristine : jasmine.createSpy('$setPristine')
+        };
+        $scope.validation.forceShowingValidationErrors = true;
+        // when
+        $scope.signIn();
+        $scope.$apply();
+        // then
+        expect($scope.errorMessage.text).toEqual('Authentication failed. Please try again!');
+        expect($scope.credentials).toEqual({});
+        expect($scope.validation.forceShowingValidationErrors).toBeFalsy();
+        expect($scope.loginForm.$setPristine).toHaveBeenCalled();
+    }));
+    it('exposes signIn() on $scope which forces showing errors when the form invalid', function () {
+        // given
+        $scope.loginForm = {
+            $invalid: true
+        };
+        $scope.validation.forceShowingValidationErrors = false;
+        // when
+        $scope.signIn();
+        // then
+        expect($scope.validation.forceShowingValidationErrors).toBeTruthy();
+    });
     it('exposes validation.userNameNotProvided() on $scope which returns true if field dirty and empty', function () {
         // given // when
         $scope.loginForm = {

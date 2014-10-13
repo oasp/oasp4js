@@ -4,9 +4,7 @@ describe('Module: \'oasp-ui\', service: \'globalSpinner\'', function () {
     var globalSpinner, $rootScope,
         broadcastRouteChangeSuccess = function ($rootScope) {
             $rootScope.$broadcast('$routeChangeStart', {
-                $$route: {
-                    resolve: []
-                }
+                resolve: []
             });
         };
 

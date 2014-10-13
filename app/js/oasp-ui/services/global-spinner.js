@@ -11,7 +11,7 @@ angular.module('oasp-ui')
         that.showOnRouteChangeStartAndHideWhenComplete= function () {
             /*jslint unparam: true*/
             $rootScope.$on('$routeChangeStart', function (event, currentRoute) {
-                if (currentRoute.$$route && currentRoute.$$route.resolve) {
+                if (currentRoute.resolve) {
                     that.show();
                 }
             });
