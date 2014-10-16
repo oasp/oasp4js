@@ -1,18 +1,32 @@
 describe('Module: main, Controller: sign-in', function () {
     'use strict';
-    var $scope, $location, security;
+    var $scope, $location, security, appContext, userHomeDialogPath;
 
-    beforeEach(module('app.main'));
-
-    beforeEach(inject(function ($rootScope, $controller, _$location_, $q) {
+    beforeEach(function () {
         security = {
             logIn: function () {
+            }
+        };
+
+        module('app.main', function ($provide) {
+            $provide.value('security', security);
+        });
+    });
+
+    beforeEach(inject(function ($rootScope, $controller, _$location_, $q) {
+        appContext = {
+            getCurrentUser: function () {
+                return {
+                    getHomeDialogPath: function () {
+                        return userHomeDialogPath;
+                    }
+                };
             }
         };
         $location = _$location_;
         $scope = $rootScope;
 
-        $controller('SignInCntl', {$scope: $scope, $location: $location, security: security});
+        $controller('SignInCntl', {$scope: $scope, $location: $location, appContext: appContext, security: security});
     }));
 
     it('exposes errorMessage.text on $scope which is empty string initially', function () {
@@ -37,13 +51,9 @@ describe('Module: main, Controller: sign-in', function () {
     });
     it('exposes signIn() on $scope which changes to the user\'s home dialog on success', inject(function ($q) {
         // given
-        var userHomeDialogPath = '/some-module/some-dialog';
+        userHomeDialogPath = '/some-module/home';
         spyOn(security, 'logIn').andCallFake(function () {
-            return $q.when({
-                getHomeDialogPath : function () {
-                    return userHomeDialogPath;
-                }
-            });
+            return $q.when();
         });
         $scope.loginForm = {
             $invalid: false
@@ -54,6 +64,7 @@ describe('Module: main, Controller: sign-in', function () {
         $scope.$apply();
         // then
         expect($location.path()).toEqual(userHomeDialogPath);
+
     }));
     it('exposes signIn() on $scope which adds an error message and clears the form on failure', inject(function ($q) {
         // given
@@ -62,7 +73,7 @@ describe('Module: main, Controller: sign-in', function () {
         });
         $scope.loginForm = {
             $invalid: false,
-            $setPristine : jasmine.createSpy('$setPristine')
+            $setPristine: jasmine.createSpy('$setPristine')
         };
         $scope.validation.forceShowingValidationErrors = true;
         // when
@@ -99,34 +110,36 @@ describe('Module: main, Controller: sign-in', function () {
         // then
         expect($scope.validation.userNameNotProvided()).toBeTruthy();
     });
-    it('exposes validation.userNameNotProvided() on $scope which returns true if field empty and forced validation', function () {
-        // given // when
-        $scope.loginForm = {
-            userName: {
-                $dirty: false,
-                $error: {
-                    required: true
+    it('exposes validation.userNameNotProvided() on $scope which returns true if field empty and forced validation',
+        function () {
+            // given // when
+            $scope.loginForm = {
+                userName: {
+                    $dirty: false,
+                    $error: {
+                        required: true
+                    }
                 }
-            }
-        };
-        $scope.validation.forceShowingValidationErrors = true;
-        // then
-        expect($scope.validation.userNameNotProvided()).toBeTruthy();
-    });
-    it('exposes validation.userNameNotProvided() on $scope which returns false if field empty and neither validation forced nor filed dirty', function () {
-        // given // when
-        $scope.loginForm = {
-            userName: {
-                $dirty: false,
-                $error: {
-                    required: true
+            };
+            $scope.validation.forceShowingValidationErrors = true;
+            // then
+            expect($scope.validation.userNameNotProvided()).toBeTruthy();
+        });
+    it('exposes validation.userNameNotProvided() on $scope which returns false if field empty and neither validation forced nor filed dirty',
+        function () {
+            // given // when
+            $scope.loginForm = {
+                userName: {
+                    $dirty: false,
+                    $error: {
+                        required: true
+                    }
                 }
-            }
-        };
-        $scope.validation.forceShowingValidationErrors = false;
-        // then
-        expect($scope.validation.userNameNotProvided()).toBeFalsy();
-    });
+            };
+            $scope.validation.forceShowingValidationErrors = false;
+            // then
+            expect($scope.validation.userNameNotProvided()).toBeFalsy();
+        });
     it('exposes validation.passwordNotProvided() on $scope which returns true if field dirty and empty', function () {
         // given // when
         $scope.loginForm = {
@@ -141,32 +154,34 @@ describe('Module: main, Controller: sign-in', function () {
         // then
         expect($scope.validation.passwordNotProvided()).toBeTruthy();
     });
-    it('exposes validation.passwordNotProvided() on $scope which returns true if field empty and forced validation', function () {
-        // given // when
-        $scope.loginForm = {
-            password: {
-                $dirty: false,
-                $error: {
-                    required: true
+    it('exposes validation.passwordNotProvided() on $scope which returns true if field empty and forced validation',
+        function () {
+            // given // when
+            $scope.loginForm = {
+                password: {
+                    $dirty: false,
+                    $error: {
+                        required: true
+                    }
                 }
-            }
-        };
-        $scope.validation.forceShowingValidationErrors = true;
-        // then
-        expect($scope.validation.passwordNotProvided()).toBeTruthy();
-    });
-    it('exposes validation.passwordNotProvided() on $scope which returns false if field empty and neither validation forced nor filed dirty', function () {
-        // given // when
-        $scope.loginForm = {
-            password: {
-                $dirty: false,
-                $error: {
-                    required: true
+            };
+            $scope.validation.forceShowingValidationErrors = true;
+            // then
+            expect($scope.validation.passwordNotProvided()).toBeTruthy();
+        });
+    it('exposes validation.passwordNotProvided() on $scope which returns false if field empty and neither validation forced nor filed dirty',
+        function () {
+            // given // when
+            $scope.loginForm = {
+                password: {
+                    $dirty: false,
+                    $error: {
+                        required: true
+                    }
                 }
-            }
-        };
-        $scope.validation.forceShowingValidationErrors = false;
-        // then
-        expect($scope.validation.passwordNotProvided()).toBeFalsy();
-    });
+            };
+            $scope.validation.forceShowingValidationErrors = false;
+            // then
+            expect($scope.validation.passwordNotProvided()).toBeFalsy();
+        });
 });

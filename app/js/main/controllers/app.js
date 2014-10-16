@@ -1,6 +1,6 @@
-angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $scope, $location, $window, security) {
+angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $scope, $location, $window, appContext, security) {
     'use strict';
-    $scope.currentUser = security.getCurrentUser();
+    $scope.currentUser = appContext.getCurrentUser();
 
     $scope.logOff = function () {
         var goToSignInDialogFullyReloadingApp = function () {

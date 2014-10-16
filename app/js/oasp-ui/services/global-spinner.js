@@ -8,7 +8,7 @@ angular.module('oasp-ui')
         that.hide = function () {
             $rootScope.globalSpinner = false;
         };
-        that.showOnRouteChangeStartAndHideWhenComplete= function () {
+        that.showOnRouteChangeStartAndHideWhenComplete = function () {
             /*jslint unparam: true*/
             $rootScope.$on('$routeChangeStart', function (event, currentRoute) {
                 if (currentRoute.resolve) {
