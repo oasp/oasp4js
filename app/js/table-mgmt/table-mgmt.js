@@ -6,9 +6,6 @@ angular.module('app.tableMgmt', ['ngRoute', 'app.offerMgmt', 'app.salesMgmt', 'a
         resolve: {
             initialTableList: ['tables', function (tables) {
                 return tables.getAllTables();
-            }],
-            dupa: ['tables', function (tables) {
-                return tables.getAllTables();
             }]
         }
     });

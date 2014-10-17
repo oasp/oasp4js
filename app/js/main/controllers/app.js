@@ -1,4 +1,4 @@
-angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $scope, $location, $window, appContext, security) {
+angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $scope, $location, $window, appContext, security, globalSpinner) {
     'use strict';
     $scope.currentUser = appContext.getCurrentUser();
 
@@ -8,9 +8,14 @@ angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $sc
             $window.location.href = $location.absUrl();
             $window.location.reload();
         };
-        security.logOff()
-            .then(function () {
-                goToSignInDialogFullyReloadingApp();
-            });
+        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+            return security.logOff();
+        }).then(function () {
+            goToSignInDialogFullyReloadingApp();
+        });
+//        security.logOff()
+//            .then(function () {
+//                goToSignInDialogFullyReloadingApp();
+//            });
     };
 });

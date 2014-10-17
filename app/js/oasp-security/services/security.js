@@ -26,7 +26,7 @@ angular.module('oasp-security')
                                 var csrfProtection = response.data;
                                 // from now on a CSRF token will be added to all HTTP requests
                                 $http.defaults.headers.common[csrfProtection.headerName] = csrfProtection.token;
-                                return true;
+                                return csrfProtection;
                             }, function () {
                                 return 'Requesting a CSRF token failed';
                             });
@@ -42,7 +42,7 @@ angular.module('oasp-security')
                                     enableCsrfProtection()
                                 ]).then(function (allResults) {
                                     getAppContextService().onLoggingIn(allResults[0].data);
-                                    logInDeferred.resolve();
+                                    logInDeferred.resolve(allResults[1]);
                                 }, function (reject) {
                                     logInDeferred.reject(reject);
                                 });

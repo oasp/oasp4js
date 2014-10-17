@@ -1,5 +1,5 @@
 angular.module('app.main')
-    .factory('signIn', function (security) {
+    .factory('signIn', function (security, globalSpinner) {
         'use strict';
 
         return function ($scope, signInSuccessCallback) {
@@ -37,12 +37,19 @@ angular.module('app.main')
                 if ($scope.loginForm.$invalid) {
                     $scope.validation.forceShowingValidationErrors = true;
                 } else {
-                    security.logIn($scope.credentials)
-                        .then(function () {
-                            signInSuccessCallback();
-                        }, function () {
-                            addErrorMessageAndClearForm('Authentication failed. Please try again!');
-                        });
+                    globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+                        return security.logIn($scope.credentials);
+                    }).then(function (csrfProtection) {
+                        signInSuccessCallback(csrfProtection);
+                    }, function () {
+                        addErrorMessageAndClearForm('Authentication failed. Please try again!');
+                    });
+//                    security.logIn($scope.credentials)
+//                        .then(function (csrfProtection) {
+//                            signInSuccessCallback(csrfProtection);
+//                        }, function () {
+//                            addErrorMessageAndClearForm('Authentication failed. Please try again!');
+//                        });
                 }
             };
         };

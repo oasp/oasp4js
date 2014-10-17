@@ -1,5 +1,5 @@
 angular.module('oasp-ui')
-    .factory('globalSpinner', function ($rootScope) {
+    .factory('globalSpinner', function ($rootScope, $q) {
         'use strict';
         var that = {};
         that.show = function () {
@@ -21,6 +21,16 @@ angular.module('oasp-ui')
             });
             $rootScope.$on('$routeChangeError', function () {
                 that.hide();
+            });
+        };
+        that.decorateCallOfFunctionReturningPromise = function (fn) {
+            that.show();
+            return fn().then(function (value) {
+                that.hide();
+                return value;
+            }, function (value) {
+                that.hide();
+                return $q.reject(value);
             });
         };
 

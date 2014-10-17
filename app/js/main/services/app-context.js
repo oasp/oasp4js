@@ -10,7 +10,11 @@ angular.module('app.main')
                         return currentUser.isLoggedIn;
                     },
                     getUserName: function () {
-                        return (currentUser.profile && currentUser.profile.userName) || '';
+                        var userName = '';
+                        if (currentUser.profile && currentUser.profile.firstName && currentUser.profile.lastName) {
+                            userName = currentUser.profile.firstName + ' ' + currentUser.profile.lastName;
+                        }
+                        return userName;
                     },
                     getHomeDialogPath: function () {
                         return (currentUser.profile && currentUser.profile.homeDialogPath) || '';

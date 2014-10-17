@@ -1,5 +1,5 @@
 angular.module('app.tableMgmt').controller('TableDetailsCntl',
-    function ($scope, $sce, tableDetails, allOffers, currentOrder, sales) {
+    function ($scope, $sce, tableDetails, allOffers, currentOrder, sales, globalSpinner) {
         'use strict';
         $scope.table = tableDetails;
         $scope.allOffers = allOffers;
@@ -56,7 +56,9 @@ angular.module('app.tableMgmt').controller('TableDetailsCntl',
         $scope.forms = {};
 
         $scope.submit = function () {
-            sales.saveOrUpdateOrder($scope.model.order).then(function () {
+            globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+                return sales.saveOrUpdateOrder($scope.model.order);
+            }).then(function () {
                 $scope.$close();
             });
         };

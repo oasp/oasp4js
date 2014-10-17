@@ -1,14 +1,13 @@
 angular.module('oasp-security')
-    .factory('securityInterceptor', function ($q, retryRequestQueue, $injector) {
+    .factory('securityInterceptor', function ($q, requestResendingQueue) {
         'use strict';
 
         return {
             responseError: function (response) {
-                var $http = $injector.get('$http');
+                var originalRequest;
                 if (response.status === 403) {
-                    return retryRequestQueue.addRetryFn('Not authenticated', function () {
-                        return $http(response.config);
-                    });
+                    originalRequest = response.config;
+                    return requestResendingQueue.addRequest(originalRequest);
                 }
                 return $q.reject(response);
             }

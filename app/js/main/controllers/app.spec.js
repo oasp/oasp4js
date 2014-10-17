@@ -1,7 +1,7 @@
 describe('Controller: AppCntl', function () {
     'use strict';
 
-    var $scope, $location, $window, security;
+    var $scope, $window, security;
     beforeEach(module('app.main'));
     beforeEach(inject(function ($rootScope, $controller, _$location_) {
         security = {
@@ -16,14 +16,13 @@ describe('Controller: AppCntl', function () {
                 };
             }
         };
-        $location = _$location_;
         $scope = $rootScope;
         $window = {
             location: jasmine.createSpyObj('location', ['href', 'reload'])
         };
 
         $controller('AppCntl',
-            {SIGN_IN_DLG_PATH: '/main/sign-in', $scope: $scope, $location: $location, security: security, $window: $window});
+            {$scope: $scope, security: security, $window: $window});
     }));
 
     it('exposes currentUser.isLoggedIn() on $scope which returns false for anonymous user', function () {
@@ -36,7 +35,7 @@ describe('Controller: AppCntl', function () {
         expect($scope.currentUser.getUserName()).toEqual('');
     });
 
-    it('exposes logOff() on $scope which redirects to the Sign In dialog on success', inject(function ($q, SIGN_IN_DLG_PATH) {
+    it('exposes logOff() on $scope which redirects to the Sign In dialog on success', inject(function ($q, SIGN_IN_DLG_PATH, $location) {
         // given
         security.logOff = jasmine.createSpy().andReturn($q.when(undefined));
         $location.path('/some-module/some-dialog');

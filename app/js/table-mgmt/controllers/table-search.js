@@ -2,17 +2,6 @@
 angular.module('app.tableMgmt').controller('TableSearchCntl',
     function ($scope, tables, initialTableList, $modal, globalSpinner, offers, sales) {
         'use strict';
-        // TODO implement it as a utility service
-        var wrapFunctionCallInSpinner = function (fn, args) {
-            var promise;
-            globalSpinner.show();
-            promise = fn.apply(null, args);
-            promise.then(function () {
-                globalSpinner.hide();
-            }, function () {
-                globalSpinner.hide();
-            });
-        };
         $scope.tables = initialTableList;
         $scope.openEditDialog = function (tableRow) {
             $modal.open({
@@ -52,7 +41,9 @@ angular.module('app.tableMgmt').controller('TableSearchCntl',
                 label: 'Reserve',
                 onClick: function (selectedTable) {
                     if (selectedTable) {
-                        wrapFunctionCallInSpinner(tables.reserve, [selectedTable]);
+                        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+                            return tables.reserve(selectedTable);
+                        });
                     }
                 },
                 isActive: function (selectedTable) {
@@ -63,7 +54,9 @@ angular.module('app.tableMgmt').controller('TableSearchCntl',
                 label: 'Cancel Reservation',
                 onClick: function (selectedTable) {
                     if (selectedTable) {
-                        wrapFunctionCallInSpinner(tables.cancelReservation, [selectedTable]);
+                        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+                            return tables.cancelReservation(selectedTable);
+                        });
                     }
                 },
                 isActive: function (selectedTable) {
@@ -74,7 +67,9 @@ angular.module('app.tableMgmt').controller('TableSearchCntl',
                 label: 'Occupy',
                 onClick: function (selectedTable) {
                     if (selectedTable) {
-                        wrapFunctionCallInSpinner(tables.occupy, [selectedTable]);
+                        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+                            return tables.occupy(selectedTable);
+                        });
                     }
                 },
                 isActive: function (selectedTable) {
@@ -85,7 +80,9 @@ angular.module('app.tableMgmt').controller('TableSearchCntl',
                 label: 'Free',
                 onClick: function (selectedTable) {
                     if (selectedTable) {
-                        wrapFunctionCallInSpinner(tables.free, [selectedTable]);
+                        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+                            return tables.free(selectedTable);
+                        });
                     }
                 },
                 isActive: function (selectedTable) {
