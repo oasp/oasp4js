@@ -13,9 +13,5 @@ angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $sc
         }).then(function () {
             goToSignInDialogFullyReloadingApp();
         });
-//        security.logOff()
-//            .then(function () {
-//                goToSignInDialogFullyReloadingApp();
-//            });
     };
 });

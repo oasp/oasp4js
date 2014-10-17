@@ -44,12 +44,6 @@ angular.module('app.main')
                     }, function () {
                         addErrorMessageAndClearForm('Authentication failed. Please try again!');
                     });
-//                    security.logIn($scope.credentials)
-//                        .then(function (csrfProtection) {
-//                            signInSuccessCallback(csrfProtection);
-//                        }, function () {
-//                            addErrorMessageAndClearForm('Authentication failed. Please try again!');
-//                        });
                 }
             };
         };
