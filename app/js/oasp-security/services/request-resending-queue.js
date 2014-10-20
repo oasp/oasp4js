@@ -49,9 +49,13 @@ angular.module('oasp-security')
                         var deferredRetry = $q.defer(),
                             retryItem = {
                                 retry: function (csrfProtection) {
-                                    var $http = $injector.get('$http');
-                                    request.headers[csrfProtection.headerName] = csrfProtection.token;
-                                    $q.when($http(request))
+                                    var resendRequestUpdatingItsCsrfProtectionData =
+                                        function (request, csrfProtection) {
+                                            var $http = $injector.get('$http');
+                                            request.headers[csrfProtection.headerName] = csrfProtection.token;
+                                            return $http(request);
+                                        };
+                                    resendRequestUpdatingItsCsrfProtectionData(request, csrfProtection)
                                         .then(function (value) {
                                             deferredRetry.resolve(value);
                                         }, function (value) {
