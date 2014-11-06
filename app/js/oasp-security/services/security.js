@@ -5,7 +5,7 @@ angular.module('oasp-security')
             securityRestServiceName: 'securityRestService',
             appContextServiceName: 'appContext'
         };
-
+        
         return {
             setSecurityRestServiceName: function (securityRestServiceName) {
                 config.securityRestServiceName = securityRestServiceName || config.securityRestServiceName;
@@ -31,6 +31,14 @@ angular.module('oasp-security')
                                 return 'Requesting a CSRF token failed';
                             });
                     };
+                    
+	            /** Check for existing session at the server side */
+                getSecurityRestService().getCurrentUser().then(function (userProfile) {
+                	enableCsrfProtection();
+                	return userProfile;
+                }).then(function (result) {
+                	getAppContextService().onLoggingIn(result.data);
+                });
 
                 return {
                     logIn: function (credentials) {
