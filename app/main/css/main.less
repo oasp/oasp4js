@@ -1,0 +1,76 @@
+@import "../../bower_components/bootstrap/less/bootstrap";
+//TODO temporary
+@import "../../../.tmp/css/images";
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+.user-select (@val) {
+  -webkit-touch-callout:  @val;
+  -webkit-user-select:    @val;
+  -khtml-user-select:     @val;
+  -moz-user-select:       @val;
+  -ms-user-select:        @val;
+  user-select:            @val;
+}
+
+.language-dropdown {
+  .icon-container {
+    display: inline-block;
+    position: relative;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 24px;
+    .icon {
+      position: absolute;
+      top: -12px;
+      left: 0px;
+    }
+  }
+  .icon {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+}
+
+.table-striped {
+  tbody {
+    > tr.selected-row > td {
+      background-color: @brand-info;
+    }
+  }
+  & *{
+    .user-select(none);
+  }
+}
+
+.oasp-grid > p > .btn {
+  margin-right: 2px;
+}
+
+.spinner-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+  .spinner-backdrop {
+    width: 100%;
+    height: 100%;
+    background: black;
+    position: absolute;
+    .opacity(0.5)
+  }
+  button {
+    width: 0px;
+    height: 0px;
+    .opacity(0);
+  }
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

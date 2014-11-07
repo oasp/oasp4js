@@ -1,9 +1,0 @@
-{
-    "version": "v0.6.6",
-    "tmp": ".tmp",
-    "dist": "dist",
-    "app": "app",
-    "test":"test",
-    "modules": ["main"],
-    "context":"oasp4j-example-application"
-}
