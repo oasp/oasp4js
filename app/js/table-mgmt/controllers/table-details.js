@@ -43,7 +43,7 @@ angular.module('app.tableMgmt').controller('TableDetailsCntl',
                 field: 'price',
                 label: 'Price',
                 renderer: function (row) {
-                    return row.price ? '<span>' + row.price.amount + ' ' + row.price.currency + '</span>' : '';
+                    return row.price ? '<span>' + row.price + ' EUR</span>' : '';
                 }
             },
             {
