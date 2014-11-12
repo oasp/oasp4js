@@ -5,7 +5,8 @@ module.exports = function (grunt) {
     // Load grunt tasks automatically
     require('jit-grunt')(grunt, {
         sprite: 'grunt-spritesmith',
-        configureProxies: 'grunt-connect-proxy'
+        configureProxies: 'grunt-connect-proxy',
+        htmlbuild: 'grunt-html-build'
     });
     // Time how long tasks take. Can help when optimizing build times
     require('time-grunt')(grunt);

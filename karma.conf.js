@@ -5,6 +5,11 @@
 
 module.exports = function (config) {
     'use strict';
+    //merge libraries configured by bower, application sources, and specs
+    var libs = require('wiredep')({
+        devDependencies: true
+    }).js, _ = require('lodash'), pathsConf = require('./grunt/config.js');
+
     config.set({
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
@@ -16,23 +21,7 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: [
-            'app/bower_components/jquery/dist/jquery.js',
-            'app/bower_components/angular/angular.js',
-            'app/bower_components/angular-mocks/angular-mocks.js',
-            'app/bower_components/angular-route/angular-route.js',
-            'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
-            'app/bower_components/angular-translate/angular-translate.js',
-            'app/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
-            'app/bower_components/spin.js/spin.js',
-            'app/bower_components/angular-spinner/angular-spinner.js',
-            'app/bower_components/angular-ui-select/dist/select.js',
-            '.tmp/js/app-templates.js',
-            'app/js/*/*.js',
-            'app/js/**/*.js',
-            'app/js/**/*.mock.js',
-            'app/js/**/*.spec.js'
-        ],
+        files: _.flatten([libs, pathsConf.scripts.sources(), pathsConf.scripts.testSources()]),
 
         // list of files / patterns to exclude
         exclude: [],
@@ -71,7 +60,7 @@ module.exports = function (config) {
         reporters: ['progress', 'coverage'],
 
         preprocessors: {
-            'app/js/**/!(*spec).js': ['coverage']
+            'app/!(bower_components)/**/!(*spec|*mock).js': ['coverage']
         },
 
         // optionally, configure the reporter

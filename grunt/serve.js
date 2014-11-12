@@ -33,7 +33,7 @@ module.exports = function (grunt) {
                     open: {
                         target: 'http://localhost:9000/<%= config.context %>/'
                     },
-                    base: ['<%= config.tmp %>', '<%= config.app %>'],
+                    base: ['<%= config.paths.tmp %>', '<%= config.paths.app %>'],
                     middleware: function (connect, options) {
                         if (!Array.isArray(options.base)) {
                             options.base = [options.base];
@@ -63,7 +63,7 @@ module.exports = function (grunt) {
                     open: {
                         target: 'http://localhost:9000/<%= config.context %>/'
                     },
-                    base: ['<%= config.dist %>'],
+                    base: ['<%= config.paths.dist %>'],
                     middleware: function (connect, options) {
                         if (!Array.isArray(options.base)) {
                             options.base = [options.base];

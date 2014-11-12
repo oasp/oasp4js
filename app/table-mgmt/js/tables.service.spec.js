@@ -1,7 +1,8 @@
+/*globals oasp*/
 describe('Service: tables', function () {
     'use strict';
 
-    var tables, $httpBackend, currentContextPath, listOfTables,
+    var tables, $httpBackend, listOfTables,
         contextPath = '/oasp-app/',
         mockAllTableResponse = function () {
             $httpBackend.whenGET(contextPath + 'services/rest/tablemanagement/table/').respond([

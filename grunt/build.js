@@ -2,16 +2,22 @@ module.exports = function (grunt) {
     'use strict';
     var _ = require('lodash');
     grunt.mergeConfig({
+        clean: {
+            dist: [
+                '<%= config.paths.dist %>',
+                '<%= config.paths.tmp %>'
+            ],
+            develop: [
+                '<%= config.paths.tmp %>'
+            ]
+        },
         less: {
             all: {
-                options: {
-                    compress: false
-                },
                 files: grunt.config().config.less.paths()
             }
         },
         html2js: _.merge(
-            grunt.config().config.html2js.paths(),
+            grunt.config().config.html2js.tasks(),
             {
                 options: {
                     module: function (path, taskName) {
@@ -24,13 +30,14 @@ module.exports = function (grunt) {
                 }
             }
         ),
+        sprite: grunt.config().config.sprite.tasks(),
         copy: {
             develop: {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= config.app %>',
-                        dest: '<%= config.tmp %>',
+                        cwd: '<%= config.paths.app %>',
+                        dest: '<%= config.paths.tmp %>',
                         src: ['index.html']
                     }
                 ]
@@ -39,55 +46,33 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= config.app %>',
-                        dest: '<%= config.dist %>',
+                        cwd: '<%= config.paths.app %>',
+                        dest: '<%= config.paths.dist %>',
                         src: ['index.html']
                     },
                     {
                         expand: true,
-                        cwd: '<%= config.app %>/html',
-                        dest: '<%= config.dist %>/html',
+                        cwd: '<%= config.paths.app %>/html',
+                        dest: '<%= config.paths.dist %>/html',
                         src: ['**', '!**/cached/**']
                     },
                     {
                         expand: true,
-                        cwd: '<%= config.tmp %>/img',
-                        dest: '<%= config.dist %>/img',
+                        cwd: '<%= config.paths.tmp %>/img',
+                        dest: '<%= config.paths.dist %>/img',
                         src: ['*.png']
                     },
                     {
                         expand: true,
-                        cwd: '<%= config.app %>/i18n',
-                        dest: '<%= config.dist %>/i18n',
+                        cwd: '<%= config.paths.app %>/i18n',
+                        dest: '<%= config.paths.dist %>/i18n',
                         src: ['*.json']
                     },
                     {
                         expand: true,
-                        cwd: '<%= config.app %>/bower_components/bootstrap/dist',
+                        cwd: '<%= config.paths.app %>/bower_components/bootstrap/dist',
                         src: 'fonts/*',
-                        dest: '<%= config.dist %>'
-                    }
-                ]
-            }
-        },
-        clean: {
-            dist: {
-                files: [
-                    {
-                        dot: true,
-                        src: [
-                            '<%= config.dist %>/{,*/}*', '<%= config.dist %>', '<%= config.test %>/{,*/}*', '<%= config.test %>'
-                        ]
-                    }
-                ]
-            },
-            develop: {
-                files: [
-                    {
-                        dot: true,
-                        src: [
-                            '<%= config.tmp %>/{,*/}*', '<%= config.tmp %>', '<%= config.test %>/{,*/}*', '<%= config.test %>'
-                        ]
+                        dest: '<%= config.paths.dist %>'
                     }
                 ]
             }
@@ -95,23 +80,23 @@ module.exports = function (grunt) {
         filerev: {
             dist: {
                 src: [
-                    '<%= config.dist %>/js/{,*/}*.js',
-                    '<%= config.dist %>/css/{,*/}*.css',
-                    '<%= config.dist %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-                    '<%= config.dist %>/fonts/*'
+                    '<%= config.paths.dist %>/js/{,*/}*.js',
+                    '<%= config.paths.dist %>/css/{,*/}*.css',
+                    '<%= config.paths.dist %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+                    '<%= config.paths.dist %>/fonts/*'
                 ]
             }
         },
         wiredep: {
             develop: {
-                src: ['<%= config.app %>/index.html'],
-                ignorePath: new RegExp('^<%= config.app %>/')
+                src: ['<%= config.paths.app %>/index.html'],
+                ignorePath: new RegExp('^<%= config.paths.app %>/')
             }
         },
         useminPrepare: {
-            html: '<%= config.app %>/index.html',
+            html: '<%= config.paths.app %>/index.html',
             options: {
-                dest: '<%= config.dist %>',
+                dest: '<%= config.paths.dist %>',
                 flow: {
                     html: {
                         steps: {
@@ -125,19 +110,10 @@ module.exports = function (grunt) {
         },
         // Performs rewrites based on filerev and the useminPrepare configuration
         usemin: {
-            html: ['<%= config.dist %>/{,*/}*.html'],
-            css: ['<%= config.dist %>/css/{,*/}*.css'],
+            html: ['<%= config.paths.dist %>/{,*/}*.html'],
+            css: ['<%= config.paths.dist %>/css/{,*/}*.css'],
             options: {
-                assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/img']
-            }
-        },
-        sprite: {
-            all: {
-                src: '<%= config.app %>/img/*.png',
-                destImg: '<%= config.tmp %>/img/images.png',
-                destCSS: '<%= config.tmp %>/css/images.less',
-                engine: 'pngsmith',
-                cssFormat: 'css'
+                assetsDirs: ['<%= config.paths.dist %>', '<%= config.paths.dist %>/img']
             }
         },
         ngAnnotate: {
@@ -145,9 +121,9 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= config.tmp %>/concat/js',
+                        cwd: '<%= config.paths.tmp %>/concat/js',
                         src: 'sample-app.js',
-                        dest: '<%= config.tmp %>/concat/js'
+                        dest: '<%= config.paths.tmp %>/concat/js'
                     }
                 ]
             }

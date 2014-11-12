@@ -1,32 +1,34 @@
 module.exports = function (grunt) {
     'use strict';
-
+    var jsLintPredef = [
+        'jQuery', 'angular', '$', 'describe', 'beforeEach', 'module', 'afterEach', 'it', 'inject', 'spyOn', 'expect', 'jasmine'
+    ];
     grunt.mergeConfig({
+        clean: {
+            test: [
+                '<%= config.paths.tmp %>',
+                '<%= config.paths.test %>'
+            ]
+        },
         jslint: {
             client: {
-                src: [
-                    '<%= config.app %>/js/**/*.js'
-                ],
-                exclude: [
-                    '<%= config.app %>/js/**/*.spec.js'
-                ],
+                src: grunt.config().config.scripts.sources(),
                 directives: {
                     browser: true,
-                    predef: [
-                        'jQuery', 'angular', '$', 'describe', 'beforeEach', 'module', 'afterEach', 'it', 'inject', 'spyOn', 'expect', 'jasmine'
-                    ]
-                }
+                    todo: true,
+                    predef: jsLintPredef
+                },
+                exclude: [
+                    '<%= config.paths.tmp %>/**/*.js'
+                ]
             },
             test: {
-                src: [
-                    '<%= config.app %>/js/**/*.spec.js'
-                ],
+                src: grunt.config().config.scripts.testSources(),
                 directives: {
                     browser: true,
                     nomen: 'false',
-                    predef: [
-                        'jQuery', 'angular', '$', 'describe', 'beforeEach', 'module', 'afterEach', 'it', 'inject', 'spyOn', 'expect', 'jasmine'
-                    ]
+                    todo: true,
+                    predef: jsLintPredef
                 }
             }
         },

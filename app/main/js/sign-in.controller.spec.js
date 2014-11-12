@@ -4,8 +4,7 @@ describe('Module: main, Controller: sign-in', function () {
 
     beforeEach(function () {
         security = {
-            logIn: function () {
-            }
+            logIn: angular.noop
         };
 
         module('app.main', function ($provide) {
@@ -13,7 +12,7 @@ describe('Module: main, Controller: sign-in', function () {
         });
     });
 
-    beforeEach(inject(function ($rootScope, $controller, _$location_, $q) {
+    beforeEach(inject(function ($rootScope, $controller, _$location_) {
         appContext = {
             getCurrentUser: function () {
                 return {

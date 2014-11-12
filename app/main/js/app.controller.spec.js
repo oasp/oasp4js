@@ -3,7 +3,7 @@ describe('Controller: AppCntl', function () {
 
     var $scope, $window, security;
     beforeEach(module('app.main'));
-    beforeEach(inject(function ($rootScope, $controller, _$location_) {
+    beforeEach(inject(function ($rootScope, $controller) {
         security = {
             getCurrentUser: function () {
                 return {
