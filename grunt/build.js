@@ -95,23 +95,26 @@ module.exports = function (grunt) {
                     },
                     {
                         expand: true,
-                        cwd: '<%= config.paths.app %>',
-                        dest: '<%= config.paths.dist %>',
-                        src: ['**/html/**/*.html', '!**/cached/**']
-                    },
-                    {
-                        expand: true,
                         cwd: '<%= config.paths.tmp %>',
                         dest: '<%= config.paths.dist %>/img',
                         flatten: true,
                         src: ['**/img/**/*-icons.png']
                     },
+                    //TODO TB optimize it on base of modules
+                    {
+                        expand: true,
+                        cwd: '<%= config.paths.app %>',
+                        dest: '<%= config.paths.dist %>',
+                        src: ['**/html/**/*.html', '!**/cached/**']
+                    },
+                    //TODO TB optimize it on base of modules
                     {
                         expand: true,
                         cwd: '<%= config.paths.app %>',
                         dest: '<%= config.paths.dist %>',
                         src: ['**/img/**', '!**/sprite/**']
                     },
+                    //TODO TB optimize it on base of modules
                     {
                         expand: true,
                         cwd: '<%= config.paths.app %>',
