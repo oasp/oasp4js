@@ -6,7 +6,6 @@ module.exports = function (grunt) {
     require('jit-grunt')(grunt, {
         sprite: 'grunt-spritesmith',
         configureProxies: 'grunt-connect-proxy',
-        htmlbuild: 'grunt-html-build',
         useminPrepare: 'grunt-usemin'
     });
     // Time how long tasks take. Can help when optimizing build times

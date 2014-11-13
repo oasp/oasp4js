@@ -35,33 +35,30 @@ module.exports = function (grunt) {
             }
         ),
         sprite: grunt.config().config.sprite.tasks(),
-        htmlbuild: {
-            dist: {
-                src: '<%= config.paths.app %>/index.html',
-                dest: '<%= config.paths.tmp %>/',
-                options: {
-                    parseTag: 'htmlbuild',
-                    beautify: true,
-                    relative: false,
-                    scripts: {
-                        bundle: {
-                            cwd: '<%= config.paths.app %>',
-                            files: grunt.config().config.scripts.htmlScriptSources()
-                        },
-                        'tmp-bundle': {
-                            cwd: '<%= config.paths.tmp %>',
-                            files: grunt.config().config.scripts.htmlTmpScriptSources()
-                        }
+        processhtml: {
+            options: {
+                commentMarker: 'process',
+                customBlockTypes: ['grunt/processhtml/scripts.js', 'grunt/processhtml/styles.js'],
+                scriptsFiles: [
+                    {
+                        cwd: '<%= config.paths.app %>',
+                        files: grunt.config().config.scripts.htmlScriptSources()
                     },
-                    styles: {
-                        bundle: {
-                            cwd: '<%= config.paths.tmp %>',
-                            files: grunt.config().config.styles.htmlStylesSources()
-                        }
-                    },
-                    sections: {
-                        layout: 'main/html/layout/**/*.html'
+                    {
+                        cwd: '<%= config.paths.tmp %>',
+                        files: grunt.config().config.scripts.htmlTmpScriptSources()
                     }
+                ],
+                stylesFiles: [
+                    {
+                        cwd: '<%= config.paths.tmp %>',
+                        files: grunt.config().config.styles.htmlStylesSources()
+                    }
+                ]
+            },
+            dist: {
+                files: {
+                    '<%= config.paths.tmp %>/index.html': ['<%= config.paths.app %>/index.html']
                 }
             }
         },
@@ -178,11 +175,11 @@ module.exports = function (grunt) {
         }
     });
     grunt.registerTask('build:develop', [
-        'clean:develop', 'sprite', 'less', 'html2js', 'wiredep', 'htmlbuild'
+        'clean:develop', 'sprite', 'less', 'html2js', 'wiredep', 'processhtml'
     ]);
 
     grunt.registerTask('build:dist', [
-        'clean:dist', 'sprite', 'less', 'html2js', 'wiredep', 'htmlbuild', 'useminPrepare', 'concat', 'ngAnnotate', 'copy:dist', 'eol', 'uglify', 'cssmin', 'filerev', 'usemin'
+        'clean:dist', 'sprite', 'less', 'html2js', 'wiredep', 'processhtml', 'useminPrepare', 'concat', 'ngAnnotate', 'copy:dist', 'eol', 'uglify', 'cssmin', 'filerev', 'usemin'
     ]);
     grunt.registerTask('build:ci', [
         'build:dist', 'karma:ci'
