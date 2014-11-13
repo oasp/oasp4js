@@ -66,7 +66,8 @@ module.exports = function (config) {
         // optionally, configure the reporter
         coverageReporter: {
             type: 'lcov',
-            dir: 'test/coverage'
+            dir: 'test/coverage',
+            subdir: '/'
         },
         junitReporter: {
             outputFile: 'test/test-results.xml'

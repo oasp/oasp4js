@@ -6,7 +6,8 @@ module.exports = function (grunt) {
     require('jit-grunt')(grunt, {
         sprite: 'grunt-spritesmith',
         configureProxies: 'grunt-connect-proxy',
-        htmlbuild: 'grunt-html-build'
+        htmlbuild: 'grunt-html-build',
+        useminPrepare: 'grunt-usemin'
     });
     // Time how long tasks take. Can help when optimizing build times
     require('time-grunt')(grunt);
@@ -24,8 +25,8 @@ module.exports = function (grunt) {
     grunt.registerTask('default', [
         'jslint:client', 'build:dist'
     ]);
-
     grunt.registerTask('log', function () {
+        grunt.log.write(JSON.stringify(grunt.filerev.summary));
         grunt.log.write(JSON.stringify(require('./grunt/config.js').less.paths()));
     });
 };

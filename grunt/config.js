@@ -68,7 +68,7 @@ module.exports = (function () {
                     if (grunt.file.isDir(srcPath)) {
                         spriteConf[modules[i]] = {
                             src: srcPath + '/**/*.png',
-                            destImg: builder.build('{tmp}/{module}/img/icons.png', modules[i]),
+                            destImg: builder.build('{tmp}/{module}/img/{module}-icons.png', modules[i]),
                             destCSS: builder.build('{tmp}/{module}/css/{module}-icons.css', modules[i]),
                             engine: 'pngsmith',
                             cssFormat: 'css'
@@ -78,7 +78,34 @@ module.exports = (function () {
                 return spriteConf;
             }
         },
+        styles: {
+            htmlStylesSources: function () {
+                var sourcesPatterns = [], i;
+                for (i = 0; i < modules.length; i += 1) {
+                    sourcesPatterns.push(builder.build('{module}/css/*.css', modules[i]));
+                }
+                return sourcesPatterns;
+            }
+        },
         scripts: {
+            htmlScriptSources: function () {
+                var sourcesPatterns = [], i;
+                sourcesPatterns.push(builder.build('app.module.js'));
+                for (i = 0; i < modules.length; i += 1) {
+                    sourcesPatterns.push(builder.build('{module}/js/**/*.module.js', modules[i]));
+                    sourcesPatterns.push(builder.build('{module}/js/**/*.js', modules[i]));
+                }
+                sourcesPatterns.push(builder.build('!**/*spec.js', modules[i]));
+                sourcesPatterns.push(builder.build('!**/*mock.js', modules[i]));
+                return sourcesPatterns;
+            },
+            htmlTmpScriptSources: function () {
+                var sourcesPatterns = [], i;
+                for (i = 0; i < modules.length; i += 1) {
+                    sourcesPatterns.push(builder.build('{module}/js/**/*.js', modules[i]));
+                }
+                return sourcesPatterns;
+            },
             sources: function () {
                 var sourcesPatterns = [], i;
                 sourcesPatterns.push(builder.build('{app}/app.module.js'));

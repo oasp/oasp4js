@@ -13,9 +13,9 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- build:css({.tmp,app}) css/oasp.css -->
-    <link rel="stylesheet" href="main/css/main.css"/>
-    <link rel="stylesheet" href="main/css/main-icons.css"/>
+    <!-- build:css css/oasp.css -->
+    <!-- htmlbuild:style bundle -->
+    <!-- /htmlbuild -->
     <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.min.css">
     <!-- endbuild -->
     <!-- build:js js/modernizr.js -->
@@ -93,47 +93,11 @@
 <!-- endbower -->
 <!-- endbuild -->
 
-<!-- build:js({.tmp,app}) js/sample-app.js -->
-<script src="app.module.js"></script>
-
-<script src="main/js/main.module.js"></script>
-<script src="main/js/main.templates.js"></script>
-<script src="main/js/app.controller.js"></script>
-<script src="main/js/app-context.service.js"></script>
-<script src="main/js/authenticator.service.js"></script>
-<script src="main/js/current-context-path.service.js"></script>
-<script src="main/js/language-change.controller.js"></script>
-<script src="main/js/security.rest.service.js"></script>
-<script src="main/js/sign-in.controller.js"></script>
-<script src="main/js/sign-in.service.js"></script>
-<script src="main/js/sign-in-modal.controller.js"></script>
-
-<script src="oasp-ui/js/oasp-ui.module.js"></script>
-<script src="oasp-ui/js/oasp-ui.templates.js"></script>
-<script src="oasp-ui/js/spinner.directive.js"></script>
-<script src="oasp-ui/js/oasp-grid.directive.js"></script>
-<script src="oasp-ui/js/modal.service.js"></script>
-<script src="oasp-ui/js/global-spinner.service.js"></script>
-
-<script src="oasp-security/js/oasp-security.module.js"></script>
-<script src="oasp-security/js/request-resending-queue.service.js"></script>
-<script src="oasp-security/js/security.service.js"></script>
-<script src="oasp-security/js/security-interceptor.service.js"></script>
-
-<script src="offer-mgmt/js/offer-mgmt.module.js"></script>
-<script src="offer-mgmt/js/offer-mgmt.rest.service.js"></script>
-<script src="offer-mgmt/js/offers.service.js"></script>
-
-<script src="sales-mgmt/js/sales-mgmt.module.js"></script>
-<script src="sales-mgmt/js/sales-mgmt.rest.service.js"></script>
-<script src="sales-mgmt/js/sales.service.js"></script>
-
-<script src="table-mgmt/js/table-mgmt.module.js"></script>
-<script src="table-mgmt/js/table-mgmt.templates.js"></script>
-<script src="table-mgmt/js/table-mgmt.rest.service.js"></script>
-<script src="table-mgmt/js/table-details.controller.js"></script>
-<script src="table-mgmt/js/table-search.controller.js"></script>
-<script src="table-mgmt/js/tables.service.js"></script>
+<!-- build:js js/app.js -->
+    <!-- htmlbuild:script bundle -->
+    <!-- /htmlbuild -->
+    <!-- htmlbuild:script tmp-bundle -->
+    <!-- /htmlbuild -->
 <!-- endbuild -->
 
 <!-- build:remove -->

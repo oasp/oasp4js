@@ -55,12 +55,12 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
-        'jslint', 'karma:ci'
+        'jslint', 'html2js', 'karma:ci'
     ]);
     grunt.registerTask('test:tdd', [
-        'karma:unit'
+        'html2js', 'karma:unit'
     ]);
     grunt.registerTask('test:tdd:debug', [
-        'karma:unit_chrome'
+        'html2js', 'karma:unit_chrome'
     ]);
 };

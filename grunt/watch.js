@@ -4,15 +4,15 @@ module.exports = function (grunt) {
         watch: {
             options: { livereload: true },
             less: {
-                files: ['<%= config.paths.app %>/css/*.less'],
+                files: ['<%= config.paths.app %>/**/*.less'],
                 tasks: ['less']
             },
             index: {
                 files: ['<%= config.paths.app %>/index.html'],
-                tasks: ['copy:develop']
+                tasks: ['htmlbuild']
             },
             cached: {
-                files: ['<%= config.paths.app %>/html/**/cached/**/*.html'],
+                files: ['<%= config.paths.app %>/**/html/**/cached/**/*.html'],
                 tasks: ['html2js']
             }
         }
