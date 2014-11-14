@@ -23,7 +23,7 @@ angular.module('app.tableMgmt').controller('TableSearchCntl',
             });
         };
         $scope.columnDefs = [
-            {field: 'id', label: 'Table number'},
+            {field: 'number', label: 'Table number'},
             {field: 'state', label: 'State'},
             {field: 'waiter', label: 'Waiter'}
         ];
