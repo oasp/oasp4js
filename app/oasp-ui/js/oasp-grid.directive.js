@@ -58,6 +58,9 @@ angular.module('oasp-ui').
                     }
                     return $sce.trustAsHtml(result);
                 };
+                scope.gridData = {
+                	data: [ {aaa: 1, bbb: 2} ]	
+                };
             }
         };
     });
