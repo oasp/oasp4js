@@ -59,7 +59,12 @@ angular.module('oasp-ui').
                     return $sce.trustAsHtml(result);
                 };
                 scope.gridData = {
-                	data: [ {aaa: 1, bbb: 2} ]	
+                	data: scope.rows,
+                	columnDefs: [
+                	             { field: 'id' },
+                	             { field: 'state' },
+                	             { field: 'waiterId' }
+                	]
                 };
             }
         };
