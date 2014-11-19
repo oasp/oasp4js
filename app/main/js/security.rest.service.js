@@ -5,7 +5,7 @@ angular.module('app.main').factory('securityRestService', function ($http, curre
 
     return {
         getCurrentUser: function () {
-            return $http.get(servicePath + '/security/currentuser');
+            return $http.get(servicePath + '/security/currentuser/');
         },
         getCsrfToken: function () {
             return $http.get(servicePath + '/security/csrftoken/');
