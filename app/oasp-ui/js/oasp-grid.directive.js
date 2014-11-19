@@ -1,7 +1,23 @@
 angular.module('oasp-ui').
     directive('oaspGrid', function ($sce) {
         'use strict';
-
+        
+        // used to translate between oasp-grid and ui-grid interfaces
+        var transcodeRows = function(rows) {
+        	// identity at the moment
+        	return rows;
+        },
+        transcodeColumnDefs = function(columnDefs) {
+        	return columnDefs.map(function(colDef) {
+        		return {
+        			field: colDef.field,
+        			name: colDef.label
+        		}
+        	});
+        };
+        
+        
+        
         return {
             restrict: 'A',
             replace: true,
@@ -59,12 +75,8 @@ angular.module('oasp-ui').
                     return $sce.trustAsHtml(result);
                 };
                 scope.gridData = {
-                	data: scope.rows,
-                	columnDefs: [
-                	             { field: 'id' },
-                	             { field: 'state' },
-                	             { field: 'waiterId' }
-                	]
+                	data: transcodeRows(scope.rows),
+                	columnDefs: transcodeColumnDefs(scope.columnDefs)
                 };
             }
         };
