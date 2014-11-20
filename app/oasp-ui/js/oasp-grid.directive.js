@@ -30,6 +30,7 @@ angular.module('oasp-ui').
                 dblclickCallback: '&?'
             },
             link: function (scope) {
+            	// row selection placeholder
                 scope.rowSelection = (function () {
                     var selectedRow = null;
 
@@ -45,9 +46,12 @@ angular.module('oasp-ui').
                         }
                     };
                 }());
+                
                 scope.noTitleDefined = function () {
                     return !scope.title;
                 };
+                
+                // buttons interface
                 scope.onButtonClick = function (buttonDef) {
                     if (buttonDef && angular.isFunction(buttonDef.onClick)) {
                         buttonDef.onClick(scope.rowSelection.getSelected());
@@ -65,6 +69,7 @@ angular.module('oasp-ui').
                 scope.onRowDblClick = function (row) {
                     scope.dblclickCallback({row: row});
                 };
+                
                 scope.render = function (row, column) {
                     var result;
                     if (angular.isFunction(column.renderer)) {
@@ -74,9 +79,22 @@ angular.module('oasp-ui').
                     }
                     return $sce.trustAsHtml(result);
                 };
+                
+                // ui-grid 
                 scope.gridData = {
                 	data: transcodeRows(scope.rows),
-                	columnDefs: transcodeColumnDefs(scope.columnDefs)
+                	columnDefs: transcodeColumnDefs(scope.columnDefs),
+                	
+                	enableRowHeaderSelection: false,
+                	multiSelect: false,
+                	
+                	onRegisterApi: function(gridApi) {
+                		gridApi.selection.on.rowSelectionChanged(scope, function(row) {
+                			scope.rowSelection.select(row.entity);
+                		});
+                	}
+
+
                 };
             }
         };

@@ -1,6 +1,7 @@
 <div class="oasp-grid">
-	<div data-ui-grid="gridData" class="myGrid">
-<!-- 	    <h2 data-ng-show="!noTitleDefined()"><span data-ng-bind="title"></span></h2> -->
+    <h2 data-ng-show="!noTitleDefined()"><span data-ng-bind="title"></span></h2>
+    
+	<div data-ui-grid="gridData" data-ui-grid-selection class="myGrid">
 <!-- 	    <table class="table table-striped"> -->
 <!-- 	        <thead> -->
 <!-- 	        <tr> -->
@@ -16,13 +17,13 @@
 <!-- 	        </tr> -->
 <!-- 	        </tbody> -->
 <!-- 	    </table> -->
-<!-- 	    <p> -->
-<!-- 	        <button data-ng-repeat="buttonDef in buttonDefs" -->
-<!-- 	                data-ng-click="onButtonClick(buttonDef)" -->
-<!-- 	                data-ng-disabled="isButtonDisabled(buttonDef)" -->
-<!-- 	                class="btn btn-sm btn-primary"> -->
-<!-- 	            <span data-ng-bind="buttonDef.label"></span> -->
-<!-- 	        </button> -->
-<!-- 	    </p> -->
 	</div>
+	    <p>
+	        <button data-ng-repeat="buttonDef in buttonDefs"
+	                data-ng-click="onButtonClick(buttonDef)"
+	                data-ng-disabled="isButtonDisabled(buttonDef)"
+	                class="btn btn-sm btn-primary">
+	            <span data-ng-bind="buttonDef.label"></span>
+	        </button>
+	    </p>
 </div>
