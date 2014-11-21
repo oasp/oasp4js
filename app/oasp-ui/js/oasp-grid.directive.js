@@ -17,7 +17,6 @@ angular.module('oasp-ui').
         };
         
         
-        
         return {
             restrict: 'A',
             replace: true,
@@ -29,6 +28,7 @@ angular.module('oasp-ui').
                 buttonDefs: '=?',
                 dblclickCallback: '&?'
             },
+            
             link: function (scope) {
             	// row selection placeholder
                 scope.rowSelection = (function () {
@@ -80,7 +80,14 @@ angular.module('oasp-ui').
                     return $sce.trustAsHtml(result);
                 };
                 
-                // ui-grid 
+                // will be referenced from uiGrid getExternalScopes()
+                scope.uiGridScopeWrapper = {
+                	onRowDblClick: function(row) {
+                		scope.onRowDblClick(row.entity);
+	                }
+                };
+                
+                // ui-grid options
                 scope.gridData = {
                 	data: transcodeRows(scope.rows),
                 	columnDefs: transcodeColumnDefs(scope.columnDefs),
@@ -92,7 +99,13 @@ angular.module('oasp-ui').
                 		gridApi.selection.on.rowSelectionChanged(scope, function(row) {
                 			scope.rowSelection.select(row.entity);
                 		});
-                	}
+                	},
+                	
+                	// enable double-click action
+                	rowTemplate:  '<div ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"'
+                				+ '  data-ng-dblclick="getExternalScopes().onRowDblClick(row)"'
+                				+ '  class="ui-grid-cell" ui-grid-cell>'
+                				+ '</div>'
 
 
                 };
