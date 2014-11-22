@@ -5,11 +5,11 @@ module.exports = function (grunt) {
             options: { livereload: true },
             less: {
                 files: ['<%= config.paths.app %>/**/*.less'],
-                tasks: ['less']
+                tasks: ['styles']
             },
-            index: {
-                files: ['<%= config.paths.app %>/index.html'],
-                tasks: ['htmlbuild']
+            html: {
+                files: ['<%= config.paths.app %>/**/*.html'],
+                tasks: ['html']
             },
             cached: {
                 files: ['<%= config.paths.app %>/**/html/**/cached/**/*.html'],

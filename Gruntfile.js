@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     grunt.mergeConfig({
         config: require('./grunt/config.js')
     });
-    //load sub tasks
+    //load sub configs
     require('./grunt/build.js')(grunt);
     require('./grunt/sonar.js')(grunt);
     require('./grunt/serve.js')(grunt);
@@ -25,7 +25,6 @@ module.exports = function (grunt) {
         'jslint:client', 'build:dist'
     ]);
     grunt.registerTask('log', function () {
-        grunt.log.write(JSON.stringify(grunt.filerev.summary));
-        grunt.log.write(JSON.stringify(require('./grunt/config.js').less.paths()));
+        grunt.log.write(JSON.stringify(require('./grunt/config.js')));
     });
 };

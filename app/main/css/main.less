@@ -1,17 +1,10 @@
-@import "../../bower_components/bootstrap/less/bootstrap";
+@import "bower_components/bootstrap/less/bootstrap";
+@import "main/css/variables";
+@import "main/css/mixins";
 
 body {
   padding-top: 50px;
   padding-bottom: 20px;
-}
-
-.user-select (@val) {
-  -webkit-touch-callout:  @val;
-  -webkit-user-select:    @val;
-  -khtml-user-select:     @val;
-  -moz-user-select:       @val;
-  -ms-user-select:        @val;
-  user-select:            @val;
 }
 
 .language-dropdown {
@@ -34,39 +27,15 @@ body {
   }
 }
 
+
 .table-striped {
   tbody {
     > tr.selected-row > td {
       background-color: @brand-info;
     }
   }
-  & *{
+  & * {
     .user-select(none);
-  }
-}
-
-.oasp-grid > p > .btn {
-  margin-right: 2px;
-}
-
-.spinner-container {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3000;
-  .spinner-backdrop {
-    width: 100%;
-    height: 100%;
-    background: black;
-    position: absolute;
-    .opacity(0.5)
-  }
-  button {
-    width: 0px;
-    height: 0px;
-    .opacity(0);
   }
 }
 

@@ -12,7 +12,7 @@ module.exports = function (grunt) {
         },
         jslint: {
             client: {
-                src: grunt.config().config.scripts.sources(),
+                src: grunt.config().config.tasks.karma.sources(),
                 directives: {
                     browser: true,
                     todo: true,
@@ -23,7 +23,7 @@ module.exports = function (grunt) {
                 ]
             },
             test: {
-                src: grunt.config().config.scripts.testSources(),
+                src: grunt.config().config.tasks.karma.testSources(),
                 directives: {
                     browser: true,
                     nomen: 'false',
@@ -55,12 +55,12 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
-        'jslint', 'html2js', 'karma:ci'
+        'jslint', 'html:all', 'html2js', 'karma:ci'
     ]);
     grunt.registerTask('test:tdd', [
-        'html2js', 'karma:unit'
+        'html:all', 'html2js', 'karma:unit'
     ]);
     grunt.registerTask('test:tdd:debug', [
-        'html2js', 'karma:unit_chrome'
+        'html:all', 'html2js', 'karma:unit_chrome'
     ]);
 };

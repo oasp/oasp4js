@@ -21,7 +21,7 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: _.flatten([libs, pathsConf.scripts.sources(), pathsConf.scripts.testSources()]),
+        files: _.flatten([libs, pathsConf.tasks.karma.sources(), pathsConf.tasks.karma.testSources()]),
 
         // list of files / patterns to exclude
         exclude: [],

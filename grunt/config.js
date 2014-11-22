@@ -25,31 +25,36 @@ module.exports = (function () {
                         .replaceAll('{tmp}', paths.tmp)
                         .replaceAll('{test}', paths.test)
                         .replaceAll('{dest}', paths.dest).s;
+                },
+                buildForModules: function (patterns) {
+                    var i, j, result = [];
+                    for (i = 0; i < modules.length; i += 1) {
+                        for (j = 0; j < arguments.length; j++) {
+                            result.push(builder.build(arguments[j], modules[i]));
+                        }
+                    }
+                    return result;
                 }
             };
         }());
-
     return {
         context: "oasp4j-example-application",
         paths: paths,
         //generating configuration for particular tasks
-        less: {
-            paths: function () {
-                var lessPaths = {}, i, srcPath;
-                for (i = 0; i < modules.length; i += 1) {
-                    srcPath = builder.build('{app}/{module}/css/{module}.less', modules[i]);
-                    if (grunt.file.exists(srcPath)) {
-                        lessPaths[builder.build('{tmp}/{module}/css/{module}.css', modules[i])] = srcPath;
-                    }
-                }
-                return lessPaths;
-            }
-        },
-        html2js: {
-            tasks: function () {
+        tasks: {
+            less: function () {
+                return builder.buildForModules('{app}/{module}/css/{module}.less');
+            },
+            i18n: function () {
+                return builder.buildForModules('{module}/i18n/**/*.json');
+            },
+            img: function () {
+                return builder.buildForModules('{module}/img/**');
+            },
+            html2js: function () {
                 var ngTempaltesPaths = {}, i, srcPath;
                 for (i = 0; i < modules.length; i += 1) {
-                    srcPath = builder.build('{app}/{module}/html/cached', modules[i]);
+                    srcPath = builder.build('{tmp}/{module}/html/cached', modules[i]);
                     if (grunt.file.isDir(srcPath)) {
                         ngTempaltesPaths[modules[i]] = {
                             src: srcPath + '/**/*.html',
@@ -58,10 +63,8 @@ module.exports = (function () {
                     }
                 }
                 return ngTempaltesPaths;
-            }
-        },
-        sprite: {
-            tasks: function () {
+            },
+            sprite: function () {
                 var spriteConf = {}, i, srcPath;
                 for (i = 0; i < modules.length; i += 1) {
                     srcPath = builder.build('{app}/{module}/img/sprite', modules[i]);
@@ -76,55 +79,57 @@ module.exports = (function () {
                     }
                 }
                 return spriteConf;
-            }
-        },
-        styles: {
-            htmlStylesSources: function () {
-                var sourcesPatterns = [], i;
-                for (i = 0; i < modules.length; i += 1) {
-                    sourcesPatterns.push(builder.build('{module}/css/*.css', modules[i]));
-                }
-                return sourcesPatterns;
-            }
-        },
-        scripts: {
-            htmlScriptSources: function () {
-                var sourcesPatterns = [], i;
-                sourcesPatterns.push(builder.build('app.module.js'));
-                for (i = 0; i < modules.length; i += 1) {
-                    sourcesPatterns.push(builder.build('{module}/js/**/*.module.js', modules[i]));
-                    sourcesPatterns.push(builder.build('{module}/js/**/*.js', modules[i]));
-                }
-                sourcesPatterns.push(builder.build('!**/*spec.js', modules[i]));
-                sourcesPatterns.push(builder.build('!**/*mock.js', modules[i]));
-                return sourcesPatterns;
             },
-            htmlTmpScriptSources: function () {
-                var sourcesPatterns = [], i;
-                for (i = 0; i < modules.length; i += 1) {
-                    sourcesPatterns.push(builder.build('{module}/js/**/*.js', modules[i]));
+            karma: {
+                sources: function () {
+                    var sourcesPatterns = [], i;
+                    sourcesPatterns.push(builder.build('{app}/app.module.js'));
+                    for (i = 0; i < modules.length; i += 1) {
+                        sourcesPatterns.push(builder.build('{app}/{module}/js/**/*.module.js', modules[i]));
+                        sourcesPatterns.push(builder.build('{app}/{module}/js/**/!(*spec|*mock).js', modules[i]));
+                        sourcesPatterns.push(builder.build('{tmp}/{module}/js/**/*.js', modules[i]));
+                    }
+                    return sourcesPatterns;
+                },
+                testSources: function () {
+                    var sourcesPatterns = [], i;
+                    for (i = 0; i < modules.length; i += 1) {
+                        sourcesPatterns.push(builder.build('{app}/{module}/js/**/*.mock.js', modules[i]));
+                    }
+                    for (i = 0; i < modules.length; i += 1) {
+                        sourcesPatterns.push(builder.build('{app}/{module}/js/**/*.spec.js', modules[i]));
+                    }
+                    return sourcesPatterns;
                 }
-                return sourcesPatterns;
             },
-            sources: function () {
-                var sourcesPatterns = [], i;
-                sourcesPatterns.push(builder.build('{app}/app.module.js'));
-                for (i = 0; i < modules.length; i += 1) {
-                    sourcesPatterns.push(builder.build('{app}/{module}/js/**/*.module.js', modules[i]));
-                    sourcesPatterns.push(builder.build('{app}/{module}/js/**/!(*spec|*mock).js', modules[i]));
-                    sourcesPatterns.push(builder.build('{tmp}/{module}/js/**/*.js', modules[i]));
+            html: {
+                sources: function () {
+                    return builder.buildForModules('{module}/html/**/*.html');
+                },
+                scriptSources: function () {
+                    var sourcesPatterns = [], i;
+                    sourcesPatterns.push(builder.build('app.module.js'));
+                    for (i = 0; i < modules.length; i += 1) {
+                        sourcesPatterns.push(builder.build('{module}/js/**/*.module.js', modules[i]));
+                        sourcesPatterns.push(builder.build('{module}/js/**/*.js', modules[i]));
+                    }
+                    sourcesPatterns.push(builder.build('!**/*spec.js', modules[i]));
+                    sourcesPatterns.push(builder.build('!**/*mock.js', modules[i]));
+                    return {
+                        cwd: paths.app,
+                        files: sourcesPatterns
+                    };
+                },
+                generatedScriptSources: function () {
+                    var sourcesPatterns = [], i;
+                    for (i = 0; i < modules.length; i += 1) {
+                        sourcesPatterns.push(builder.build('{module}/js/**/*.js', modules[i]));
+                    }
+                    return {
+                        cwd: paths.tmp,
+                        files: sourcesPatterns
+                    };
                 }
-                return sourcesPatterns;
-            },
-            testSources: function () {
-                var sourcesPatterns = [], i;
-                for (i = 0; i < modules.length; i += 1) {
-                    sourcesPatterns.push(builder.build('{app}/{module}/js/**/*.mock.js', modules[i]));
-                }
-                for (i = 0; i < modules.length; i += 1) {
-                    sourcesPatterns.push(builder.build('{app}/{module}/js/**/*.spec.js', modules[i]));
-                }
-                return sourcesPatterns;
             }
         }
     };
