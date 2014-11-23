@@ -8,7 +8,7 @@ angular.module('oasp-ui').
         	return rows;
         },
         transcodeColumnDefs = function(columnDefs) {
-        	return columnDefs.map(function(colDef) {
+        	return columnDefs && columnDefs.map(function(colDef) {
         		return {
         			field: colDef.field,
         			name: colDef.label
@@ -104,6 +104,7 @@ angular.module('oasp-ui').
                 	// enable double-click action
                 	rowTemplate:  '<div ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"'
                 				+ '  data-ng-dblclick="getExternalScopes().onRowDblClick(row)"'
+                				// + '  data-ng-class="{\'selected-row\': getExternalScopes().rowSelection.isSelected(row)}">'
                 				+ '  class="ui-grid-cell" ui-grid-cell>'
                 				+ '</div>'
 
