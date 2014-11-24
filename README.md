@@ -29,9 +29,9 @@ Prepare folder structure
 -----------------------
 Create directories :
 
-•	<oasp_dir>
-•	<oasp_dir>\java
-•	<oasp_dir>\js
+	'<oasp_dir>'
+    '<oasp_dir>\java'
+	'<oasp_dir>\js'
 
 Structure should be like on print screen bellow: 
 TODO 
