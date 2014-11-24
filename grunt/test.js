@@ -55,7 +55,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
-         'html2js', 'karma:ci'
+         'jslint', 'html2js', 'karma:ci'
     ]);
     grunt.registerTask('test:tdd', [
         'html2js', 'karma:unit'
