@@ -37,7 +37,7 @@ Structure should be like on print screen bellow:
 TODO 
 
 
-Server
+Prepare server
 -----------------------
 1. Open cmd and go to \java folder
 cd <oasp_dir>\java
@@ -93,7 +93,7 @@ Set up port 8081. This is port number that is used by our application.
 
 
 
-Client
+Prepare client
 -----------------------
 1.	In cmd go to \js folder 	
 cd <oasp_dir>\oasp\js 
