@@ -35,7 +35,7 @@ Create directories :
 
 Structure should be like on print screen bellow: 
 TODO 
-![alt tag](http://aermech.com/wp-content/uploads/2014/03/coolridesonline.net_.jpg)
+![alt tag](/relative/path/to/img.jpg?raw=true "Optional Title")
 
 Prepare server
 -----------------------
