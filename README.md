@@ -34,9 +34,10 @@ Create directories :
 	'<oasp_dir>\js'
 
 Structure should be like on print screen bellow: 
-TODO 
-![alt tag](/image/folder_struc_1.png?raw=true)
+
 ![Image](/image/folder_struc_1.png?raw=true)
+
+
 
 Prepare server
 -----------------------
