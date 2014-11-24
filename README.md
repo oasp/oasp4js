@@ -3,13 +3,24 @@ Sample Application
 
 The sample application is built on top of the [application template](https://github.com/oasp/oasp4js-app-template) and [oasp4js extensions](https://github.com/oasp/oasp4js) showing their usage scenarios.
 
+
+Getting Started
+-----------------------
+
+To get started you simply need to create specific folder structure and clone repositories and install the dependencies.
+
+
+
+
+
+
+
 Install prerequisites
 -----------------------
 
 You need a Git client to clone the repository and the Node.js platform (including its package manager - npm) which allows Grunt and Bower to install the dependencies and build the application. Here you can learn how to install the prerequisites.
 Additional install tomcat on your machine. In this example I assume that tomcat installation location is 
 <tomcat_dir>
-
 
 
 
