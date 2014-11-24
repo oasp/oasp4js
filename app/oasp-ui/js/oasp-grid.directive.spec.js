@@ -1,7 +1,7 @@
 describe('oasp-grid directive specs', function () {
     "use strict";
     var $compile, $rootScope,
-    	rowSelector = '.ui-grid-row',
+    	rowSelector = '.rowWrapper',
     	cellSelector = '.ui-grid-cell',
     	headerCellSelector = '.ui-grid-header-cell',
         elementHasRowsContainingLabels = function (element, rowNumber, labels) {
@@ -102,8 +102,12 @@ describe('oasp-grid directive specs', function () {
         // when
         var element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows"></div>')($rootScope);
         $rootScope.$digest();
-        element.find(rowSelector).find(cellSelector).eq(0).click();
+        
+        // find some cell and click it
+        var someCell = element.find(rowSelector).find(cellSelector).eq(0);
+        someCell.click();
         $rootScope.$digest();
+        
         // then
         expect(element.find(rowSelector).hasClass('selected-row')).toBeTruthy();
     });
@@ -209,7 +213,7 @@ describe('oasp-grid directive specs', function () {
         // when
         element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows" data-button-defs="buttonDefs"></div>')($rootScope);
         $rootScope.$digest();
-        element.find(rowSelector).click();
+        element.find(cellSelector).eq(0).click();
         $rootScope.$digest();
         element.find('button').click();
         // then

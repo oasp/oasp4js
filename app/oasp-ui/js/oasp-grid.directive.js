@@ -84,6 +84,9 @@ angular.module('oasp-ui').
                 scope.uiGridScopeWrapper = {
                 	onRowDblClick: function(row) {
                 		scope.onRowDblClick(row.entity);
+	                },
+	                isSelected: function(row) {
+	                	return scope.rowSelection.isSelected(row.entity);
 	                }
                 };
                 
@@ -97,15 +100,23 @@ angular.module('oasp-ui').
                 	
                 	onRegisterApi: function(gridApi) {
                 		gridApi.selection.on.rowSelectionChanged(scope, function(row) {
-                			scope.rowSelection.select(row.entity);
+                			if (row.isSelected) {
+                				scope.rowSelection.select(row.entity);
+                				
+                			} else {
+                				// deselection
+                				scope.rowSelection.select(null);
+                			}
                 		});
                 	},
                 	
-                	// enable double-click action
-                	rowTemplate:  '<div ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"'
-                				+ '  data-ng-dblclick="getExternalScopes().onRowDblClick(row)"'
-                				// + '  data-ng-class="{\'selected-row\': getExternalScopes().rowSelection.isSelected(row)}">'
-                				+ '  class="ui-grid-cell" ui-grid-cell>'
+                	// custom template, to e.g. enable double-click action
+                	rowTemplate:  '<div class="rowWrapper"'
+                				+ ' data-ng-class="{\'selected-row\': getExternalScopes().isSelected(row)}"'
+                				+ ' data-ng-dblclick="getExternalScopes().onRowDblClick(row)">'
+                				+ '  <div ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"'
+                				+ '   class="ui-grid-cell" ui-grid-cell>'
+                				+ '  </div>'
                 				+ '</div>'
 
 
