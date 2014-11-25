@@ -1,6 +1,4 @@
-Sample Application
-
-=============
+= Sample Application
 
 
 
@@ -12,11 +10,7 @@ The sample application is built on top of the [application template](https://git
 
 
 
-Getting Started
-
-=============
-
-
+== Getting Started
 
 To get started you simply need to create specific folder structure, clone repositories and set up tomcat server
 
