@@ -29,7 +29,7 @@ describe('Module: tableMgmt, Controller: table-search', function () {
     it('exposes tables\' column definitions', function () {
         expect($scope.columnDefs).toBeDefined();
         expect($scope.columnDefs.length).toEqual(3);
-        expect($scope.columnDefs[0].field).toEqual('id');
+        expect($scope.columnDefs[0].field).toEqual('number');
         expect($scope.columnDefs[1].field).toEqual('state');
         expect($scope.columnDefs[2].field).toEqual('waiter');
     });
