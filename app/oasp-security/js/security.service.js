@@ -33,11 +33,11 @@ angular.module('oasp-security')
                     };
 
                 /** Check for existing session at the server side */
-//                getSecurityRestService().getCurrentUser().then(function (userProfile) {
-//                    enableCsrfProtection();
-//                    return userProfile;
-//                }).then(function (result) {
-//                    getAppContextService().onLoggingIn(result.data);
+//                getSecurityRestService().getCurrentUser().then(function (response) {
+//                    var userProfile = response.data;
+//                    enableCsrfProtection().then(function () {
+//                        getAppContextService().onLoggingIn(userProfile);
+//                    });
 //                });
 
                 return {
@@ -64,6 +64,14 @@ angular.module('oasp-security')
                             .then(function () {
                                 getAppContextService().onLoggingOff();
                             });
+                    },
+                    checkIfUserIsLoggedInAndIfSoReinitializeAppContext: function () {
+                        getSecurityRestService().getCurrentUser().then(function (response) {
+                            var userProfile = response.data;
+                            enableCsrfProtection().then(function () {
+                                getAppContextService().onLoggingIn(userProfile);
+                            });
+                        });
                     }
                 };
             }
