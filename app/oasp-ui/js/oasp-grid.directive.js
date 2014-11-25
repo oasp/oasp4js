@@ -1,5 +1,5 @@
 angular.module('oasp-ui').
-    directive('oaspGrid', function ($sce) {
+    directive('oaspGrid', function ($sce, uiGridConstants) {
         'use strict';
 
         // used to translate between oasp-grid and ui-grid interfaces
@@ -103,7 +103,9 @@ angular.module('oasp-ui').
                 scope.gridData = {
                     data: transcodeRows(scope.rows),
                     columnDefs: transcodeColumnDefs(scope.columnDefs),
-
+                    
+                    enableHorizontalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
+                    enableVerticalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
                     enableRowHeaderSelection: false,
                     multiSelect: false,
 
