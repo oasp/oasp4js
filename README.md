@@ -1,5 +1,5 @@
-= Sample Application
-
+Sample Application
+===
 
 
 The sample application is built on top of the [application template](https://github.com/oasp/oasp4js-app-template) and [oasp4js extensions](https://github.com/oasp/oasp4js) showing their usage scenarios.
@@ -10,8 +10,8 @@ The sample application is built on top of the [application template](https://git
 
 
 
-== Getting Started
-
+Getting Started
+---
 To get started you simply need to create specific folder structure, clone repositories and set up tomcat server
 
 
@@ -21,8 +21,7 @@ To get started you simply need to create specific folder structure, clone reposi
 
 
 Install prerequisites
-
------
+---
 
 
 
@@ -47,8 +46,7 @@ Additional install tomcat on your machine. In this example I assume that tomcat 
 
 
 Prepare folder structure
-
------
+---
 
 
 
@@ -93,7 +91,6 @@ Structure should be like on print screen bellow:
 
 
 Prepare server
-
 -----
 
 
@@ -220,10 +217,7 @@ In section '<tomcat-user>'  add roles and user passwords  like bellow:
 
 [source,xml]
 
-----
-
-
-
+---
 <tomcat-users>
 
   <role rolename="Chief"/>
@@ -243,7 +237,6 @@ In section '<tomcat-user>'  add roles and user passwords  like bellow:
   <user password="cook" roles="Cook" username="cook"/>
 
 </tomcat-users>
-
 ----
 
 
@@ -259,7 +252,6 @@ Edit file '<tomcat_dir>\\conf\\server.xml'.
 Set up port 8081. This is port number that is used by our application.
 
 [source,xml]
-
 ----
 
 <Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8443"/>
@@ -275,7 +267,6 @@ Set up port 8081. This is port number that is used by our application.
 
 
 Prepare client
-
 -----
 
 
@@ -311,7 +302,6 @@ To clone project in cmd type:
 
 
 Summary
-
 -----
 
 
@@ -329,7 +319,6 @@ Now all project structure should look like that.
 
 
 Start application
-
 =============
 
 
@@ -351,7 +340,6 @@ Please note that all command below must be executed in project ' oasp4js-sample'
 
 
 Start application. (Developing)
-
 -----
 
 
@@ -373,7 +361,6 @@ The above Grunt's task opens the application in your default browser (http://loc
 
 
 Start application. (Building)
-
 -----
 
 
