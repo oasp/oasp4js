@@ -76,14 +76,17 @@ describe('oasp-grid directive specs', function () {
     it('renders using a renderer supplied', function () {
         // given
         var itemLabel = 'Item', priceLabel = 'Price',
-            banana = {item: 'Banana', price: {amount: 2, currency: 'EUR'}},
+            banana = { item: 'Banana', price: {amount: 2, currency: 'EUR'} },
             element;
         $rootScope.columnDefs = [
             {field: 'item', label: itemLabel},
-            {field: 'price', label: priceLabel, renderer: function (row, column) {
-                var currentPrice = row[column.field];
-                return currentPrice.amount + ' ' + currentPrice.currency;
-            }}
+            {field: 'price', label: priceLabel,
+            	renderer: function(row, col) {
+            		var currentPrice = row.price;
+            		
+            		return currentPrice.amount + ' ' + currentPrice.currency;
+            	}
+            }
         ];
         $rootScope.rows = [banana];
         // when

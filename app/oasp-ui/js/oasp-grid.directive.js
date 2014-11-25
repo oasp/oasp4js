@@ -11,8 +11,13 @@ angular.module('oasp-ui').
         	return columnDefs && columnDefs.map(function(colDef) {
         		return {
         			field: colDef.field,
-        			name: colDef.label
-        		}
+        			name: colDef.label,
+        			renderer: colDef.renderer,
+        			
+        			cellTemplate: '<div class="ui-grid-cell-contents"'
+        						 + ' data-ng-bind-html="getExternalScopes().render(row, col)">'
+        						+ '</div>'
+        		};
         	});
         };
         
@@ -74,9 +79,11 @@ angular.module('oasp-ui').
                     var result;
                     if (angular.isFunction(column.renderer)) {
                         result = column.renderer(row, column);
+                        
                     } else {
                         result = '<span>' + (row[column.field] || '') + '</span>';
                     }
+                    
                     return $sce.trustAsHtml(result);
                 };
                 
@@ -87,6 +94,9 @@ angular.module('oasp-ui').
 	                },
 	                isSelected: function(row) {
 	                	return scope.rowSelection.isSelected(row.entity);
+	                },
+	                render: function(row, col) {
+	                	return scope.render(row.entity, col.colDef);
 	                }
                 };
                 
