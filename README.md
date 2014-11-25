@@ -58,7 +58,7 @@ Create directories :
 Structure should be like on print screen bellow: 
 
 
-    ![Image](/image/folder_struc_1.png?raw=true)
+![Image](/image/folder_struc_1.png?raw=true)
 
 
 
@@ -210,7 +210,7 @@ Summary
 Now all project structure should look like that.
 
 
-    ![Image](/image/folder_struc_2.png?raw=true)
+![Image](/image/folder_struc_2.png?raw=true)
 
 
 
