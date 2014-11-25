@@ -32,14 +32,6 @@ angular.module('oasp-security')
                             });
                     };
 
-                /** Check for existing session at the server side */
-//                getSecurityRestService().getCurrentUser().then(function (response) {
-//                    var userProfile = response.data;
-//                    enableCsrfProtection().then(function () {
-//                        getAppContextService().onLoggingIn(userProfile);
-//                    });
-//                });
-
                 return {
                     logIn: function (credentials) {
                         var logInDeferred = $q.defer();
