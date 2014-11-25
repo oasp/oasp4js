@@ -1,0 +1,9 @@
+<div class="rowWrapper"
+	 data-ng-class="{'selected-row': getExternalScopes().isSelected(row)}"
+     data-ng-dblclick="getExternalScopes().onRowDblClick(row)">
+     
+	<div data-ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"
+		 class="ui-grid-cell" data-ui-grid-cell>
+	</div>
+	
+</div>

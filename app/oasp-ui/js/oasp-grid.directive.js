@@ -14,9 +14,7 @@ angular.module('oasp-ui').
                         name: colDef.label,
                         renderer: colDef.renderer,
 
-                        cellTemplate: '<div class="ui-grid-cell-contents"'
-                                       + ' data-ng-bind-html="getExternalScopes().render(row, col)">'
-                                       + '</div>'
+                        cellTemplate: 'oasp-ui/html/ui-grid-cellTemplate.html'
                     };
                 });
             };
@@ -121,13 +119,7 @@ angular.module('oasp-ui').
                     },
 
                     // custom template, to e.g. enable double-click action
-                    rowTemplate:  '<div class="rowWrapper"'
-                                + ' data-ng-class="{\'selected-row\': getExternalScopes().isSelected(row)}"'
-                                + ' data-ng-dblclick="getExternalScopes().onRowDblClick(row)">'
-                                + '  <div ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"'
-                                + '   class="ui-grid-cell" ui-grid-cell>'
-                                + '  </div>'
-                                + '</div>'
+                    rowTemplate: 'oasp-ui/html/ui-grid-rowTemplate.html'
                 };
             }
         };
