@@ -4,7 +4,8 @@ describe('Module: main, Controller: sign-in', function () {
 
     beforeEach(function () {
         security = {
-            logIn: angular.noop
+            logIn: angular.noop,
+            checkIfUserIsLoggedInAndIfSoReinitializeAppContext: angular.noop
         };
 
         module('app.main', function ($provide) {

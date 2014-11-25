@@ -56,6 +56,14 @@ angular.module('oasp-security')
                             .then(function () {
                                 getAppContextService().onLoggingOff();
                             });
+                    },
+                    checkIfUserIsLoggedInAndIfSoReinitializeAppContext: function () {
+                        getSecurityRestService().getCurrentUser().then(function (response) {
+                            var userProfile = response.data;
+                            enableCsrfProtection().then(function () {
+                                getAppContextService().onLoggingIn(userProfile);
+                            });
+                        });
                     }
                 };
             }

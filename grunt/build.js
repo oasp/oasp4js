@@ -1,6 +1,10 @@
 module.exports = function (grunt) {
     'use strict';
     var _ = require('lodash');
+    require('./build/styles.js')(grunt);
+    require('./build/html.js')(grunt);
+    require('./build/html2js.js')(grunt);
+    require('./build/sprite.js')(grunt);
     grunt.mergeConfig({
         clean: {
             options: { force: true },
@@ -15,51 +19,10 @@ module.exports = function (grunt) {
                 '<%= config.paths.tmp %>'
             ]
         },
-        less: {
-            all: {
-                files: grunt.config().config.less.paths()
-            }
-        },
-        html2js: _.merge(
-            grunt.config().config.html2js.tasks(),
-            {
-                options: {
-                    module: function (path, taskName) {
-                        return 'app.' + taskName + '.templates';
-                    },
-                    singleModule: true,
-                    rename: function (moduleName) {
-                        return moduleName.replace('../app/', '').replace('cached/', '');
-                    }
-                }
-            }
-        ),
-        sprite: grunt.config().config.sprite.tasks(),
-        processhtml: {
-            options: {
-                commentMarker: 'process',
-                customBlockTypes: ['grunt/processhtml/scripts.js', 'grunt/processhtml/styles.js'],
-                scriptsFiles: [
-                    {
-                        cwd: '<%= config.paths.app %>',
-                        files: grunt.config().config.scripts.htmlScriptSources()
-                    },
-                    {
-                        cwd: '<%= config.paths.tmp %>',
-                        files: grunt.config().config.scripts.htmlTmpScriptSources()
-                    }
-                ],
-                stylesFiles: [
-                    {
-                        cwd: '<%= config.paths.tmp %>',
-                        files: grunt.config().config.styles.htmlStylesSources()
-                    }
-                ]
-            },
-            dist: {
-                files: {
-                    '<%= config.paths.tmp %>/index.html': ['<%= config.paths.app %>/index.html']
-                }
+        wiredep: {
+            develop: {
+                src: ['<%= config.paths.app %>/index.html'],
+                ignorePath: new RegExp('^<%= config.paths.app %>/')
             }
         },
         eol: {
@@ -97,26 +60,23 @@ module.exports = function (grunt) {
                         flatten: true,
                         src: ['**/img/**/*-icons.png']
                     },
-                    //TODO TB optimize it on base of modules
                     {
                         expand: true,
-                        cwd: '<%= config.paths.app %>',
+                        cwd: '<%= config.paths.tmp %>',
                         dest: '<%= config.paths.dist %>',
                         src: ['**/html/**/*.html', '!**/cached/**']
                     },
-                    //TODO TB optimize it on base of modules
                     {
                         expand: true,
                         cwd: '<%= config.paths.app %>',
                         dest: '<%= config.paths.dist %>',
-                        src: ['**/img/**', '!**/sprite/**']
+                        src: _.union(grunt.config().config.tasks.img(),['!**/sprite/**'])
                     },
-                    //TODO TB optimize it on base of modules
                     {
                         expand: true,
                         cwd: '<%= config.paths.app %>',
                         dest: '<%= config.paths.dist %>',
-                        src: ['**/i18n/**.json']
+                        src: grunt.config().config.tasks.i18n()
                     }
                 ]
             }
@@ -129,12 +89,6 @@ module.exports = function (grunt) {
                     '<%= config.paths.dist %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
                     '<%= config.paths.dist %>/fonts/*'
                 ]
-            }
-        },
-        wiredep: {
-            develop: {
-                src: ['<%= config.paths.app %>/index.html'],
-                ignorePath: new RegExp('^<%= config.paths.app %>/')
             }
         },
         ngAnnotate: {
@@ -174,12 +128,17 @@ module.exports = function (grunt) {
             }
         }
     });
+
+    grunt.registerTask('build:process', [
+        'wiredep', 'sprite', 'styles', 'html:all', 'html2js', 'html:index'
+    ]);
+
     grunt.registerTask('build:develop', [
-        'clean:develop', 'sprite', 'less', 'html2js', 'wiredep', 'processhtml'
+        'clean:develop', 'build:process'
     ]);
 
     grunt.registerTask('build:dist', [
-        'clean:dist', 'sprite', 'less', 'html2js', 'wiredep', 'processhtml', 'useminPrepare', 'concat', 'ngAnnotate', 'copy:dist', 'eol', 'uglify', 'cssmin', 'filerev', 'usemin'
+        'clean:dist', 'build:process', 'useminPrepare', 'concat:generated', 'ngAnnotate', 'copy:dist', 'eol', 'uglify', 'cssmin', 'filerev', 'usemin'
     ]);
     grunt.registerTask('build:ci', [
         'build:dist', 'karma:ci'
