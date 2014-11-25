@@ -33,12 +33,12 @@ angular.module('oasp-security')
                     };
 
                 /** Check for existing session at the server side */
-                getSecurityRestService().getCurrentUser().then(function (userProfile) {
-                    enableCsrfProtection();
-                    return userProfile;
-                }).then(function (result) {
-                    getAppContextService().onLoggingIn(result.data);
-                });
+//                getSecurityRestService().getCurrentUser().then(function (userProfile) {
+//                    enableCsrfProtection();
+//                    return userProfile;
+//                }).then(function (result) {
+//                    getAppContextService().onLoggingIn(result.data);
+//                });
 
                 return {
                     logIn: function (credentials) {

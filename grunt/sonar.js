@@ -9,7 +9,9 @@ module.exports = function (grunt) {
                     dryRun: false,
                     sonar: {
                         host: {
-                            url: 'http://localhost:9000/sonarqube'
+                            url: 'http://localhost:9000/sonarqube',
+                            username: 'jenkins',
+                            password: 'oDWa5QKJF82cPk7LpqQH'
                         },
                         jdbc: {
                             url: 'jdbc:mysql://localhost:3306/sonar',
