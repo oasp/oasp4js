@@ -1,9 +1,9 @@
 describe('oasp-grid directive specs', function () {
     "use strict";
     var $compile, $rootScope,
-    	rowSelector = '.rowWrapper',
-    	cellSelector = '.ui-grid-cell',
-    	headerCellSelector = '.ui-grid-header-cell',
+        rowSelector = '.rowWrapper',
+        cellSelector = '.ui-grid-cell',
+        headerCellSelector = '.ui-grid-header-cell',
         elementHasRowsContainingLabels = function (element, rowNumber, labels) {
             var row = element.find(rowSelector).eq(rowNumber), cells = row.find(cellSelector), i, currentLabel;
             expect(cells.length).toEqual(labels.length);
@@ -79,14 +79,14 @@ describe('oasp-grid directive specs', function () {
             banana = { item: 'Banana', price: {amount: 2, currency: 'EUR'} },
             element;
         $rootScope.columnDefs = [
-            {field: 'item', label: itemLabel},
-            {field: 'price', label: priceLabel,
-            	renderer: function(row, col) {
-            		var currentPrice = row.price;
-            		
-            		return currentPrice.amount + ' ' + currentPrice.currency;
-            	}
-            }
+            { field: 'item', label: itemLabel },
+            { field: 'price', label: priceLabel,
+                renderer: function (row) {
+                    var currentPrice = row.price;
+
+                    return currentPrice.amount + ' ' + currentPrice.currency;
+                }
+                }
         ];
         $rootScope.rows = [banana];
         // when
@@ -103,14 +103,14 @@ describe('oasp-grid directive specs', function () {
         ];
         $rootScope.rows = [{attr : 'My value'}];
         // when
-        var element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows"></div>')($rootScope);
+        var element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows"></div>')($rootScope),
+            someCell;
         $rootScope.$digest();
-        
         // find some cell and click it
-        var someCell = element.find(rowSelector).find(cellSelector).eq(0);
+        someCell = element.find(rowSelector).find(cellSelector).eq(0);
         someCell.click();
         $rootScope.$digest();
-        
+
         // then
         expect(element.find(rowSelector).hasClass('selected-row')).toBeTruthy();
     });
