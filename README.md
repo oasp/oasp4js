@@ -50,16 +50,15 @@ Create directories :
 
 
 ```
-
-'<oasp_dir>'
-'<oasp_dir>\java'
-'<oasp_dir>\js'
-
+    '<oasp_dir>'
+    '<oasp_dir>\java'
+    '<oasp_dir>\js'
 ```
 
 Structure should be like on print screen bellow: 
 
-![Image](/image/folder_struc_1.png?raw=true)
+
+    ![Image](/image/folder_struc_1.png?raw=true)
 
 
 
@@ -125,31 +124,20 @@ Copy 'oasp4j-example-application.war'  file to
 
 Set up tomacat users 
 
-Edit '<tomcat_dir>\conf\tomcat-users.xml'
-
-In section '<tomcat-user>'  add roles and user passwords  like bellow:
+Edit '<tomcat_dir>\conf\tomcat-users.xml'. Add roles and user passwords  like bellow:
 
 
 
 ```
 <tomcat-users>
-
   <role rolename="Chief"/>
-
   <role rolename="Waiter"/>
-
   <role rolename="Cook"/>
-
   <role rolename="Barkeeper"/>
-
   <user password="chief" roles="Chief" username="chief"/>
-
   <user password="waiter" roles="Waiter" username="waiter"/>
-
   <user password="barkeeper" roles="Barkeeper"   username="barkeeper"/>
-
   <user password="cook" roles="Cook" username="cook"/>
-
 </tomcat-users>
 ```
 
@@ -165,8 +153,6 @@ Set up tomcat ports
 Edit file '<tomcat_dir>\conf\server.xml'. 
 
 Set up port 8081. This is port number that is used by our application.
-
-
 
 ```
 <Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8443"/>
@@ -224,8 +210,7 @@ Summary
 Now all project structure should look like that.
 
 
-
-![Image](/image/folder_struc_2.png?raw=true)
+    ![Image](/image/folder_struc_2.png?raw=true)
 
 
 
