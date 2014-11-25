@@ -1,6 +1,6 @@
 Sample Application
 ===
-
+ 
 
 The sample application is built on top of the [application template](https://github.com/oasp/oasp4js-app-template) and [oasp4js extensions](https://github.com/oasp/oasp4js) showing their usage scenarios.
 
@@ -32,15 +32,8 @@ Additional install tomcat on your machine. In this example I assume that tomcat 
 
 
 ```
-
-'<tomcat_dir>'
-
+ '<tomcat_dir>'
 ```
-
-
-
-
-
 
 
 
@@ -57,142 +50,72 @@ Create directories :
 
 
 ```
-
-'<oasp_dir>'
-
-
-
-'<oasp_dir>\\java'
-
-
-
-'<oasp_dir>\\js'
-
-
-
+    '<oasp_dir>'
+    '<oasp_dir>\java'
+    '<oasp_dir>\js'
 ```
 
-
-
-
-
-
-
 Structure should be like on print screen bellow: 
-
 
 
 ![Image](/image/folder_struc_1.png?raw=true)
 
 
 
-
-
-
-
 Prepare server
 -----
 
-
-
-Open cmd and go to \\java folder
-
-
+Open cmd and go to \java folder
 
 ```  
-
-    cd <oasp_dir>\\java 
-
+    cd <oasp_dir>\java 
 ```
 
 
 
 Clone the server application repository using Git. In cmd type:
 
-
-
 ```  
-
     git clone https://github.com/oasp/oasp4j.git
-
-
 
     git clone https://github.com/oasp/oasp4j-sample.git 
 
-    
-
 ```
-
-
-
-
 
 Now install oasp4j  java component on tomcat. 
 
-
-
 type
 
-
-
 ```  
-
-    cd <oasp_dir>\\java\\oasp4j 
-
-
+    cd <oasp_dir>\java\oasp4j 
 
     mvn clean install 
-
-
-
 ```
-
-
-
 
 
 Now install oasp4j-sample java component on tomcat.
 
 In cmd type
 
-
-
-type
-
-
-
 ```
-
-    cd <oasp_dir>\\java\\oasp4j-sample 
-
-
-
-
+    cd <oasp_dir>\java\oasp4j-sample 
 
     mvn clean install
 
 ```
 
 
-
-
-
 File 'oasp4j-example-application.war'  should appear in following location
 
 ``` 
-
-<oasp_dir>\\java\oasp4j-sample\\oasp4j-example-application\\target 
-
+<oasp_dir>\java\oasp4j-sample\oasp4j-example-application\target 
 ```
-
 
 
 Copy 'oasp4j-example-application.war'  file to 
 
 ```
-
-<tomcat_dir>\\webapps
-
+<tomcat_dir>\webapps
 ```
 
 
@@ -201,43 +124,23 @@ Copy 'oasp4j-example-application.war'  file to
 
 Set up tomacat users 
 
-
-
-Edit '<tomcat_dir>\\conf\\tomcat-users.xml'
-
-In section '<tomcat-user>'  add roles and user passwords  like bellow:
+Edit '<tomcat_dir>\conf\tomcat-users.xml'. Add roles and user passwords  like bellow:
 
 
 
-
-
-
-
-
-
-[source,xml]
-
----
+```
 <tomcat-users>
-
   <role rolename="Chief"/>
-
   <role rolename="Waiter"/>
-
   <role rolename="Cook"/>
-
   <role rolename="Barkeeper"/>
-
   <user password="chief" roles="Chief" username="chief"/>
-
   <user password="waiter" roles="Waiter" username="waiter"/>
-
   <user password="barkeeper" roles="Barkeeper"   username="barkeeper"/>
-
   <user password="cook" roles="Cook" username="cook"/>
-
 </tomcat-users>
-----
+```
+
 
 
 
@@ -247,16 +150,14 @@ Set up tomcat ports
 
 	
 
-Edit file '<tomcat_dir>\\conf\\server.xml'. 
+Edit file '<tomcat_dir>\conf\server.xml'. 
 
 Set up port 8081. This is port number that is used by our application.
 
-[source,xml]
-----
-
+```
 <Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8443"/>
+```
 
-----
 
 
 
@@ -271,7 +172,7 @@ Prepare client
 
 
 
-Now go to \\js. In cmd type: 	
+Now go to \js. In cmd type: 	
 
   
 
@@ -279,7 +180,7 @@ Now go to \\js. In cmd type:
 
 ``` 
 
-    cd <oasp_dir>\\js 
+    cd <oasp_dir>\js 
 
 ```
 
@@ -309,7 +210,6 @@ Summary
 Now all project structure should look like that.
 
 
-
 ![Image](/image/folder_struc_2.png?raw=true)
 
 
@@ -326,9 +226,7 @@ Start application
 Start tomcat by  
 
 ```
-
-<tomcat_dir>\\bin\\startup.bat 
-
+<tomcat_dir>\bin\startup.bat 
 ```
 
 
