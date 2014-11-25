@@ -2,23 +2,6 @@ angular.module('oasp-ui').
     directive('oaspGrid', function ($sce, uiGridConstants) {
         'use strict';
 
-        // used to translate between oasp-grid and ui-grid interfaces
-        var transcodeRows = function (rows) {
-                // identity at the moment
-                return rows;
-            },
-            transcodeColumnDefs = function (columnDefs) {
-                return columnDefs && columnDefs.map(function (colDef) {
-                    return {
-                        field: colDef.field,
-                        name: colDef.label,
-                        renderer: colDef.renderer,
-
-                        cellTemplate: 'oasp-ui/html/ui-grid-cellTemplate.html'
-                    };
-                });
-            };
-
         return {
             restrict: 'A',
             replace: true,
@@ -100,29 +83,49 @@ angular.module('oasp-ui').
                 };
 
                 // ui-grid options
-                scope.gridData = {
-                    data: transcodeRows(scope.rows),
-                    columnDefs: transcodeColumnDefs(scope.columnDefs),
-                    
-                    enableHorizontalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
-                    enableVerticalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
-                    enableRowHeaderSelection: false,
-                    multiSelect: false,
+                scope.gridData = (function () {
+                    // used to translate between oasp-grid and ui-grid interfaces
+                    var transcodeRows = function (rows) {
+                            // identity at the moment
+                            return rows;
+                        },
+                        transcodeColumnDefs = function (columnDefs) {
+                            return columnDefs && columnDefs.map(function (colDef) {
+                                return {
+                                    field: colDef.field,
+                                    name: colDef.label,
+                                    renderer: colDef.renderer,
 
-                    onRegisterApi: function (gridApi) {
-                        gridApi.selection.on.rowSelectionChanged(scope, function (row) {
-                            if (row.isSelected) {
-                                scope.rowSelection.select(row.entity);
-                            } else {
-                                // deselection
-                                scope.rowSelection.select(null);
-                            }
-                        });
-                    },
+                                    cellTemplate: 'oasp-ui/html/ui-grid-cellTemplate.html'
+                                };
+                            });
+                        };
 
-                    // custom template, to e.g. enable double-click action
-                    rowTemplate: 'oasp-ui/html/ui-grid-rowTemplate.html'
-                };
+                    return {
+                        data: transcodeRows(scope.rows),
+                        columnDefs: transcodeColumnDefs(scope.columnDefs),
+
+                        enableHorizontalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
+                        enableVerticalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
+                        enableRowHeaderSelection: false,
+                        multiSelect: false,
+
+                        onRegisterApi: function (gridApi) {
+                            gridApi.selection.on.rowSelectionChanged(scope, function (row) {
+                                if (row.isSelected) {
+                                    scope.rowSelection.select(row.entity);
+                                } else {
+                                    // deselection
+                                    scope.rowSelection.select(null);
+                                }
+                            });
+                        },
+
+                        // custom template, to e.g. enable double-click action
+                        rowTemplate: 'oasp-ui/html/ui-grid-rowTemplate.html'
+                    };
+
+                }());
             }
         };
     });
