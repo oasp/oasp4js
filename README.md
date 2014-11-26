@@ -84,7 +84,7 @@ Clone the server application repository using Git. In cmd type:
 
 Now install oasp4j  java component on tomcat. 
 
-type
+In cmd type
 
 ```  
     cd <oasp_dir>\java\oasp4j 
