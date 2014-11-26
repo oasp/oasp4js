@@ -202,8 +202,9 @@ To clone project in cmd type:
 Now install dependencies -  go to oasp4js-sample root directory
 
 ```
-cd <oasp_dir>\js\oasp4js-sample
-npm install
+    cd <oasp_dir>\js\oasp4js-sample
+
+    npm install
 ```
 
 
