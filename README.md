@@ -25,8 +25,7 @@ Install prerequisites
 
 
 
-You need a Git client to clone the repositories and the Node.js platform (including its package manager - npm) which allows Grunt and Bower to install the dependencies and build the application. Here you can learn how to install the prerequisites.
-
+You need a Git client to clone the repositories and the Node.js platform (including its package manager - npm) which allows Grunt and Bower to install the dependencies and build the application. [Here](https://github.com/oasp/oasp4js-app-template/wiki/Prerequisites) you can learn how to install the prerequisites
 Additional install tomcat on your machine. In this example I assume that tomcat installation location is 
 
 
