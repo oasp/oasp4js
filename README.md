@@ -67,8 +67,7 @@ Setup server part of application
 ```
 
 
-
-    Clone the server application repository using Git. In command prompt type:
+* Clone the server application repository using Git. In command prompt type:
 
 ```  
 
@@ -111,7 +110,7 @@ Setup server part of application
 ```
 
 
-    Copy 'oasp4j-example-application.war'  file to 
+* Copy 'oasp4j-example-application.war'  file to 
 
 ```
 <tomcat_dir>\webapps
