@@ -68,7 +68,7 @@ Setup server part of application
 
 
 
-Clone the server application repository using Git. In command prompt type:
+    Clone the server application repository using Git. In command prompt type:
 
 ```  
 
@@ -79,9 +79,7 @@ Clone the server application repository using Git. In command prompt type:
 
 ```
 
-* Now install oasp4j - java component on tomcat. 
-
-Open command prompt and type:
+* Now install oasp4j - java component on tomcat. Open command prompt and type:
 
 
 ```  
@@ -93,9 +91,7 @@ Open command prompt and type:
 ```
 
 
-* Now install oasp4j-sample - java component on tomcat.
-
-Open command prompt and type:
+* Now install oasp4j-sample - java component on tomcat. Open command prompt and type:
 
 
 
@@ -108,14 +104,14 @@ Open command prompt and type:
 ```
 
 
-* File 'oasp4j-example-application.war'  should appear in following location
+* File 'oasp4j-example-application.war' should appear in following location
 
 ``` 
 <oasp_dir>\java\oasp4j-sample\oasp4j-example-application\target 
 ```
 
 
-Copy 'oasp4j-example-application.war'  file to 
+    Copy 'oasp4j-example-application.war'  file to 
 
 ```
 <tomcat_dir>\webapps
