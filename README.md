@@ -12,7 +12,7 @@ The sample application is built on top of the [application template](https://git
 
 Getting Started
 ---
-To get started you simply need to create specific folder structure, clone repositories for server writen in java, clone repositories for client and set up tomcat server.
+To get started you simply need to create specific folder structure, clone repositories for server writen in java, clone repository for client and set up tomcat web server.
 
 
 
