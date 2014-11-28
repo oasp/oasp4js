@@ -184,18 +184,6 @@ Now go to \js, open command prompt and type:
 
     cd <oasp_dir>\js 
 
-```
-
-
-
-
-
-To clone project, open command prompt and type: 
-
-	
-
-```
-
     git clone https://github.com/oasp/oasp4js-sample.git 
 
 ```
@@ -289,7 +277,7 @@ Build the application using Grunt:
 
 
 
-The above Grunt's task creates the myapp/dist directory and put there HTML documents, CSS files (compiled from Less files) and JavaScript files (merged, minimized and obfuscated).
+The above Grunt's task creates the '<oasp_dir>\js\oasp4js-sample\dist' directory and put there HTML documents, CSS files (compiled from Less files) and JavaScript files (merged, minimized and obfuscated).
 
 
 
