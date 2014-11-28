@@ -58,7 +58,7 @@ Create directories :
 Setup server part of application
 -----
 
-Open command prompt and go to \java folder
+* Open command prompt and go to \java folder
 
 ```  
 
@@ -79,7 +79,7 @@ Clone the server application repository using Git. In command prompt type:
 
 ```
 
-Now install oasp4j  java component on tomcat. 
+* Now install oasp4j - java component on tomcat. 
 
 Open command prompt and type:
 
@@ -93,7 +93,7 @@ Open command prompt and type:
 ```
 
 
-Now install oasp4j-sample java component on tomcat.
+* Now install oasp4j-sample - java component on tomcat.
 
 Open command prompt and type:
 
@@ -108,7 +108,7 @@ Open command prompt and type:
 ```
 
 
-File 'oasp4j-example-application.war'  should appear in following location
+* File 'oasp4j-example-application.war'  should appear in following location
 
 ``` 
 <oasp_dir>\java\oasp4j-sample\oasp4j-example-application\target 
@@ -125,7 +125,7 @@ Setup tomcat web server
 ---
 
 
-Set up tomcat users 
+* Set up tomcat users 
 
 Edit '<tomcat_dir>\conf\tomcat-users.xml'. Add roles and user passwords  like bellow:
 
@@ -149,7 +149,7 @@ Edit '<tomcat_dir>\conf\tomcat-users.xml'. Add roles and user passwords  like be
 
 
 
-Set up tomcat ports
+* Set up tomcat ports
 
 	
 
