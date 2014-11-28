@@ -78,7 +78,7 @@ Setup server part of application
 
 ```
 
-* Now install oasp4j - java component on tomcat. Open command prompt and type:
+* Now install oasp4j - java component. Open command prompt and type:
 
 
 ```  
@@ -90,7 +90,7 @@ Setup server part of application
 ```
 
 
-* Now install oasp4j-sample - java component on tomcat. Open command prompt and type:
+* Now install oasp4j-sample - java component. Open command prompt and type:
 
 
 
