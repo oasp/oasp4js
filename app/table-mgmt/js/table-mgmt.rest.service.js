@@ -17,7 +17,7 @@ angular.module('app.tableMgmt').factory('tableManagementRestService', function (
             return $http.delete(servicePath + '/table/' + id);
         },
         markTableAs: function (id, state) {
-            return $http.post(servicePath + '/table/' + id + '/marktableas' + state);
+            return $http.post(servicePath + '/table/' + id + '/marktableas/' + state);
         },
         isTableReleasable: function (id) {
             return $http.get(servicePath + '/table/' + id + '/istablereleasable/');
