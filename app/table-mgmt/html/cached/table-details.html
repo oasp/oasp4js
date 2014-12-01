@@ -18,9 +18,10 @@
             </div>
 
             <div class="row" data-ng-show="noOrderAssigned()">
-                <div class="col-md-12" >
+                <div class="col-md-12">
                     <div class="alert alert-info" role="alert">
-                        No order currently assigned to this table. <a data-ng-click="assignNewOrder()">Assign a new order...</a>
+                        No order currently assigned to this table. <a data-ng-click="assignNewOrder()">Assign a new
+                        order...</a>
                     </div>
                 </div>
             </div>
@@ -37,14 +38,16 @@
                     </div>
                     <div class="col-md-4">
                         <ui-select ng-model="model.selected">
-                            <ui-select-match placeholder="Select offer...">{{$select.selected.description}}</ui-select-match>
+                            <ui-select-match placeholder="Select offer...">{{$select.selected.description}}
+                            </ui-select-match>
                             <ui-select-choices repeat="o in allOffers | filter: $select.search">
                                 <div ng-bind-html="trustAsHtml((o.description | highlight: $select.search))"></div>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-sm btn-primary" data-ng-click="addPosition(model.selected)">+Add</button>&nbsp;
+                        <button class="btn btn-sm btn-primary" data-ng-click="addPosition(model.selected)">+Add</button>
+                        &nbsp;
                     </div>
                 </div>
                 <div class="row">
@@ -60,7 +63,9 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" data-ng-disabled="!model.order" ng-click="submit()">Submit</button>
-        <button class="btn btn-warning" ng-click="$close()">Cancel</button>
+        <button class="btn btn-primary" data-ng-disabled="!model.order" ng-click="submit()" translate>
+            TABLE_MGMT.SUBMIT
+        </button>
+        <button class="btn btn-warning" ng-click="$close()" translate>TABLE_MGMT.CANCEL</button>
     </div>
 </div>

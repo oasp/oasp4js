@@ -12,6 +12,7 @@ module.exports = (function () {
             'oasp-security',
             'oasp-ui',
             'oasp-mock',
+            'oasp-i18n',
             'offer-mgmt',
             'sales-mgmt',
             'table-mgmt'

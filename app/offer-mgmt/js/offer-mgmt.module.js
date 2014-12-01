@@ -1,2 +1,2 @@
-angular.module('app.offerMgmt', ['app.main']);
+angular.module('app.offer-mgmt', ['app.main']);
 

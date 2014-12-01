@@ -1,4 +1,4 @@
-angular.module('app.salesMgmt').factory('sales', function (salesManagementRestService) {
+angular.module('app.sales-mgmt').factory('sales', function (salesManagementRestService) {
     'use strict';
     return {
         loadOrderForTable: function (tableId) {

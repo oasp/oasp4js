@@ -1,4 +1,4 @@
-angular.module('app.tableMgmt').controller('TableDetailsCntl',
+angular.module('app.table-mgmt').controller('TableDetailsCntl',
     function ($scope, $sce, tableDetails, allOffers, currentOrder, sales, globalSpinner) {
         'use strict';
         $scope.table = tableDetails;
