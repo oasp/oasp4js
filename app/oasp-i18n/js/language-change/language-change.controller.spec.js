@@ -2,7 +2,7 @@ describe('Controller: LanguageChangeCntl', function () {
     'use strict';
     var $scope;
 
-    beforeEach(module('app.main'));
+    beforeEach(module('app.oasp-i18n'));
 
     beforeEach(inject(function ($rootScope, $controller) {
         //given

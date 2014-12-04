@@ -1,4 +1,4 @@
-angular.module('app.salesMgmt').factory('salesManagementRestService', function ($http, currentContextPath) {
+angular.module('app.sales-mgmt').factory('salesManagementRestService', function ($http, currentContextPath) {
     'use strict';
 
     var servicePath = currentContextPath.get() + 'services/rest/salesmanagement';

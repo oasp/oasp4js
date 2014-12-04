@@ -1,6 +1,7 @@
 {
     "OASP": {
         "LOGGED_IN_AS": "Logged in as",
-        "LANGUAGE": "Language"
+        "LANGUAGE": "Language",
+        "LOG_OFF": "Log off"
     }
 }

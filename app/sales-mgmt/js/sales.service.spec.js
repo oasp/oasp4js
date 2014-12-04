@@ -1,9 +1,9 @@
 /*globals oasp*/
-describe('Module: \'app.salesMgmt\', Service: \'sales\'', function () {
+describe('Module: \'app.sales-mgmt\', Service: \'sales\'', function () {
     'use strict';
     var contextPath = '/oasp-app/', $httpBackend, sales;
 
-    beforeEach(module('app.salesMgmt', function ($provide) {
+    beforeEach(module('app.sales-mgmt', function ($provide) {
         $provide.value('currentContextPath', oasp.mock.currentContextPathReturning(contextPath));
     }));
     /*jslint nomen: true */
