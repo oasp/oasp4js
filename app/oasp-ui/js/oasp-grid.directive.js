@@ -101,6 +101,13 @@ angular.module('oasp-ui').
                             });
                         };
 
+
+                    // the watch here is needed in case somebody exchanges the rows-object
+                    // - in this case the watch of ui-grid (on uiGrid.data) would still point to the old object
+                    scope.$watchCollection(function () { return scope.rows; }, function (newRows) {
+                        scope.gridData.data = transcodeRows(newRows);
+                    });
+
                     return {
                         data: transcodeRows(scope.rows),
                         columnDefs: transcodeColumnDefs(scope.columnDefs),
