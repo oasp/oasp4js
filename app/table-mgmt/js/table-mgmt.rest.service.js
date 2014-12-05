@@ -1,4 +1,4 @@
-angular.module('app.tableMgmt').factory('tableManagementRestService', function ($http, currentContextPath) {
+angular.module('app.table-mgmt').factory('tableManagementRestService', function ($http, currentContextPath) {
     'use strict';
 
     var servicePath = currentContextPath.get() + 'services/rest/tablemanagement';
@@ -17,7 +17,7 @@ angular.module('app.tableMgmt').factory('tableManagementRestService', function (
             return $http.delete(servicePath + '/table/' + id);
         },
         markTableAs: function (id, state) {
-            return $http.post(servicePath + '/table/' + id + '/marktableas' + state);
+            return $http.post(servicePath + '/table/' + id + '/marktableas/' + state);
         },
         isTableReleasable: function (id) {
             return $http.get(servicePath + '/table/' + id + '/istablereleasable/');

@@ -1,4 +1,4 @@
-angular.module('app.offerMgmt').factory('offers', function (offerManagementRestService) {
+angular.module('app.offer-mgmt').factory('offers', function (offerManagementRestService) {
     'use strict';
     return {
         loadAllOffers: function () {

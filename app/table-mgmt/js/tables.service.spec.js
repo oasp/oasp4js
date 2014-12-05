@@ -19,9 +19,9 @@ describe('Service: tables', function () {
             ]);
         },
         mockTableStatusChange = function (tableId, status) {
-            $httpBackend.whenPOST(contextPath + 'services/rest/tablemanagement/table/' + tableId + '/marktableas' + status).respond(200);
+            $httpBackend.whenPOST(contextPath + 'services/rest/tablemanagement/table/' + tableId + '/marktableas/' + status).respond(200);
         };
-    beforeEach(module('app.tableMgmt'));
+    beforeEach(module('app.table-mgmt'));
 
     beforeEach(function () {
         module(function ($provide) {

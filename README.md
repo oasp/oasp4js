@@ -12,7 +12,7 @@ The sample application is built on top of the [application template](https://git
 
 Getting Started
 ---
-To get started you simply need to create specific folder structure, clone repositories and set up tomcat server
+To get started you simply need to create specific folder structure, clone repositories for server writen in java, clone repository for client and set up tomcat web server.
 
 
 
@@ -25,8 +25,7 @@ Install prerequisites
 
 
 
-You need a Git client to clone the repository and the Node.js platform (including its package manager - npm) which allows Grunt and Bower to install the dependencies and build the application. Here you can learn how to install the prerequisites.
-
+You need a Git client to clone the repositories and the Node.js platform (including its package manager - npm) which allows Grunt and Bower to install the dependencies and build the application. [Here](https://github.com/oasp/oasp4js-app-template/wiki/Prerequisites) you can learn how to install the prerequisites
 Additional install tomcat on your machine. In this example I assume that tomcat installation location is 
 
 
@@ -46,83 +45,81 @@ Prepare folder structure
 Create directories :
 
 
+	<oasp_dir> 
+           | 
+		   |‾‾‾ java
+		   |
+            ‾‾‾ js
+ 
 
 
 
-```
-    '<oasp_dir>'
-    '<oasp_dir>\java'
-    '<oasp_dir>\js'
-```
-
-Structure should be like on print screen bellow: 
-
-
-![Image](/image/folder_struc_1.png?raw=true)
-
-
-
-Prepare server
+Setup server part of application
 -----
 
-Open cmd and go to \java folder
+* Open command prompt and go to \java folder
 
 ```  
+
     cd <oasp_dir>\java 
+
 ```
 
 
-
-Clone the server application repository using Git. In cmd type:
+* Clone the server application repository using Git. In command prompt type:
 
 ```  
+
     git clone https://github.com/oasp/oasp4j.git
 
     git clone https://github.com/oasp/oasp4j-sample.git 
 
+
 ```
 
-Now install oasp4j  java component on tomcat. 
+* Now install oasp4j - java component. Open command prompt and type:
 
-type
 
 ```  
+ 
     cd <oasp_dir>\java\oasp4j 
 
     mvn clean install 
-```
-
-
-Now install oasp4j-sample java component on tomcat.
-
-In cmd type
 
 ```
+
+
+* Now install oasp4j-sample - java component. Open command prompt and type:
+
+
+
+```
+ 
     cd <oasp_dir>\java\oasp4j-sample 
-
+ 
     mvn clean install
 
 ```
 
 
-File 'oasp4j-example-application.war'  should appear in following location
+* File 'oasp4j-example-application.war' should appear in following location
 
 ``` 
 <oasp_dir>\java\oasp4j-sample\oasp4j-example-application\target 
 ```
 
 
-Copy 'oasp4j-example-application.war'  file to 
+* Copy 'oasp4j-example-application.war'  file to 
 
 ```
 <tomcat_dir>\webapps
 ```
 
+Setup tomcat web server  
+---
 
 
-
-
-Set up tomacat users 
+* Set up tomcat users 
 
 Edit '<tomcat_dir>\conf\tomcat-users.xml'. Add roles and user passwords  like bellow:
 
@@ -146,7 +143,7 @@ Edit '<tomcat_dir>\conf\tomcat-users.xml'. Add roles and user passwords  like be
 
 
 
-Set up tomcat ports
+* Set up tomcat ports
 
 	
 
@@ -166,13 +163,12 @@ Set up port 8081. This is port number that is used by our application.
 
 
 
-
-Prepare client
+Setup client part of application
 -----
 
 
 
-Now go to \js. In cmd type: 	
+Now go to \js, open command prompt and type: 	
 
   
 
@@ -182,24 +178,18 @@ Now go to \js. In cmd type:
 
     cd <oasp_dir>\js 
 
-```
-
-
-
-
-
-To clone project in cmd type: 
-
-	
-
-```
-
     git clone https://github.com/oasp/oasp4js-sample.git 
 
 ```
 
 
+Now install dependencies -  go to oasp4js-sample root directory
 
+```
+    cd <oasp_dir>\js\oasp4js-sample
+
+    npm install
+```
 
 
 Summary
@@ -207,16 +197,22 @@ Summary
 
 
 
-Now all project structure should look like that.
-
-
-![Image](/image/folder_struc_2.png?raw=true)
+Now all project structure should look like that:
 
 
 
-
-
-
+	
+		<oasp_dir> 
+	              | 
+			      |‾‾‾ java
+				  |		|
+				  |		|‾‾‾ oasp4j
+				  |		|
+	     		  |	     ‾‾‾ oasp4j-sample
+				  |  
+	               ‾‾‾ js
+					    |
+     			         ‾‾‾ oasp4js-sample
 
 Start application
 =============
@@ -230,11 +226,11 @@ Start tomcat by
 ```
 
 
+All commands below must be executed in project 'oasp4js-sample'  root directory. Open command prompt and type:
 
-Please note that all command below must be executed in project ' oasp4js-sample'  root directory.
-
-
-
+```
+cd <oasp_dir>\js\oasp4js-sample
+```
 
 
 Start application. (Developing)
@@ -275,10 +271,7 @@ Build the application using Grunt:
 
 
 
-The above Grunt's task creates the myapp/dist directory and put there HTML documents, CSS files (compiled from Less files) and JavaScript files (merged, minimized and obfuscated).
-
-
-
+The above Grunt's task creates the '<oasp_dir>\js\oasp4js-sample\dist' directory and put there HTML documents, CSS files (compiled from Less files) and JavaScript files (merged, minimized and obfuscated).
 
 
 

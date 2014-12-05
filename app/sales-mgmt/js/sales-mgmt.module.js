@@ -1,2 +1,2 @@
-angular.module('app.salesMgmt', ['app.main']);
+angular.module('app.sales-mgmt', ['app.main']);
 

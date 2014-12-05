@@ -1,8 +1,9 @@
 /*jslint todo: true */
-angular.module('app.tableMgmt').controller('TableSearchCntl',
+angular.module('app.table-mgmt').controller('TableSearchCntl',
     function ($scope, tables, initialTableList, $modal, globalSpinner, offers, sales) {
         'use strict';
         $scope.tables = initialTableList;
+
         $scope.openEditDialog = function (tableRow) {
             $modal.open({
                 templateUrl: 'table-mgmt/html/table-details.html',
