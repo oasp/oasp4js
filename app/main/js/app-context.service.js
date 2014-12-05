@@ -26,7 +26,14 @@ angular.module('app.main')
                 currentUserInternal.profile = userProfile;
                 // TODO remove it once implemented on the server
                 if (angular.isUndefined(userProfile.homeDialogPath)) {
-                    currentUserInternal.profile.homeDialogPath = '/table-mgmt/table-search';
+                    if (userProfile.role === 'WAITER') {
+                        currentUserInternal.profile.homeDialogPath = '/table-mgmt/table-search';
+                    } else if (userProfile.role === 'COOK') {
+                        currentUserInternal.profile.homeDialogPath = '/cook-order-mgmt/order-view';
+                    } else {
+                        // TODO: add rest (+ default?) roles and dialogs
+                        currentUserInternal.profile.homeDialogPath = '/table-mgmt/table-search';
+                    }
                 }
             },
             switchToAnonymousUser = function () {
