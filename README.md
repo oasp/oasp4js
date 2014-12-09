@@ -115,7 +115,7 @@ Set up the server part of the application
 <tomcat_dir>\webapps
 ```
 
-Set up a Tomcat web server
+Set up the Tomcat web server
 ---
 
 
