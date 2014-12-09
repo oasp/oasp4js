@@ -12,7 +12,7 @@ The sample application is built on top of the [application template](https://git
 
 Getting Started
 ---
-To get started you simply need to create a specific folder structure, clone repositories for server writen in java, clone repository for client and set up a Tomcat web server.
+To get started you simply need to create a specific folder structure, clone repositories for the server part which is written in java, clone the repository for the client and set up a Tomcat web server.
 
 
 
@@ -57,7 +57,7 @@ Create directories :
 Set up the server part of the application
 -----
 
-* Open command prompt and go to \java folder
+* Open command prompt and go to the '\java' folder
 
 ```  
 
@@ -77,7 +77,7 @@ Set up the server part of the application
 
 ```
 
-* Now install the oasp4j - java component. Open command prompt and type:
+* Now install the oasp4j java component. Open command prompt and type:
 
 
 ```  
@@ -89,7 +89,7 @@ Set up the server part of the application
 ```
 
 
-* Now install the oasp4j-sample - java component. Open command prompt and type:
+* Now install the oasp4j-sample java component. Open command prompt and type:
 
 
 
@@ -168,7 +168,7 @@ Set up the client part of the application
 
 
 
-Now go to the '\js' folder - open command prompt and type: 	
+Now go to the '\js' folder - open command prompt and type: 
 
   
 
@@ -197,7 +197,7 @@ Summary
 
 
 
-Now the whole project structure should look like that:
+Now the whole project structure should look like this:
 
 
 
