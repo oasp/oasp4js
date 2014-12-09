@@ -1,5 +1,5 @@
 angular.module('oasp-security')
-    .provider('security', function () {
+    .provider('oaspSecurityService', function () {
         'use strict';
         var config = {
             securityRestServiceName: 'securityRestService',

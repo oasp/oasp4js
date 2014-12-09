@@ -1,4 +1,4 @@
-angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $scope, $location, $window, appContext, security, globalSpinner) {
+angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $scope, $location, $window, appContext, oaspSecurityService, globalSpinner) {
     'use strict';
     $scope.currentUser = appContext.getCurrentUser();
     $scope.logOff = function () {
@@ -8,7 +8,7 @@ angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $sc
             $window.location.reload();
         };
         globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-            return security.logOff();
+            return oaspSecurityService.logOff();
         }).then(function () {
             goToSignInDialogFullyReloadingApp();
         });

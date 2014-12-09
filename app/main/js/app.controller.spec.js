@@ -22,7 +22,7 @@ describe('Controller: AppCntl', function () {
         };
 
         $controller('AppCntl',
-            {$scope: $scope, security: security, $window: $window});
+            {$scope: $scope, oaspSecurityService: security, $window: $window});
     }));
 
     it('exposes currentUser.isLoggedIn() on $scope which returns false for anonymous user', function () {

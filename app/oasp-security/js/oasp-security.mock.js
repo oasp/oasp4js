@@ -15,5 +15,5 @@ angular.module('oasp-security')
                 checkIfUserIsLoggedInAndIfSoReinitializeAppContext: angular.noop
             };
         };
-        $provide.decorator('security', securityDecorator);
+        $provide.decorator('oaspSecurityService', securityDecorator);
     });

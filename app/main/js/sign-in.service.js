@@ -1,5 +1,5 @@
 angular.module('app.main')
-    .factory('signIn', function (security, globalSpinner) {
+    .factory('signIn', function (oaspSecurityService, globalSpinner) {
         'use strict';
 
         return function ($scope, signInSuccessCallback) {
@@ -38,7 +38,7 @@ angular.module('app.main')
                     $scope.validation.forceShowingValidationErrors = true;
                 } else {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return security.logIn($scope.credentials);
+                        return oaspSecurityService.logIn($scope.credentials);
                     }).then(function (csrfProtection) {
                         signInSuccessCallback(csrfProtection);
                     }, function () {

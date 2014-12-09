@@ -3,7 +3,7 @@ angular.module('oasp-security', [])
         'use strict';
         $httpProvider.interceptors.push('securityInterceptor');
     })
-    .run(function (security) {
+    .run(function (oaspSecurityService) {
         'use strict';
-        security.checkIfUserIsLoggedInAndIfSoReinitializeAppContext();
+        oaspSecurityService.checkIfUserIsLoggedInAndIfSoReinitializeAppContext();
     });
