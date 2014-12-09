@@ -1,7 +1,8 @@
-describe('Module: \'oasp-security\', service: \'requestResendingQueue\'', function () {
+describe('Module: \'oasp-security\', service: \'oaspUnauthenticatedRequestResender\'', function () {
     'use strict';
-    var $httpBackend, $q, $scope, requestResendingQueue, authenticatorPromise, successCallback, failureCallback,
-        myAuthenticator;
+    var token = 'SADS8788sa86d8sa', headerName = 'CSRF_TOKEN',
+        $httpBackend, $q, $scope, oaspUnauthenticatedRequestResender, authenticatorPromise, successCallback, failureCallback,
+        myAuthenticator, oaspSecurityService;
 
     beforeEach(function () {
         myAuthenticator = (function () {
@@ -11,22 +12,40 @@ describe('Module: \'oasp-security\', service: \'requestResendingQueue\'', functi
                 }
             };
         }());
+        oaspSecurityService = (function () {
+            return {
+                getCurrentCsrfToken: function () {
+                    return (function () {
+                        return {
+                            getHeaderName: function () {
+                                return headerName;
+                            },
+                            getToken: function () {
+                                return token;
+                            }
+                        };
+                    }());
+                },
+                checkIfUserIsLoggedInAndIfSoReinitializeAppContext: angular.noop
+            };
+        }());
 
         angular.module('module-using-oasp-security', ['oasp-security'])
-            .config(function (requestResendingQueueProvider) {
-                requestResendingQueueProvider.setAuthenticatorServiceName('myAuthenticator');
+            .config(function (oaspUnauthenticatedRequestResenderProvider) {
+                oaspUnauthenticatedRequestResenderProvider.setAuthenticatorServiceName('myAuthenticator');
             })
-            .value('myAuthenticator', myAuthenticator);
+            .value('myAuthenticator', myAuthenticator)
+            .value('oaspSecurityService', oaspSecurityService);
 
-        module('oasp-security', 'module-using-oasp-security');
+        module('module-using-oasp-security');
     });
 
     /*jslint nomen: true*/
-    beforeEach(inject(function (_$httpBackend_, _$q_, $rootScope, _requestResendingQueue_) {
+    beforeEach(inject(function (_$httpBackend_, _$q_, $rootScope, _oaspUnauthenticatedRequestResender_) {
         $httpBackend = _$httpBackend_;
         $q = _$q_;
         $scope = $rootScope;
-        requestResendingQueue = _requestResendingQueue_;
+        oaspUnauthenticatedRequestResender = _oaspUnauthenticatedRequestResender_;
         successCallback = jasmine.createSpy('success');
         failureCallback = jasmine.createSpy('failure');
     }));
@@ -52,7 +71,7 @@ describe('Module: \'oasp-security\', service: \'requestResendingQueue\'', functi
         $httpBackend.whenGET(requestPath).respond(200);
         authenticatorPromise = $q.when(csrfProtection);
         // when
-        requestResendingQueue.addRequest(originalRequest)
+        oaspUnauthenticatedRequestResender.addRequest(originalRequest)
             .then(successCallback, failureCallback);
         $scope.$apply();
         $httpBackend.flush();
@@ -81,9 +100,9 @@ describe('Module: \'oasp-security\', service: \'requestResendingQueue\'', functi
             $httpBackend.whenGET(requestPath).respond(200);
             spyOn(myAuthenticator, 'execute').andReturn($q.when(csrfProtection));
             // when
-            requestResendingQueue.addRequest(originalRequest)
+            oaspUnauthenticatedRequestResender.addRequest(originalRequest)
                 .then(successCallback, failureCallback);
-            requestResendingQueue.addRequest(originalRequest)
+            oaspUnauthenticatedRequestResender.addRequest(originalRequest)
                 .then(successCallback2, failureCallback2);
             $scope.$apply();
             $httpBackend.flush();
@@ -104,7 +123,7 @@ describe('Module: \'oasp-security\', service: \'requestResendingQueue\'', functi
         };
         authenticatorPromise = $q.reject();
         // when
-        requestResendingQueue.addRequest(originalRequest)
+        oaspUnauthenticatedRequestResender.addRequest(originalRequest)
             .then(successCallback, failureCallback);
         $scope.$apply();
         // then
@@ -127,7 +146,7 @@ describe('Module: \'oasp-security\', service: \'requestResendingQueue\'', functi
         $httpBackend.whenGET(requestPath).respond(401);
         authenticatorPromise = $q.when(csrfProtection);
         // when
-        requestResendingQueue.addRequest(originalRequest)
+        oaspUnauthenticatedRequestResender.addRequest(originalRequest)
             .then(successCallback, failureCallback);
         $scope.$apply();
         $httpBackend.flush();

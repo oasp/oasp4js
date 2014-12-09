@@ -38,9 +38,9 @@ angular.module('app.main')
                     $scope.validation.forceShowingValidationErrors = true;
                 } else {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return oaspSecurityService.logIn($scope.credentials);
-                    }).then(function (csrfProtection) {
-                        signInSuccessCallback(csrfProtection);
+                        return oaspSecurityService.logIn($scope.credentials.username, $scope.credentials.password);
+                    }).then(function () {
+                        signInSuccessCallback();
                     }, function () {
                         addErrorMessageAndClearForm('Authentication failed. Please try again!');
                     });
