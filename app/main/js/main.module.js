@@ -1,3 +1,14 @@
+/**
+ * @ngdoc module
+ * @name app.main
+ * @module app.main
+ *
+ * @description
+ * Main module of OaspJs
+ *
+ *
+ */
+
 angular.module('app.main', ['ngRoute', 'oasp-ui', 'oasp-security', 'app.main.templates', 'app.oasp-i18n'])
     .constant('SIGN_IN_DLG_PATH', '/main/sign-in')
     .config(function (SIGN_IN_DLG_PATH, $routeProvider, supportedLanguagesProvider, translationSupportProvider) {

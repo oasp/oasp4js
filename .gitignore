@@ -7,3 +7,4 @@ dist
 java/target
 .settings
 .project
+doc\dist

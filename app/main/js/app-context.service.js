@@ -35,12 +35,50 @@ angular.module('app.main')
             };
 
         return {
+
+          /**
+           * @ngdoc function
+           * @name getCurrentUser
+           * @module app.main
+           * @kind function
+           *
+           * @description
+           *Invoke to log in user
+           *
+           * @returned {Object} currentUser
+           */
             getCurrentUser: function () {
                 return currentUserExternal;
             },
+
+
+
+          /**
+           * @ngdoc function
+           * @name onLoggingIn
+           * @module app.main
+           * @kind function
+           *
+           * @description
+           *Invoke to log in user
+           *
+           * @param {Object} currentUser
+           */
             onLoggingIn: function (currentUser) {
                 updateUserProfile(currentUser);
             },
+
+
+          /**
+           * @ngdoc function
+           * @name onLoggingOff
+           * @module app.main
+           * @kind function
+           *
+           * @description
+           * Invoke when you logoff User
+           *
+           */
             onLoggingOff: function () {
                 switchToAnonymousUser();
             }

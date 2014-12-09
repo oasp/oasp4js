@@ -1,0 +1,24 @@
+@ngdoc overview
+@name API Reference
+@description
+
+# OASP API Docs
+Welcome to the OASP Javascript API documentation page. These pages contain the reference materials for version <strong ng-bind="version"> TMP FAKE VERSION </strong>.
+
+The documentation is organized into modules, aligned to the modules existing in application source code. 
+Modules contain various components of an AngularJS application:
+
+- directives,
+- services,
+- filters,
+- providers,
+- and global APIs.
+
+<div class="alert alert-info">
+<p>**Angular Prefixes `$` and `$$`**:</p>
+<p>Please note that to prevent accidental name collisions Angular prefixes names of public objects start with `$`.</p>
+</div>
+
+## Angular Modules, etc.
+
+We need to decide what kind of content is needed here.
