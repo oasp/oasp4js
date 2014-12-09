@@ -1,5 +1,5 @@
 angular.module('oasp-security')
-    .factory('securityInterceptor', function ($q, requestResendingQueue) {
+    .factory('oaspSecurityInterceptor', function ($q, oaspUnauthenticatedRequestResender) {
         'use strict';
 
         return {
@@ -7,7 +7,7 @@ angular.module('oasp-security')
                 var originalRequest;
                 if (response.status === 403) {
                     originalRequest = response.config;
-                    return requestResendingQueue.addRequest(originalRequest);
+                    return oaspUnauthenticatedRequestResender.addRequest(originalRequest);
                 }
                 return $q.reject(response);
             }

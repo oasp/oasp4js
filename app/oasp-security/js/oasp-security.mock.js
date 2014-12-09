@@ -12,6 +12,7 @@ angular.module('oasp-security')
             return {
                 logIn: $delegate.logIn,
                 logOff: $delegate.logOff,
+                getCurrentCsrfToken: $delegate.getCurrentCsrfToken,
                 checkIfUserIsLoggedInAndIfSoReinitializeAppContext: angular.noop
             };
         };

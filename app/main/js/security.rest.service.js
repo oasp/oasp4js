@@ -10,8 +10,11 @@ angular.module('app.main').factory('securityRestService', function ($http, curre
         getCsrfToken: function () {
             return $http.get(servicePath + '/security/csrftoken/');
         },
-        login: function (credentials) {
-            return $http.post(servicePath + '/login', credentials);
+        login: function (username, password) {
+            return $http.post(servicePath + '/login', {
+                j_username: username,
+                j_password: password
+            });
         },
         logout: function () {
             return $http.get(servicePath + '/logout');

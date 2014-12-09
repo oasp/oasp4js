@@ -1,4 +1,4 @@
-describe('Module: \'oasp-security\', service: \'securityInterceptor\'', function () {
+describe('Module: \'oasp-security\', service: \'oaspSecurityInterceptor\'', function () {
     'use strict';
     var $httpBackend, $http,
         addRequestSpy = jasmine.createSpy('addRequestSpy'),
@@ -13,7 +13,7 @@ describe('Module: \'oasp-security\', service: \'securityInterceptor\'', function
 
     beforeEach(function () {
         module('oasp-security', function ($provide) {
-            $provide.value('requestResendingQueue', (function () {
+            $provide.value('oaspUnauthenticatedRequestResender', (function () {
                 return {
                     addRequest: addRequestSpy
                 };
