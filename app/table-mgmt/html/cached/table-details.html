@@ -52,11 +52,23 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div data-oasp-grid=""
-                             data-column-defs="columnDefs"
-                             data-button-defs="buttonDefs"
-                             data-rows="model.order.positions">
-                        </div>
+                        <table class="raw-table" tr-ng-grid=""
+                               selection-mode="SingleRow"
+                               enable-filtering="false"
+                               selected-items="selectedItems"
+                               items="model.order.positions">
+                            <thead>
+                            <tr>
+                                <th field-name="id" display-name="Number" cell-width="7em"></th>
+                                <th field-name="offerName" display-name="Title"></th>
+                                <th field-name="state" display-name="Status"></th>
+                                <th field-name="price" display-name="Price" display-format="price:gridItem"></th>
+                                <th field-name="comment" display-name="Comment"></th>
+                            </tr>
+                            </thead>
+                        </table>
+
+                        <button-bar button-defs="buttonDefs"></button-bar>
                     </div>
                 </div>
             </div>

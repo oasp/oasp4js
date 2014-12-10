@@ -13,7 +13,7 @@ describe('Module: \'oasp-ui\', service: \'$modal\'', function () {
                 }
             });
         });
-        module('oasp-ui');
+        module('oasp-ui.modal');
     });
 
     /*jslint nomen: true */

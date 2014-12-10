@@ -1,14 +1,14 @@
 /*jslint todo: true */
-angular.module('app.table-mgmt').controller('TableSearchCntl',
-    function ($scope, tables, initialTableList, $modal, globalSpinner, offers, sales) {
+angular.module('app.table-mgmt')
+    .controller('TableSearchCntl', function ($scope, tables, initialTableList, $modal, globalSpinner, offers, sales) {
         'use strict';
-        $scope.tables = initialTableList;
+        var selectedTable = function () {
+            return $scope.selectedItems && $scope.selectedItems.length ? $scope.selectedItems[0] : undefined;
+        };
 
         $scope.openEditDialog = function (tableRow) {
             $modal.open({
                 templateUrl: 'table-mgmt/html/table-details.html',
-                backdrop: 'static',
-                keyboard: false,
                 controller: 'TableDetailsCntl',
                 resolve: {
                     tableDetails: function () {
@@ -23,71 +23,62 @@ angular.module('app.table-mgmt').controller('TableSearchCntl',
                 }
             });
         };
-        $scope.columnDefs = [
-            {field: 'number', label: 'Table number'},
-            {field: 'state', label: 'State'},
-            {field: 'waiter', label: 'Waiter'}
-        ];
+        $scope.selectedItems = [];
+        $scope.gridOptions = {
+            data: initialTableList
+        };
         $scope.buttonDefs = [
             {
                 label: 'Edit...',
-                onClick: function (selectedRow) {
-                    $scope.openEditDialog(selectedRow);
+                onClick: function () {
+                    $scope.openEditDialog(selectedTable());
                 },
-                isNotActive: function (selectedRow) {
-                    return selectedRow === null;
+                isActive: function () {
+                    return selectedTable();
                 }
             },
             {
                 label: 'Reserve',
-                onClick: function (selectedTable) {
-                    if (selectedTable) {
-                        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                            return tables.reserve(selectedTable);
-                        });
-                    }
+                onClick: function () {
+                    globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+                        return tables.reserve(selectedTable());
+                    });
                 },
-                isActive: function (selectedTable) {
-                    return selectedTable && selectedTable.state === 'FREE';
+                isActive: function () {
+                    return selectedTable() && selectedTable().state === 'FREE';
                 }
             },
             {
                 label: 'Cancel Reservation',
-                onClick: function (selectedTable) {
-                    if (selectedTable) {
-                        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                            return tables.cancelReservation(selectedTable);
-                        });
-                    }
+                onClick: function () {
+                    globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+                        return tables.cancelReservation(selectedTable());
+                    });
                 },
-                isActive: function (selectedTable) {
-                    return selectedTable && selectedTable.state === 'RESERVED';
+                isActive: function () {
+                    return selectedTable() && selectedTable().state === 'RESERVED';
                 }
             },
             {
                 label: 'Occupy',
-                onClick: function (selectedTable) {
-                    if (selectedTable) {
-                        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                            return tables.occupy(selectedTable);
-                        });
-                    }
+                onClick: function () {
+                    globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+                        return tables.occupy(selectedTable());
+                    });
                 },
-                isActive: function (selectedTable) {
-                    return selectedTable && (selectedTable.state === 'RESERVED' || selectedTable.state === 'FREE');
+                isActive: function () {
+                    return selectedTable() && (selectedTable().state === 'RESERVED' || selectedTable().state === 'FREE');
                 }
             },
             {
                 label: 'Free',
-                onClick: function (selectedTable) {
-                    if (selectedTable) {
-                        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                            return tables.free(selectedTable);
-                        });
-                    }
+                onClick: function () {
+                    globalSpinner.decorateCallOfFunctionReturningPromise(function () {
+                        return tables.free(selectedTable());
+                    });
                 },
-                isActive: function (selectedTable) {
-                    return selectedTable && selectedTable.state === 'OCCUPIED';
+                isActive: function () {
+                    return selectedTable() && selectedTable().state === 'OCCUPIED';
                 }
             }
         ];

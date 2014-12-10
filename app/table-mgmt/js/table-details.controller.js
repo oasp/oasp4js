@@ -6,6 +6,7 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
         $scope.model = {};
         $scope.model.order = currentOrder;
         $scope.model.selected = allOffers.length ? allOffers[0] : undefined;
+        $scope.selectedItems = [];
 
         $scope.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);
@@ -26,31 +27,6 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
                 positions: []
             };
         };
-        $scope.columnDefs = [
-            {
-                field: 'id',
-                label: 'Number'
-            },
-            {
-                field: 'offerName',
-                label: 'Title'
-            },
-            {
-                field: 'state',
-                label: 'Status'
-            },
-            {
-                field: 'price',
-                label: 'Price',
-                renderer: function (row) {
-                    return row.price ? '<span>' + row.price + ' EUR</span>' : '';
-                }
-            },
-            {
-                field: 'comment',
-                label: 'Comment'
-            }
-        ];
 
         // form container to access forms added in parent scopes
         $scope.forms = {};
@@ -63,6 +39,7 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
             });
         };
         $scope.addPosition = function (offer) {
+            //$scope.gridOptions.data = $scope.model.order.positions;
             $scope.model.order.positions.push({
                 revision: null,
                 orderId: $scope.model.order.order.id,
@@ -73,14 +50,15 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
                 comment: ''
             });
         };
+
         $scope.buttonDefs = [
             {
                 label: 'Remove',
-                onClick: function (selectedPosition) {
-                    $scope.model.order.positions.splice($scope.model.order.positions.indexOf(selectedPosition), 1);
+                onClick: function () {
+                    $scope.model.order.positions.splice($scope.model.order.positions.indexOf($scope.selectedItems[0]), 1);
                 },
-                isNotActive: function (selectedRow) {
-                    return selectedRow === null;
+                isActive: function () {
+                    return $scope.selectedItems.length;
                 }
             }
         ];

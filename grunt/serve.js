@@ -33,7 +33,7 @@ module.exports = function (grunt) {
                     open: {
                         target: 'http://localhost:9000/<%= config.context %>/'
                     },
-                    base: ['<%= config.paths.tmp %>', '<%= config.paths.app %>'],
+                    base: ['<%= config.paths.tmp %>', '<%= config.paths.app %>', '<%= config.paths.app %>/bower_components/bootstrap'],
                     middleware: function (connect, options) {
                         if (!Array.isArray(options.base)) {
                             options.base = [options.base];
