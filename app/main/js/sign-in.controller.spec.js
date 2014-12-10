@@ -1,15 +1,15 @@
 describe('Module: main, Controller: sign-in', function () {
     'use strict';
-    var $scope, $location, security, appContext, userHomeDialogPath;
+    var $scope, $location, oaspSecurityService, appContext, userHomeDialogPath;
 
     beforeEach(function () {
-        security = {
+        oaspSecurityService = {
             logIn: angular.noop,
             checkIfUserIsLoggedInAndIfSoReinitializeAppContext: angular.noop
         };
 
         module('app.main', function ($provide) {
-            $provide.value('security', security);
+            $provide.value('oaspSecurityService', oaspSecurityService);
         });
     });
 
@@ -26,7 +26,7 @@ describe('Module: main, Controller: sign-in', function () {
         $location = _$location_;
         $scope = $rootScope;
 
-        $controller('SignInCntl', {$scope: $scope, $location: $location, appContext: appContext, security: security});
+        $controller('SignInCntl', {$scope: $scope, $location: $location, appContext: appContext});
     }));
 
     it('exposes errorMessage.text on $scope which is empty string initially', function () {
@@ -52,7 +52,7 @@ describe('Module: main, Controller: sign-in', function () {
     it('exposes signIn() on $scope which changes to the user\'s home dialog on success', inject(function ($q) {
         // given
         userHomeDialogPath = '/some-module/home';
-        spyOn(security, 'logIn').andCallFake(function () {
+        spyOn(oaspSecurityService, 'logIn').andCallFake(function () {
             return $q.when();
         });
         $scope.loginForm = {
@@ -68,7 +68,7 @@ describe('Module: main, Controller: sign-in', function () {
     }));
     it('exposes signIn() on $scope which adds an error message and clears the form on failure', inject(function ($q) {
         // given
-        spyOn(security, 'logIn').andCallFake(function () {
+        spyOn(oaspSecurityService, 'logIn').andCallFake(function () {
             return $q.reject();
         });
         $scope.loginForm = {

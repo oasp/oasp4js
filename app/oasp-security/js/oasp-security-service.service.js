@@ -1,5 +1,5 @@
 angular.module('oasp-security')
-    .provider('security', function () {
+    .provider('oaspSecurityService', function () {
         'use strict';
         var config = {
             securityRestServiceName: 'securityRestService',
@@ -14,7 +14,30 @@ angular.module('oasp-security')
                 config.appContextServiceName = appContextServiceName || config.appContextServiceName;
             },
             $get: function ($injector, $http, $q) {
-                var getSecurityRestService = function () {
+                var currentCsrfProtection = {
+                        set: function (headerName, token) {
+                            this.headerName = headerName;
+                            this.token = token;
+                        },
+                        invalidate: function () {
+                            this.headerName = undefined;
+                            this.token = undefined;
+                        }
+                    },
+                    currentCsrfProtectionWrapper = (function () {
+                        return {
+                            hasToken: function () {
+                                return currentCsrfProtection.headerName && currentCsrfProtection.token ? true : false;
+                            },
+                            getHeaderName: function () {
+                                return currentCsrfProtection.headerName;
+                            },
+                            getToken: function () {
+                                return currentCsrfProtection.token;
+                            }
+                        };
+                    }()),
+                    getSecurityRestService = function () {
                         return $injector.get(config.securityRestServiceName);
                     },
                     getAppContextService = function () {
@@ -26,6 +49,7 @@ angular.module('oasp-security')
                                 var csrfProtection = response.data;
                                 // from now on a CSRF token will be added to all HTTP requests
                                 $http.defaults.headers.common[csrfProtection.headerName] = csrfProtection.token;
+                                currentCsrfProtection.set(csrfProtection.headerName, csrfProtection.token);
                                 return csrfProtection;
                             }, function () {
                                 return 'Requesting a CSRF token failed';
@@ -33,16 +57,16 @@ angular.module('oasp-security')
                     };
 
                 return {
-                    logIn: function (credentials) {
+                    logIn: function (username, password) {
                         var logInDeferred = $q.defer();
-                        getSecurityRestService().login(credentials)
+                        getSecurityRestService().login(username, password)
                             .then(function () {
                                 $q.all([
                                     getSecurityRestService().getCurrentUser(),
                                     enableCsrfProtection()
                                 ]).then(function (allResults) {
                                     getAppContextService().onLoggingIn(allResults[0].data);
-                                    logInDeferred.resolve(allResults[1]);
+                                    logInDeferred.resolve();
                                 }, function (reject) {
                                     logInDeferred.reject(reject);
                                 });
@@ -54,6 +78,7 @@ angular.module('oasp-security')
                     logOff: function () {
                         return getSecurityRestService().logout()
                             .then(function () {
+                                currentCsrfProtection.invalidate();
                                 getAppContextService().onLoggingOff();
                             });
                     },
@@ -64,6 +89,9 @@ angular.module('oasp-security')
                                 getAppContextService().onLoggingIn(userProfile);
                             });
                         });
+                    },
+                    getCurrentCsrfToken: function () {
+                        return currentCsrfProtectionWrapper;
                     }
                 };
             }
