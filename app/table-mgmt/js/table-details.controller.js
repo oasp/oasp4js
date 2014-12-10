@@ -56,6 +56,7 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
                 label: 'Remove',
                 onClick: function () {
                     $scope.model.order.positions.splice($scope.model.order.positions.indexOf($scope.selectedItems[0]), 1);
+                    $scope.selectedItems.length = 0;
                 },
                 isActive: function () {
                     return $scope.selectedItems.length;
