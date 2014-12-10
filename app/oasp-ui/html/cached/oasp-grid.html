@@ -1,20 +1,10 @@
 <div class="oasp-grid">
     <h2 data-ng-show="!noTitleDefined()"><span data-ng-bind="title"></span></h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th data-ng-repeat="columnDef in columnDefs" class="column"><span data-ng-bind="columnDef.label"></span></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr data-ng-repeat="row in rows"
-            data-ng-click="rowSelection.select(row)"
-            data-ng-dblclick="onRowDblClick(row)"
-            data-ng-class="{'selected-row': rowSelection.isSelected(row)}">
-            <td data-ng-repeat="columnDef in columnDefs" data-ng-bind-html="render(row,columnDef)"></td>
-        </tr>
-        </tbody>
-    </table>
+    
+<!--     UI-GRID -->
+	<div data-ui-grid="gridData" data-ui-grid-selection data-external-scopes='uiGridScopeWrapper' class="myGrid">
+	</div>
+	
     <p>
         <button data-ng-repeat="buttonDef in buttonDefs"
                 data-ng-click="onButtonClick(buttonDef)"

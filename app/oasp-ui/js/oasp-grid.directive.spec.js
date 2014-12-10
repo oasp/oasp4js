@@ -1,8 +1,11 @@
 describe('oasp-grid directive specs', function () {
     "use strict";
     var $compile, $rootScope,
+        rowSelector = '.rowWrapper',
+        cellSelector = '.ui-grid-cell',
+        headerCellSelector = '.ui-grid-header-cell',
         elementHasRowsContainingLabels = function (element, rowNumber, labels) {
-            var row = element.find('tbody tr').eq(rowNumber), cells = row.find('td'), i, currentLabel;
+            var row = element.find(rowSelector).eq(rowNumber), cells = row.find(cellSelector), i, currentLabel;
             expect(cells.length).toEqual(labels.length);
             for (i = 0; i < labels.length; i += 1) {
                 currentLabel = cells.eq(i).text();
@@ -45,10 +48,10 @@ describe('oasp-grid directive specs', function () {
             person1 = {firstName: 'John', lastName: 'Example'},
             person2 = {firstName: 'Joe', lastName: 'Smith'},
             elementHasHeaderRowContainingLabels = function (element, labels) {
-                var headerRows = element.find('th'), i, currentLabel;
-                expect(headerRows.length).toEqual(labels.length);
+                var headerCells = element.find(headerCellSelector), i, currentLabel;
+                expect(headerCells.length).toEqual(labels.length);
                 for (i = 0; i < labels.length; i += 1) {
-                    currentLabel = headerRows.eq(i).text();
+                    currentLabel = headerCells.eq(i).text();
                     expect(currentLabel.trim()).toEqual(labels[i]);
                 }
             },
@@ -73,14 +76,17 @@ describe('oasp-grid directive specs', function () {
     it('renders using a renderer supplied', function () {
         // given
         var itemLabel = 'Item', priceLabel = 'Price',
-            banana = {item: 'Banana', price: {amount: 2, currency: 'EUR'}},
+            banana = { item: 'Banana', price: {amount: 2, currency: 'EUR'} },
             element;
         $rootScope.columnDefs = [
-            {field: 'item', label: itemLabel},
-            {field: 'price', label: priceLabel, renderer: function (row, column) {
-                var currentPrice = row[column.field];
-                return currentPrice.amount + ' ' + currentPrice.currency;
-            }}
+            { field: 'item', label: itemLabel },
+            { field: 'price', label: priceLabel,
+                renderer: function (row) {
+                    var currentPrice = row.price;
+
+                    return currentPrice.amount + ' ' + currentPrice.currency;
+                }
+                }
         ];
         $rootScope.rows = [banana];
         // when
@@ -97,12 +103,16 @@ describe('oasp-grid directive specs', function () {
         ];
         $rootScope.rows = [{attr : 'My value'}];
         // when
-        var element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows"></div>')($rootScope);
+        var element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows"></div>')($rootScope),
+            someCell;
         $rootScope.$digest();
-        element.find('tbody tr').click();
+        // find some cell and click it
+        someCell = element.find(rowSelector).find(cellSelector).eq(0);
+        someCell.click();
         $rootScope.$digest();
+
         // then
-        expect(element.find('tbody tr').hasClass('selected-row')).toBeTruthy();
+        expect(element.find(rowSelector).hasClass('selected-row')).toBeTruthy();
     });
 
     it('calls a function back on a double click', function () {
@@ -117,7 +127,7 @@ describe('oasp-grid directive specs', function () {
         // when
         element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows" data-dblclick-callback="myCallback(row)"></div>')($rootScope);
         $rootScope.$digest();
-        element.find('tbody tr').dblclick();
+        element.find(rowSelector).dblclick();
         $rootScope.$digest();
         // then
         expect($rootScope.myCallback).toHaveBeenCalledWith(row);
@@ -181,7 +191,7 @@ describe('oasp-grid directive specs', function () {
         // when
         element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows" data-button-defs="buttonDefs"></div>')($rootScope);
         $rootScope.$digest();
-        element.find('tbody tr').click();
+        element.find(rowSelector).click();
         $rootScope.$digest();
         // then
         expect(element.find('button').is(':disabled')).toBeFalsy();
@@ -206,7 +216,7 @@ describe('oasp-grid directive specs', function () {
         // when
         element = $compile('<div data-oasp-grid="" data-title="Some Items" data-column-defs="columnDefs" data-rows="rows" data-button-defs="buttonDefs"></div>')($rootScope);
         $rootScope.$digest();
-        element.find('tbody tr').click();
+        element.find(cellSelector).eq(0).click();
         $rootScope.$digest();
         element.find('button').click();
         // then
