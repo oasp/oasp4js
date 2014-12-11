@@ -43,10 +43,10 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
             $scope.model.order.positions.push({
                 revision: null,
                 orderId: $scope.model.order.order.id,
-                offerId: null,
+                offerId: offer.id,
                 offerName: offer.description,
                 state: 'ORDERED',
-                price: offer.currentPrice,
+                price: offer.price,
                 comment: ''
             });
         };
