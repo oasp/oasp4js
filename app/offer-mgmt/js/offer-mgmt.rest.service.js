@@ -6,6 +6,9 @@ angular.module('app.offer-mgmt').factory('offerManagementRestService', function 
     return {
         getAllOffers: function () {
             return $http.get(servicePath + '/offer');
+        },
+        getAllProducts: function () {
+            return $http.get(servicePath + '/product');
         }
     };
 });

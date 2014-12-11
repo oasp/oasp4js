@@ -15,8 +15,7 @@ module.exports = (function () {
             'oasp-i18n',
             'offer-mgmt',
             'sales-mgmt',
-            'table-mgmt',
-            'cook-order-mgmt'
+            'table-mgmt'
         ],
         builder = (function () {
             return {
