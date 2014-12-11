@@ -9,8 +9,15 @@ body {
 
 .table-striped {
   tbody {
-    > tr.selected-row > td {
-      background-color: @brand-info;
+    > tr.active {
+      &:hover {
+        > td {
+          background-color: darken(@brand-info, 10%)
+        }
+      }
+      > td {
+        background-color: @brand-info;
+      }
     }
   }
   & * {
