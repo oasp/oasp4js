@@ -4,7 +4,7 @@ angular.module('app.oasp-i18n', ['pascalprecht.translate', 'app.oasp-i18n.templa
     $translateProvider.useLoader('$translatePartialLoader', {
         urlTemplate: '{part}/i18n/locale-{lang}.json'
     });
-}).run(function ($rootScope, $translate, $translatePartialLoader, translationSupport, supportedLanguages) {
+}).run(function ($rootScope, $translate, $translatePartialLoader, translationSupport, supportedLanguages, $timeout) {
     'use strict';
     var switchPart = function (part) {
         $translatePartialLoader.addPart(part);
@@ -16,8 +16,10 @@ angular.module('app.oasp-i18n', ['pascalprecht.translate', 'app.oasp-i18n.templa
     if (supportedLanguages.getDefault()) {
         $translate.use(supportedLanguages.getDefault().key);
     }
-    if (translationSupport.getDefaultTranslationModule()) {
-        switchPart(translationSupport.getDefaultTranslationModule());
-    }
+    $timeout(function () {
+        if (translationSupport.getDefaultTranslationModule()) {
+            switchPart(translationSupport.getDefaultTranslationModule());
+        }
+    });
 });
 
