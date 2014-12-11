@@ -7,6 +7,25 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
         $scope.model.order = currentOrder;
         $scope.model.selected = allOffers.length ? allOffers[0] : undefined;
 
+
+
+      /**
+       * @ngdoc directive
+       * @name trustAsHtml
+       * @module app.tableMgmt
+       * @function
+       *
+       * @description
+       * description for trustAsHtml method
+       * * @example
+       * <example module="rfx">
+       * <file name="index.html">
+       *  <textarea ng-model="text" r-autogrow class="input-block-level"></textarea>
+       *  <pre>{{text}}</pre>
+       * </file>
+       * </example>
+       *
+       */
         $scope.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);
         };
