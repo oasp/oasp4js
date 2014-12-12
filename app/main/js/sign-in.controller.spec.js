@@ -13,14 +13,14 @@ describe('Module: main, Controller: sign-in', function () {
         });
     });
 
-    beforeEach(inject(function ($rootScope, $controller, _$location_) {
+    beforeEach(inject(function ($rootScope, $controller, _$location_, $q) {
         appContext = {
             getCurrentUser: function () {
-                return {
+                return $q.when({
                     getHomeDialogPath: function () {
                         return userHomeDialogPath;
                     }
-                };
+                });
             }
         };
         $location = _$location_;

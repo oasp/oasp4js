@@ -37,6 +37,37 @@ angular.module('oasp-security')
                             }
                         };
                     }()),
+                    currentUserProfileHandler = (function () {
+                        var currentUserProfile,
+                            profileBeingInitialized = false,
+                            deferredUserProfileRetrieval;
+
+                        return {
+                            initializationStarts: function () {
+                                profileBeingInitialized = true;
+                                deferredUserProfileRetrieval = $q.defer();
+                            },
+                            initializationSucceeded: function (newUserProfile) {
+                                currentUserProfile = newUserProfile;
+                                profileBeingInitialized = false;
+                                deferredUserProfileRetrieval.resolve(currentUserProfile);
+                                deferredUserProfileRetrieval = undefined;
+                            },
+                            initializationFailed: function () {
+                                currentUserProfile = undefined;
+                                profileBeingInitialized = false;
+                                deferredUserProfileRetrieval.resolve(currentUserProfile);
+                                deferredUserProfileRetrieval = undefined;
+                            },
+                            userLoggedOff: function () {
+                                currentUserProfile = undefined;
+                            },
+                            getProfile: function () {
+                                return profileBeingInitialized ? deferredUserProfileRetrieval.promise :
+                                    $q.when(currentUserProfile);
+                            }
+                        };
+                    }()),
                     getSecurityRestService = function () {
                         return $injector.get(config.securityRestServiceName);
                     },
@@ -59,18 +90,23 @@ angular.module('oasp-security')
                 return {
                     logIn: function (username, password) {
                         var logInDeferred = $q.defer();
+                        currentUserProfileHandler.initializationStarts();
                         getSecurityRestService().login(username, password)
                             .then(function () {
                                 $q.all([
                                     getSecurityRestService().getCurrentUser(),
                                     enableCsrfProtection()
                                 ]).then(function (allResults) {
-                                    getAppContextService().onLoggingIn(allResults[0].data);
+                                    var userProfile = allResults[0].data;
+                                    currentUserProfileHandler.initializationSucceeded(userProfile);
+                                    getAppContextService().onLoggingIn(userProfile);
                                     logInDeferred.resolve();
                                 }, function (reject) {
+                                    currentUserProfileHandler.initializationFailed();
                                     logInDeferred.reject(reject);
                                 });
                             }, function () {
+                                currentUserProfileHandler.initializationFailed();
                                 logInDeferred.reject('Authentication failed');
                             });
                         return logInDeferred.promise;
@@ -79,19 +115,30 @@ angular.module('oasp-security')
                         return getSecurityRestService().logout()
                             .then(function () {
                                 currentCsrfProtection.invalidate();
+                                currentUserProfileHandler.userLoggedOff();
                                 getAppContextService().onLoggingOff();
                             });
                     },
                     checkIfUserIsLoggedInAndIfSoReinitializeAppContext: function () {
-                        getSecurityRestService().getCurrentUser().then(function (response) {
-                            var userProfile = response.data;
-                            enableCsrfProtection().then(function () {
-                                getAppContextService().onLoggingIn(userProfile);
+                        currentUserProfileHandler.initializationStarts();
+                        getSecurityRestService().getCurrentUser()
+                            .then(function (response) {
+                                var userProfile = response.data;
+                                enableCsrfProtection().then(function () {
+                                    currentUserProfileHandler.initializationSucceeded(userProfile);
+                                    getAppContextService().onLoggingIn(userProfile);
+                                }, function () {
+                                    currentUserProfileHandler.initializationFailed();
+                                });
+                            }, function () {
+                                currentUserProfileHandler.initializationFailed();
                             });
-                        });
                     },
                     getCurrentCsrfToken: function () {
                         return currentCsrfProtectionWrapper;
+                    },
+                    getCurrentUserProfile: function () {
+                        return currentUserProfileHandler.getProfile();
                     }
                 };
             }

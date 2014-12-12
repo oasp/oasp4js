@@ -115,36 +115,43 @@ angular.module('app.sales-mgmt')
             }());
 
         that.get = function () {
-            var deferredPositions = $q.defer(),
-                cookId = appContext.getCurrentUser().getUserId();
+            var deferredPositions = $q.defer(), cookId;
 
-            $q.all([
-                salesManagementRestService.findOrderPositions({state: 'ORDERED', mealOrSideDish: true}),
-                salesManagementRestService.findOrderPositions({state: 'ORDERED', mealOrSideDish: true, cookId: cookId}),
-                offerManagementRestService.getAllOffers(),
-                offerManagementRestService.getAllProducts()
-            ]).then(function (allResults) {
-                positionManager
-                    .allPositions(allResults[0].data)
-                    .assignedPositions(allResults[1].data)
-                    .offers(allResults[2].data)
-                    .products(allResults[3].data);
-                deferredPositions.resolve(positionManager.getAvailableAndAssignedPositions());
-            }, function (reject) {
-                deferredPositions.reject(reject);
+            appContext.getCurrentUser().then(function (currentUser) {
+                cookId = currentUser.getUserId();
+                if (cookId) {
+                    $q.all([
+                        salesManagementRestService.findOrderPositions({state: 'ORDERED', mealOrSideDish: true}),
+                        salesManagementRestService.findOrderPositions({state: 'ORDERED', mealOrSideDish: true, cookId: cookId}),
+                        offerManagementRestService.getAllOffers(),
+                        offerManagementRestService.getAllProducts()
+                    ]).then(function (allResults) {
+                        positionManager
+                            .allPositions(allResults[0].data)
+                            .assignedPositions(allResults[1].data)
+                            .offers(allResults[2].data)
+                            .products(allResults[3].data);
+                        deferredPositions.resolve(positionManager.getAvailableAndAssignedPositions());
+                    }, function (reject) {
+                        deferredPositions.reject(reject);
+                    });
+                } else {
+                    deferredPositions.reject();
+                }
             });
 
             return deferredPositions.promise;
         };
 
         that.assignCookToPosition = function (positionId) {
-            var cookId = appContext.getCurrentUser().getUserId();
-
-            return salesManagementRestService.updateOrderPosition(positionManager.assignCookToPosition(cookId,
-                positionId))
-                .then(function () {
-                    return that.get();
-                });
+            var cookId;
+            return appContext.getCurrentUser().then(function (currentUser) {
+                cookId = currentUser.getUserId();
+                return salesManagementRestService.updateOrderPosition(positionManager.assignCookToPosition(cookId, positionId))
+                    .then(function () {
+                        return that.get();
+                    });
+            });
         };
 
         that.makePositionAvailable = function (positionId) {

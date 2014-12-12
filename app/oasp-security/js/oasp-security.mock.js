@@ -13,6 +13,7 @@ angular.module('oasp-security')
                 logIn: $delegate.logIn,
                 logOff: $delegate.logOff,
                 getCurrentCsrfToken: $delegate.getCurrentCsrfToken,
+                getCurrentUserProfile: $delegate.getCurrentUserProfile,
                 checkIfUserIsLoggedInAndIfSoReinitializeAppContext: angular.noop
             };
         };

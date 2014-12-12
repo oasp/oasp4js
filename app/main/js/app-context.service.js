@@ -1,10 +1,10 @@
 angular.module('app.main')
-    .factory('appContext', function () {
+    .factory('appContext', function (oaspSecurityService, $q) {
         'use strict';
         var currentUserInternal = {
                 isLoggedIn: false
             },
-            currentUserExternal = (function (currentUser) {
+            currentUserExternal = function (currentUser) {
                 return {
                     isLoggedIn: function () {
                         return currentUser.isLoggedIn;
@@ -23,7 +23,7 @@ angular.module('app.main')
                         return (currentUser.profile && currentUser.profile.homeDialogPath) || '';
                     }
                 };
-            }(currentUserInternal)),
+            },
             updateUserProfile = function (userProfile) {
                 currentUserInternal.isLoggedIn = true;
                 currentUserInternal.profile = userProfile;
@@ -46,10 +46,20 @@ angular.module('app.main')
 
         return {
             getCurrentUser: function () {
-                return currentUserExternal;
+                var deferred = $q.defer();
+                oaspSecurityService.getCurrentUserProfile()
+                    .then(function (userProfile) {
+                        if (userProfile) {
+                            updateUserProfile(userProfile);
+                        } else {
+                            switchToAnonymousUser();
+                        }
+                        deferred.resolve(currentUserExternal(currentUserInternal));
+                    });
+                return deferred.promise;
             },
-            onLoggingIn: function (currentUser) {
-                updateUserProfile(currentUser);
+            onLoggingIn: function (userProfile) {
+                updateUserProfile(userProfile);
             },
             onLoggingOff: function () {
                 switchToAnonymousUser();

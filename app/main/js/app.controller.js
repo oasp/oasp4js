@@ -1,6 +1,10 @@
 angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $scope, $location, $window, appContext, oaspSecurityService, globalSpinner) {
     'use strict';
-    $scope.currentUser = appContext.getCurrentUser();
+
+    appContext.getCurrentUser().then(function (currentUser) {
+        $scope.currentUser = currentUser;
+    });
+
     $scope.logOff = function () {
         var goToSignInDialogFullyReloadingApp = function () {
             $location.path(SIGN_IN_DLG_PATH);
