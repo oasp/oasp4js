@@ -15,8 +15,8 @@ angular.module('app.sales-mgmt').factory('salesManagementRestService', function 
         createOrder: function (order) {
             return $http.post(servicePath + '/order', order);
         },
-        updateOrderPosition: function (orderPositionId, orderPosition) {
-            return $http.post(servicePath + '/orderposition/' + orderPositionId, orderPosition);
+        updateOrderPosition: function (orderPosition) {
+            return $http.post(servicePath + '/orderposition', orderPosition);
         },
         findOrderPositions: function (params) {
             return $http.get(servicePath + '/orderposition', {
