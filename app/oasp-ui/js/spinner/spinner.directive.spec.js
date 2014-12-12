@@ -2,7 +2,7 @@ describe('spinner directive specs', function () {
     "use strict";
     var $compile, $rootScope;
 
-    beforeEach(module('oasp-ui'));
+    beforeEach(module('oasp-ui.spinner'));
 
     beforeEach(inject(function (_$compile_, _$rootScope_) {
         $compile = _$compile_;

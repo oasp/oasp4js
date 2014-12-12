@@ -3,13 +3,23 @@
 <body>
 <div class="row">
     <div class="col-md-12">
-        <div data-oasp-grid=""
-             data-title="Tables"
-             data-column-defs="columnDefs"
-             data-rows="tables"
-             data-button-defs="buttonDefs"
-             data-dblclick-callback="openEditDialog(row)">
-        </div>
+        <h2>Tables</h2>
+
+        <table class="raw-table table-striped" tr-ng-grid=""
+               selection-mode="SingleRow"
+               enable-filtering="false"
+               selected-items="selectedItems"
+               items="gridOptions.data">
+            <thead>
+            <tr>
+                <th field-name="number" display-name="Number" cell-width="7em"></th>
+                <th field-name="state" display-name="State"></th>
+                <th field-name="waiter" display-name="waiter"></th>
+            </tr>
+            </thead>
+        </table>
+
+        <button-bar button-defs="buttonDefs"></button-bar>
     </div>
 </div>
 </body>

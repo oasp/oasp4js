@@ -1,9 +1,9 @@
 describe('Module: oasp-i18n', function () {
     'use strict';
     beforeEach(function () {
-        angular.module('fake.module', ['app.oasp-i18n'], function (supportedLanguagesProvider, translationSupportProvider) {
-            translationSupportProvider.enableTranslationForModule('main', true);
-            supportedLanguagesProvider.setSupportedLanguages(
+        angular.module('fake.module', ['app.oasp-i18n'], function (oaspTranslationProvider) {
+            oaspTranslationProvider.enableTranslationForModule('main', true);
+            oaspTranslationProvider.setSupportedLanguages(
                 [
                     {
                         key: 'en',

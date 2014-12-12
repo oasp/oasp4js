@@ -1,1 +1,1 @@
-angular.module('oasp-ui', ['ui.bootstrap', 'angularSpinner', 'app.oasp-ui.templates']);
+angular.module('oasp-ui', ['oasp-ui.oasp-grid', 'oasp-ui.spinner', 'oasp-ui.modal', 'oasp-ui.button-bar']);

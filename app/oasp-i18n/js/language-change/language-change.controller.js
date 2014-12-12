@@ -1,6 +1,6 @@
-angular.module('app.oasp-i18n').controller('LanguageChangeCntl', function ($scope, $translate, supportedLanguages) {
+angular.module('app.oasp-i18n').controller('LanguageChangeCntl', function ($scope, $translate, oaspTranslation) {
     'use strict';
-    $scope.supportedLanguages = supportedLanguages.get();
+    $scope.supportedLanguages = oaspTranslation.getSupportedLanguages();
 
     $scope.changeLanguage = function (lang) {
         $translate.use(lang);

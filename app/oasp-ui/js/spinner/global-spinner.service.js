@@ -1,4 +1,4 @@
-angular.module('oasp-ui')
+angular.module('oasp-ui.spinner')
     .factory('globalSpinner', function ($rootScope, $q) {
         'use strict';
         var that = {};

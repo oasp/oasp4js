@@ -9,7 +9,7 @@ describe('Module: \'oasp-ui\', service: \'globalSpinner\'', function () {
         };
 
     beforeEach(function () {
-        module('oasp-ui');
+        module('oasp-ui.spinner');
         /*jslint nomen: true */
         inject(function (_globalSpinner_, _$rootScope_) {
             globalSpinner = _globalSpinner_;
