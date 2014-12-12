@@ -9,7 +9,7 @@ angular.module('oasp-ui.modal')
             return {
                 open: function (options) {
                     globalSpinner.show();
-                    var result = $delegate.open(angular.extend(oaspUiModalDefaults, options));
+                    var result = $delegate.open(angular.extend({}, oaspUiModalDefaults, options));
                     result.opened
                         .then(function () {
                             globalSpinner.hide();
