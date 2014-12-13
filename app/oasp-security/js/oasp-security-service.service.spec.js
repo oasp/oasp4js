@@ -70,6 +70,71 @@ describe('Module: \'oasp-security\', service: \'oaspSecurityService\'', function
         expect(myAppContext.onLoggingIn).toHaveBeenCalledWith(userProfile);
     });
 
+    it('logIn() rejects after getCurrentUser REST service failed', function () {
+        // given
+        currentUserPromise = $q.reject();
+        // when
+        oaspSecurityService.logIn('user', 'pass').then(successCallback, failureCallback);
+        $rootScope.$apply();
+        // then
+        expect(failureCallback).toHaveBeenCalled();
+        expect(successCallback).not.toHaveBeenCalled();
+        expect(myAppContext.onLoggingIn).not.toHaveBeenCalledWith();
+    });
+
+    it('logIn() rejects after getCsrfToken REST service failed', function () {
+        // given
+        csrfTokenPromise = $q.reject();
+        // when
+        oaspSecurityService.logIn('user', 'pass').then(successCallback, failureCallback);
+        $rootScope.$apply();
+        // then
+        expect(failureCallback).toHaveBeenCalled();
+        expect(successCallback).not.toHaveBeenCalled();
+        expect(myAppContext.onLoggingIn).not.toHaveBeenCalledWith();
+    });
+
+    it('logIn() rejects after logIn REST service failed', function () {
+        // given
+        logInPromise = $q.reject();
+        // when
+        oaspSecurityService.logIn('user', 'pass').then(successCallback, failureCallback);
+        $rootScope.$apply();
+        // then
+        expect(failureCallback).toHaveBeenCalled();
+        expect(successCallback).not.toHaveBeenCalled();
+        expect(myAppContext.onLoggingIn).not.toHaveBeenCalledWith();
+    });
+
+    it('getCurrentUserProfile() resolves to undefined after logging in failed', function () {
+        // given
+        var currentUserProfile = 'some value';
+        logInPromise = $q.reject();
+        oaspSecurityService.logIn('user', 'pass');
+        $rootScope.$apply();
+        // when
+        oaspSecurityService.getCurrentUserProfile().then(function (userProfile) {
+            currentUserProfile = userProfile;
+        });
+        $rootScope.$apply();
+        // then
+        expect(currentUserProfile).toBeUndefined();
+    });
+
+    it('getCurrentUserProfile() resolves to current user profile after successful logging in', function () {
+        // given
+        var currentUserProfile;
+        oaspSecurityService.logIn('user', 'pass');
+        $rootScope.$apply();
+        // when
+        oaspSecurityService.getCurrentUserProfile().then(function (userProfile) {
+            currentUserProfile = userProfile;
+        });
+        $rootScope.$apply();
+        // then
+        expect(currentUserProfile).toBe(userProfile);
+    });
+
     it('calls onLoggingOff() when logging out successful', function () {
         // when
         oaspSecurityService.logOff().then(successCallback, failureCallback);
@@ -105,4 +170,6 @@ describe('Module: \'oasp-security\', service: \'oaspSecurityService\'', function
         expect(currentCsrfToken.getHeaderName()).toBeUndefined();
         expect(currentCsrfToken.getToken()).toBeUndefined();
     });
+
+
 });

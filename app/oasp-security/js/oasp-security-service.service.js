@@ -83,7 +83,7 @@ angular.module('oasp-security')
                                 currentCsrfProtection.set(csrfProtection.headerName, csrfProtection.token);
                                 return csrfProtection;
                             }, function () {
-                                return 'Requesting a CSRF token failed';
+                                return $q.reject('Requesting a CSRF token failed');
                             });
                     };
 
