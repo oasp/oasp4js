@@ -53,12 +53,13 @@ module.exports = (function () {
                 return builder.buildForModules('{module}/img/**');
             },
             html2js: function () {
-                var ngTempaltesPaths = {}, i, srcPath;
+                var ngTempaltesPaths = {}, i, tempSrcPath, srcPath;
                 for (i = 0; i < modules.length; i += 1) {
-                    srcPath = builder.build('{tmp}/{module}/html/cached', modules[i]);
+                    tempSrcPath = builder.build('{tmp}/{module}/html/cached', modules[i]);
+                    srcPath = builder.build('{app}/{module}/html/cached', modules[i]);
                     if (grunt.file.isDir(srcPath)) {
                         ngTempaltesPaths[modules[i]] = {
-                            src: srcPath + '/**/*.html',
+                            src: tempSrcPath + '/**/*.html',
                             dest: builder.build('{tmp}/{module}/js/{module}.templates.js', modules[i])
                         };
                     }
