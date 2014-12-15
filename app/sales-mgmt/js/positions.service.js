@@ -1,11 +1,11 @@
 angular.module('app.sales-mgmt')
-    .factory('positions', function (salesManagementRestService, offerManagementRestService, appContext, $q) {
+    .factory('positions', function (salesManagementRestService, offers, appContext, $q) {
         'use strict';
         var that = {},
             positionManager = (function () {
                 var thisPositionManager = {},
                     allPositions = [],
-                    positionsAssignedToCurrentUser = [],
+                    cookId,
                     offers = [],
                     products = [],
                     availableAndAssignedPositions = {},
@@ -20,42 +20,24 @@ angular.module('app.sales-mgmt')
                             }
                         }
                     },
-                    createDetailedPositions = function (positions) {
-                        var detailedPositions = [], i, currentPosition, currentOffer, currentMeal, currentSideDish;
+                    createDetailedPosition = function (position) {
+                        var currentOffer, currentMeal, currentSideDish;
 
-                        if (positions) {
-                            for (i = 0; i < positions.length; i += 1) {
-                                currentPosition = positions[i];
-                                currentOffer = findItemById(offers, currentPosition.offerId);
-                                if (currentOffer) {
-                                    currentMeal = findItemById(products, currentOffer.mealId);
-                                    currentSideDish = findItemById(products, currentOffer.sideDishId);
-                                }
-
-                                detailedPositions.push({
-                                    id: currentPosition.id,
-                                    orderId: currentPosition.orderId,
-                                    offerName: currentPosition.offerName,
-                                    mealName: (currentMeal && currentMeal.description) || '',
-                                    sideDishName: (currentSideDish && currentSideDish.description) || ''
-                                });
+                        if (position) {
+                            currentOffer = findItemById(offers, position.offerId);
+                            if (currentOffer) {
+                                currentMeal = findItemById(products, currentOffer.mealId);
+                                currentSideDish = findItemById(products, currentOffer.sideDishId);
                             }
-                        }
 
-                        return detailedPositions;
-                    },
-                    extractUnassignedPositions = function (positions) {
-                        var unassignedPositions = [], i, currentPosition, noCookAssigned;
-                        if (positions) {
-                            for (i = 0; i < positions.length; i += 1) {
-                                currentPosition = positions[i];
-                                noCookAssigned = !currentPosition.cookId;
-                                if (noCookAssigned) {
-                                    unassignedPositions.push(currentPosition);
-                                }
-                            }
+                            return {
+                                id: position.id,
+                                orderId: position.orderId,
+                                offerName: position.offerName,
+                                mealName: currentMeal && currentMeal.description,
+                                sideDishName: currentSideDish && currentSideDish.description
+                            };
                         }
-                        return unassignedPositions;
                     };
 
                 thisPositionManager.allPositions = function (allPositionsToSet) {
@@ -63,8 +45,8 @@ angular.module('app.sales-mgmt')
                     return thisPositionManager;
                 };
 
-                thisPositionManager.assignedPositions = function (assignedPositions) {
-                    positionsAssignedToCurrentUser = assignedPositions;
+                thisPositionManager.currentUserId = function (cookIdToSet) {
+                    cookId = cookIdToSet;
                     return thisPositionManager;
                 };
 
@@ -103,10 +85,21 @@ angular.module('app.sales-mgmt')
                 };
 
                 thisPositionManager.getAvailableAndAssignedPositions = function () {
-                    availableAndAssignedPositions.availablePositions =
-                        createDetailedPositions(extractUnassignedPositions(allPositions));
-                    availableAndAssignedPositions.positionsAssignedToCurrentUser =
-                        createDetailedPositions(positionsAssignedToCurrentUser);
+                    var available = [], assigned = [], i, currentPosition, noCookAssigned;
+                    if (allPositions) {
+                        for (i = 0; i < allPositions.length; i += 1) {
+                            currentPosition = allPositions[i];
+                            // 0 is falsy, but can be a valid ID
+                            noCookAssigned = currentPosition.cookId === null || currentPosition.cookId === undefined;
+                            if (noCookAssigned) {
+                                available.push(createDetailedPosition(currentPosition));
+                            } else if (cookId === currentPosition.cookId) {
+                                assigned.push(createDetailedPosition(currentPosition));
+                            } // ignoring positions assigned to other users
+                        }
+                    }
+                    availableAndAssignedPositions.availablePositions = available;
+                    availableAndAssignedPositions.positionsAssignedToCurrentUser = assigned;
 
                     return availableAndAssignedPositions;
                 };
@@ -122,15 +115,14 @@ angular.module('app.sales-mgmt')
                 if (cookId) {
                     $q.all([
                         salesManagementRestService.findOrderPositions({state: 'ORDERED', mealOrSideDish: true}),
-                        salesManagementRestService.findOrderPositions({state: 'ORDERED', mealOrSideDish: true, cookId: cookId}),
-                        offerManagementRestService.getAllOffers(),
-                        offerManagementRestService.getAllProducts()
+                        offers.loadAllOffers(),
+                        offers.loadAllProducts()
                     ]).then(function (allResults) {
                         positionManager
+                            .currentUserId(cookId)
                             .allPositions(allResults[0].data)
-                            .assignedPositions(allResults[1].data)
-                            .offers(allResults[2].data)
-                            .products(allResults[3].data);
+                            .offers(allResults[1])
+                            .products(allResults[2]);
                         deferredPositions.resolve(positionManager.getAvailableAndAssignedPositions());
                     }, function (reject) {
                         deferredPositions.reject(reject);

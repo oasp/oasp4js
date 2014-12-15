@@ -5,6 +5,11 @@ angular.module('app.offer-mgmt').factory('offers', function (offerManagementRest
             return offerManagementRestService.getAllOffers().then(function (response) {
                 return response.data;
             });
+        },
+        loadAllProducts: function () {
+            return offerManagementRestService.getAllProducts().then(function (response) {
+                return response.data;
+            });
         }
     };
 });
