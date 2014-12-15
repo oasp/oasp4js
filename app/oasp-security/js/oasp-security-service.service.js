@@ -63,8 +63,7 @@ angular.module('oasp-security')
                                 currentUserProfile = undefined;
                             },
                             getProfile: function () {
-                                return profileBeingInitialized ? deferredUserProfileRetrieval.promise :
-                                    $q.when(currentUserProfile);
+                                return profileBeingInitialized ? deferredUserProfileRetrieval.promise : $q.when(currentUserProfile);
                             }
                         };
                     }()),
