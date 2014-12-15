@@ -6,8 +6,8 @@ angular.module('app.sales-mgmt')
                 var thisPositionManager = {},
                     allPositions = [],
                     cookId,
-                    offers = [],
-                    products = [],
+                    allOffers = [],
+                    allProducts = [],
                     availableAndAssignedPositions = {},
                     findItemById = function (items, id) {
                         var j, currentItem;
@@ -24,10 +24,10 @@ angular.module('app.sales-mgmt')
                         var currentOffer, currentMeal, currentSideDish;
 
                         if (position) {
-                            currentOffer = findItemById(offers, position.offerId);
+                            currentOffer = findItemById(allOffers, position.offerId);
                             if (currentOffer) {
-                                currentMeal = findItemById(products, currentOffer.mealId);
-                                currentSideDish = findItemById(products, currentOffer.sideDishId);
+                                currentMeal = findItemById(allProducts, currentOffer.mealId);
+                                currentSideDish = findItemById(allProducts, currentOffer.sideDishId);
                             }
 
                             return {
@@ -51,19 +51,19 @@ angular.module('app.sales-mgmt')
                 };
 
                 thisPositionManager.offers = function (offersToSet) {
-                    offers = offersToSet;
+                    allOffers = offersToSet;
                     return thisPositionManager;
                 };
 
                 thisPositionManager.products = function (productsToSet) {
-                    products = productsToSet;
+                    allProducts = productsToSet;
                     return thisPositionManager;
                 };
 
-                thisPositionManager.assignCookToPosition = function (cookId, positionId) {
+                thisPositionManager.assignCookToPosition = function (cookIdToSet, positionId) {
                     var position = findItemById(allPositions, positionId);
                     if (position) {
-                        position.cookId = cookId;
+                        position.cookId = cookIdToSet;
                     }
                     return position;
                 };
