@@ -1,6 +1,12 @@
 angular.module('app.sales-mgmt')
-    .controller('CookPositionsCntl', function ($scope, currentPositions, positions, globalSpinner) {
+    .controller('CookPositionsCntl', function ($scope, currentPositions, positions, globalSpinner, positionStateNotification) {
         'use strict';
+
+        positionStateNotification.connect().then(function () {
+            positionStateNotification.subscribe(function (message) {
+                positions.get();
+            });
+        });
 
         $scope.positionsAvailableSelected = [];
         $scope.positionsAssignedSelected = [];

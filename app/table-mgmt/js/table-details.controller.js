@@ -1,5 +1,5 @@
 angular.module('app.table-mgmt').controller('TableDetailsCntl',
-    function ($scope, $sce, tableDetails, allOffers, currentOrder, sales, globalSpinner) {
+    function ($scope, $sce, tableDetails, allOffers, currentOrder, sales, globalSpinner, positionStateNotification) {
         'use strict';
         $scope.table = tableDetails;
         $scope.allOffers = allOffers;
@@ -35,6 +35,11 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
             globalSpinner.decorateCallOfFunctionReturningPromise(function () {
                 return sales.saveOrUpdateOrder($scope.model.order);
             }).then(function () {
+                positionStateNotification.connect().then(function () {
+                    var pos = $scope.model.order.positions[0];
+                    positionStateNotification.notify(pos.id, pos.status);
+                });
+
                 $scope.$close();
             });
         };
