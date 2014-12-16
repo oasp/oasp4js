@@ -16,6 +16,14 @@ module.exports = function (grunt) {
                         changeOrigin: true
                     },
                     {
+                        context: '/<%= config.context %>/websocket',
+                        host: 'localhost',
+                        port: 8081,
+                        https: false,
+                        changeOrigin: true,
+                        ws: true
+                    },
+                    {
                         context: '/<%= config.context %>',
                         host: 'localhost',
                         port: 9000,
