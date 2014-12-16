@@ -5,24 +5,17 @@
         "modernizr": "~2.6.2",
         "respond": "~1.1.0",
         "bootstrap": "~3.3.1",
-        "angular-ui-bootstrap-bower": "0.12.0",
         "angular": "1.3.5",
         "angular-route": "1.3.5",
-        "angular-translate": "2.5.2",
-        "angular-translate-loader-partial": "2.5.2",
         "angular-ui-select": "~0.8.3",
-        "angular-spinner": "~0.5.1",
         "autofill-event": "~1.0.0",
-        "trNgGrid": "~3.0.3",
-        "sockjs-client": "~0.3.4",
-        "stomp-websocket": "~2.3.3"
+        "oasp-js": "C:/projects/oasp/oasp4js/.git/"
     },
     "devDependencies": {
         "angular-mocks": "1.3.5"
     },
     "appPath": "app",
     "resolutions": {
-        "angular": ">=1.3",
-        "angular-translate": "~2.5.2"
+        "angular": ">=1.3"
     }
 }

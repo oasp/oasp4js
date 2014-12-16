@@ -1,9 +1,9 @@
+/*global Stomp,SockJS*/
 angular.module('app.sales-mgmt')
     .factory('positionStateNotification', function (currentContextPath, $q) {
         'use strict';
 
-        var positionStompClient,
-            subscription;
+        var positionStompClient;
 
         return {
             connect: function () {
@@ -43,7 +43,7 @@ angular.module('app.sales-mgmt')
                 };
 
                 if (positionStompClient) {
-                    subscription = positionStompClient.subscribe('/topic/positionStatusChange', internalCallback);
+                    positionStompClient.subscribe('/topic/positionStatusChange', internalCallback);
                 }
             },
             notify: function (positionId, newStatus) {
@@ -53,7 +53,7 @@ angular.module('app.sales-mgmt')
                 };
 
                 if (positionStompClient) {
-                    subscription = positionStompClient.send("/sample/positions", {},
+                    positionStompClient.send("/sample/positions", {},
                         JSON.stringify(positionStatusChange));
                 }
             }

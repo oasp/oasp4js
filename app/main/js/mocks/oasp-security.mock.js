@@ -4,7 +4,7 @@
  * This is necessary when testing modules which depend on the oasp-security module, so that the REST services' calls
  * are not executed when loading these modules.
  */
-angular.module('oasp-security')
+angular.module('oasp.oaspSecurity')
     .config(function ($provide) {
         'use strict';
 

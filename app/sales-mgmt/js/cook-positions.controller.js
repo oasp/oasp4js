@@ -3,7 +3,7 @@ angular.module('app.sales-mgmt')
         'use strict';
 
         positionStateNotification.connect().then(function () {
-            positionStateNotification.subscribe(function (message) {
+            positionStateNotification.subscribe(function () {
                 positions.get();
             });
         });
