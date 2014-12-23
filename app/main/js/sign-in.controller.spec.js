@@ -52,7 +52,7 @@ describe('Module: main, Controller: sign-in', function () {
     it('exposes signIn() on $scope which changes to the user\'s home dialog on success', inject(function ($q) {
         // given
         userHomeDialogPath = '/some-module/home';
-        spyOn(oaspSecurityService, 'logIn').andCallFake(function () {
+        spyOn(oaspSecurityService, 'logIn').and.callFake(function () {
             return $q.when();
         });
         $scope.loginForm = {
@@ -68,7 +68,7 @@ describe('Module: main, Controller: sign-in', function () {
     }));
     it('exposes signIn() on $scope which adds an error message and clears the form on failure', inject(function ($q) {
         // given
-        spyOn(oaspSecurityService, 'logIn').andCallFake(function () {
+        spyOn(oaspSecurityService, 'logIn').and.callFake(function () {
             return $q.reject();
         });
         $scope.loginForm = {

@@ -39,7 +39,7 @@ describe('Controller: AppCntl', function () {
 
     it('exposes logOff() on $scope which redirects to the Sign In dialog on success', inject(function ($q, SIGN_IN_DLG_PATH, $location) {
         // given
-        security.logOff = jasmine.createSpy().andReturn($q.when(undefined));
+        security.logOff = jasmine.createSpy().and.returnValue($q.when(undefined));
         $location.path('/some-module/some-dialog');
         // when
         $scope.logOff();

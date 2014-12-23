@@ -119,7 +119,7 @@ describe('Module: \'app.sales-mgmt\', Service: \'positions\'', function () {
         allProductsPromise = $q.when(allProducts);
         positions.get();
         $scope.$apply();
-        spyOn(salesManagementRestServiceMock, 'updateOrderPosition').andReturn($q.when());
+        spyOn(salesManagementRestServiceMock, 'updateOrderPosition').and.returnValue($q.when());
         // when
         positions.assignCookToPosition(availablePositionId).then(successCallback, failureCallback);
         $scope.$apply();
@@ -145,7 +145,7 @@ describe('Module: \'app.sales-mgmt\', Service: \'positions\'', function () {
         allProductsPromise = $q.when(allProducts);
         positions.get();
         $scope.$apply();
-        spyOn(salesManagementRestServiceMock, 'updateOrderPosition').andReturn($q.when());
+        spyOn(salesManagementRestServiceMock, 'updateOrderPosition').and.returnValue($q.when());
         // when
         positions.makePositionAvailable(currentUserPositionId).then(successCallback, failureCallback);
         $scope.$apply();
@@ -171,7 +171,7 @@ describe('Module: \'app.sales-mgmt\', Service: \'positions\'', function () {
         allProductsPromise = $q.when(allProducts);
         positions.get();
         $scope.$apply();
-        spyOn(salesManagementRestServiceMock, 'updateOrderPosition').andReturn($q.when());
+        spyOn(salesManagementRestServiceMock, 'updateOrderPosition').and.returnValue($q.when());
         // when
         positions.setPositionStatusToPrepared(currentUserPositionId).then(successCallback, failureCallback);
         $scope.$apply();

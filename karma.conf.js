@@ -8,7 +8,7 @@ module.exports = function (config) {
     //merge libraries configured by bower, application sources, and specs
     var libs = require('wiredep')({
         devDependencies: true
-    }).js, _ = require('lodash'), pathsConf = require('./grunt/config.js');
+    }).js, _ = require('lodash'), pathsConf = require('./gulp/config.js');
 
     config.set({
         // enable / disable watching file and executing tests whenever any file changes
@@ -21,7 +21,7 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: _.flatten([libs, pathsConf.tasks.karma.sources(), pathsConf.tasks.karma.testSources()]),
+        files: _.flatten([libs, pathsConf.js.src(), pathsConf.js.testSrc()]),
 
         // list of files / patterns to exclude
         exclude: [],
