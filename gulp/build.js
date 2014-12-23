@@ -118,13 +118,18 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('clean', function (done) {
-    return $.del([config.app.tmp(), config.app.dist()], done);
+    return $.del([config.app.tmp(), config.app.dist(), config.app.test()], done);
 });
 
 gulp.task('build', ['index', 'html', 'ngTemplates', 'less', 'sprite', 'img', 'i18n', 'fonts']);
 
 gulp.task('build:develop', [], function () {
     process.env.NODE_ENV = 'dev';
+    gulp.start('build');
+});
+
+gulp.task('build:ci', ['test'], function () {
+    process.env.NODE_ENV = 'prod';
     gulp.start('build');
 });
 

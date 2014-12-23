@@ -1,4 +1,4 @@
 #!/bin/bash
 npm install
-grunt build:ci
-grunt sonarRunner --login $1 --password $2
+gulp build:ci
+gulp sonar --login $1 --password $2

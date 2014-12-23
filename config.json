@@ -1,0 +1,17 @@
+{
+    "paths": {
+        "tmp": ".tmp",
+        "dist": "dist",
+        "app": "app",
+        "test": "test"
+    },
+    "modules": [
+        "main",
+        "oasp-mock",
+        "offer-mgmt",
+        "sales-mgmt",
+        "table-mgmt"
+    ],
+    "proxy": "http://localhost:8081",
+    "proxyContext": "/oasp4j-example-application"
+}

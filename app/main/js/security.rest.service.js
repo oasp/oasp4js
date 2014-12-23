@@ -11,10 +11,12 @@ angular.module('app.main').factory('securityRestService', function ($http, curre
             return $http.get(servicePath + '/security/csrftoken/');
         },
         login: function (username, password) {
+            /*jshint -W106*/
             return $http.post(servicePath + '/login', {
                 j_username: username,
                 j_password: password
             });
+            /*jshint +W106*/
         },
         logout: function () {
             return $http.get(servicePath + '/logout');

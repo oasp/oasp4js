@@ -1,19 +1,8 @@
 module.exports = (function () {
     'use strict';
-    var $s = require('string'), _ = require('lodash'),
-        paths = {
-            tmp: ".tmp",
-            dist: "dist",
-            app: "app",
-            test: "test"
-        },
-        modules = [
-            'main',
-            'oasp-mock',
-            'offer-mgmt',
-            'sales-mgmt',
-            'table-mgmt'
-        ],
+    var $s = require('string'), _ = require('lodash'), externalConfig = require('../config.json'),
+        paths = externalConfig.paths,
+        modules = externalConfig.modules,
         builder = (function () {
             return {
                 build: function (path, module) {
@@ -46,15 +35,17 @@ module.exports = (function () {
             };
         }());
     return {
-        context: "oasp4j-example-application",
-        proxy: 'http://localhost:8081/oasp4j-example-application/',
-        paths: paths,
+        context: externalConfig.proxyContext,
+        proxy: externalConfig.proxy + externalConfig.proxyContext,
         app: {
             src: function () {
                 return builder.build('{app}');
             },
             tmp: function () {
                 return builder.build('{tmp}');
+            },
+            test: function () {
+                return builder.build('{test}');
             },
             dist: function () {
                 return builder.build('{dist}');
@@ -80,6 +71,16 @@ module.exports = (function () {
                     ),
                     builder.buildForModules(
                         '{app}/{module}/js/**/*.spec.js'
+                    )
+                ]);
+            },
+            lintSrc: function () {
+                return _.flatten([
+                    [
+                        builder.build('{app}/*.module.js')
+                    ],
+                    builder.buildForModules(
+                        '{app}/{module}/js/**/**.js'
                     )
                 ]);
             }

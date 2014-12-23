@@ -8,11 +8,11 @@ describe('Module: \'app.sales-mgmt\', Service: \'positions\'', function () {
             }
         }, availablePositionId = 10000012, currentUserPositionId = 10000010, allPositions,
         allOffers = [
-            {id: 1, description: "Some super offer 1", mealId: 1, drinkId: 10, sideDishId: 5, state: "NORMAL", price: "6.99"}
+            {id: 1, description: 'Some super offer 1', mealId: 1, drinkId: 10, sideDishId: 5, state: 'NORMAL', price: '6.99'}
         ],
         allProducts = [
-            {"@type": "Meal", id: 1, description: "Steak"},
-            {"@type": "Meal", id: 5, description: "Fries"}
+            {'@type': 'Meal', id: 1, description: 'Steak'},
+            {'@type': 'Meal', id: 5, description: 'Fries'}
         ],
         currentUserPromise,
         appContextMock = {
@@ -52,10 +52,10 @@ describe('Module: \'app.sales-mgmt\', Service: \'positions\'', function () {
         failureCallback = jasmine.createSpy('failureCallback');
 
         allPositions = [
-            {id: currentUserPositionId, orderId: 10000001, cookId: 1234, offerId: 1, offerName: "Some super offer 1", state: "ORDERED", price: 6.99},
-            {id: 10000011, orderId: 10000000, cookId: 5678, offerId: 1, offerName: "Some super offer 1", state: "ORDERED", price: 6.99},
-            {id: availablePositionId, orderId: 10000000, cookId: null, offerId: 1, offerName: "Some super offer 1", state: "ORDERED", price: 6.99},
-            {id: 10000013, orderId: 10000001, cookId: null, offerId: 1, offerName: "Some super offer 1", state: "ORDERED", price: 6.99}
+            {id: currentUserPositionId, orderId: 10000001, cookId: 1234, offerId: 1, offerName: 'Some super offer 1', state: 'ORDERED', price: 6.99},
+            {id: 10000011, orderId: 10000000, cookId: 5678, offerId: 1, offerName: 'Some super offer 1', state: 'ORDERED', price: 6.99},
+            {id: availablePositionId, orderId: 10000000, cookId: null, offerId: 1, offerName: 'Some super offer 1', state: 'ORDERED', price: 6.99},
+            {id: 10000013, orderId: 10000001, cookId: null, offerId: 1, offerName: 'Some super offer 1', state: 'ORDERED', price: 6.99}
         ];
     }));
 

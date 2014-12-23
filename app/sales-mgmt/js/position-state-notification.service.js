@@ -53,7 +53,7 @@ angular.module('app.sales-mgmt')
                 };
 
                 if (positionStompClient) {
-                    positionStompClient.send("/sample/positions", {},
+                    positionStompClient.send('/sample/positions', {},
                         JSON.stringify(positionStatusChange));
                 }
             }

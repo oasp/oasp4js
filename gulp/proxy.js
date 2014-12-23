@@ -23,7 +23,7 @@ proxy.on('error', function (error, req, res) {
  */
 proxy.on('proxyRes', function (proxyRes) {
     if (proxyRes.headers['set-cookie']) {
-        proxyRes.headers['set-cookie'][0] = proxyRes.headers['set-cookie'][0].replace(config.context + '/', '');
+        proxyRes.headers['set-cookie'][0] = proxyRes.headers['set-cookie'][0].replace(config.context, '');
     }
 });
 /**
