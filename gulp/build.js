@@ -48,7 +48,7 @@ gulp.task('index', ['wiredep', 'ngTemplates', 'sprite', 'less'], function () {
             includeBase: config.app.src()}))
         .pipe($.if(isProd(), $.usemin({
             css: [$.minifyCss(), 'concat', $.rev()],
-            js: [$.ngAnnotate(), $.uglify(), $.rev()]
+            js: [$.sourcemaps.init(), $.ngAnnotate(), $.uglify({preserveComments: $.uglifySaveLicense}), $.rev(), $.sourcemaps.write('./')]
         })))
         .pipe($.if(isProd(), gulp.dest(config.app.dist())))
         .pipe($.if(!isProd(), gulp.dest(config.app.tmp())))
