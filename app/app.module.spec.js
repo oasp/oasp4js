@@ -18,7 +18,7 @@ describe('Module: \'app\'', function () {
 
     it('adds the spinner upon route changes', function () {
         // given
-        module('oasp-ui', function ($provide) {
+        module('oasp.oaspUi', function ($provide) {
             $provide.value('globalSpinner',
                 jasmine.createSpyObj('globalSpinner', ['showOnRouteChangeStartAndHideWhenComplete']));
             // when
