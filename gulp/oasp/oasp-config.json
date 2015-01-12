@@ -1,0 +1,16 @@
+{
+    "paths": {
+        "tmp": ".tmp",
+        "dist": "dist",
+        "app": "app",
+        "test": "test"
+    },
+    "modules": [
+        "oasp",
+        "oasp/oasp-security",
+        "oasp/oasp-ui",
+        "oasp/oasp-i18n"
+    ],
+    "appBuild": false,
+    "buildLibName": "oasp/oasp.js"
+}

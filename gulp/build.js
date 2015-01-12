@@ -1,37 +1,41 @@
+/*global config, isProd*/
 'use strict';
-
 var gulp = require('gulp');
-var config = require('./config.js');
 var $ = require('gulp-load-plugins')({
     pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'uglify-save-license', 'del']
 });
-var isProd = function () {
-    return process.env.NODE_ENV === 'prod';
-};
+var gulpsync = require('gulp-sync')(gulp);
+
 var ngTemplatesTasks = [];
-config.ngTemplates.conf().forEach(function (ngTemplatesItemConf) {
-    ngTemplatesTasks.push('ngTemplates[' + ngTemplatesItemConf.file + ']');
-    gulp.task('ngTemplates[' + ngTemplatesItemConf.file + ']', [], function () {
-        return gulp.src(ngTemplatesItemConf.src)
-            .pipe($.processhtml({commentMarker: 'process',
-                recursive: true,
-                includeBase: config.app.src()}))
-            .pipe($.minifyHtml({
-                empty: true,
-                spare: true,
-                quotes: true
-            }))
-            .pipe($.ngTemplates({
-                module: ngTemplatesItemConf.module,
-                path: function (path, base) {
-                    return path.replace(base, ngTemplatesItemConf.moduleBasePath + '/').replace('/cached', '');
-                }
-            }))
-            .pipe($.concat(ngTemplatesItemConf.file))
-            .pipe(gulp.dest(ngTemplatesItemConf.dest));
+
+gulp.task('ngTemplatesTasksGeneration', function () {
+    config.ngTemplates.conf().forEach(function (ngTemplatesItemConf) {
+        ngTemplatesTasks.push('ngTemplates[' + ngTemplatesItemConf.file + ']');
+        gulp.task('ngTemplates[' + ngTemplatesItemConf.file + ']', [], function () {
+            return gulp.src(ngTemplatesItemConf.src)
+                .pipe($.processhtml({commentMarker: 'process',
+                    recursive: true,
+                    includeBase: config.app.src()}))
+                .pipe($.minifyHtml({
+                    empty: true,
+                    spare: true,
+                    quotes: true
+                }))
+                .pipe($.ngTemplates({
+                    module: ngTemplatesItemConf.module,
+                    path: function (path, base) {
+                        return path.replace(base, ngTemplatesItemConf.moduleBasePath + '/').replace('/cached', '');
+                    }
+                }))
+                .pipe($.concat(ngTemplatesItemConf.file))
+                .pipe(gulp.dest(ngTemplatesItemConf.dest));
+        });
     });
 });
-gulp.task('ngTemplates', ngTemplatesTasks);
+
+gulp.task('ngTemplatesTasksExecution', ngTemplatesTasks);
+
+gulp.task('ngTemplates', gulpsync.sync(['ngTemplatesTasksGeneration', 'ngTemplatesTasksExecution']));
 
 gulp.task('index', ['wiredep', 'ngTemplates', 'sprite', 'less'], function () {
     return gulp.src(config.index.src())
@@ -70,6 +74,12 @@ gulp.task('html', [], function () {
         .pipe($.if(!isProd(), gulp.dest(config.app.tmp())))
         .pipe($.size());
 });
+gulp.task('copy-less', function () {
+    return gulp.src(config.css.src(true), { base: config.app.src()})
+        .pipe($.if(isProd(), gulp.dest(config.app.dist())))
+        .pipe($.if(!isProd(), gulp.dest(config.app.tmp())))
+        .pipe($.size());
+});
 gulp.task('less', function () {
     return gulp.src(config.css.src())
         .pipe($.concat(config.css.dest.file()))
@@ -102,12 +112,23 @@ gulp.task('img', function () {
             .pipe(gulp.dest(config.app.dist()));
     }
 });
+gulp.task('copy-img', function () {
+    return gulp.src(config.img.src(true), {base: config.app.src()})
+        .pipe($.imagemin({
+            optimizationLevel: 3,
+            progressive: true,
+            interlaced: true
+        }))
+        .pipe($.if(isProd(), gulp.dest(config.app.dist())))
+        .pipe($.if(!isProd(), gulp.dest(config.app.tmp())));
+});
 gulp.task('i18n', function () {
     if (isProd()) {
         return gulp.src(config.i18n.src(), {base: config.app.src()})
             .pipe(gulp.dest(config.app.dist()));
     }
 });
+
 gulp.task('fonts', function () {
     if (isProd()) {
         return gulp.src($.mainBowerFiles())

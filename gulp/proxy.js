@@ -1,8 +1,9 @@
+/*global config*/
 'use strict';
 
 var httpProxy = require('http-proxy');
 var chalk = require('chalk');
-var config = require('./config.js');
+//var config = require('./config.js');
 
 var proxy = httpProxy.createProxyServer({
     target: config.proxy,

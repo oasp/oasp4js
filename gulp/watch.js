@@ -1,7 +1,7 @@
+/*global config*/
 'use strict';
 
 var gulp = require('gulp');
-var config = require('./config.js');
 
 gulp.task('watch', [], function () {
     gulp.watch(config.css.src(), ['less']);

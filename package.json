@@ -34,6 +34,7 @@
     "gulp-size": "~1.1.0",
     "gulp-sonar": "^1.0.1",
     "gulp-sourcemaps": "^1.2.8",
+    "gulp-sync": "^0.1.4",
     "gulp-uglify": "~1.0.1",
     "gulp-usemin": "^0.3.8",
     "gulp-util": "^3.0.1",
@@ -48,6 +49,7 @@
     "main-bower-files": "~2.4.0",
     "protractor": "~1.4.0",
     "require-dir": "~0.1.0",
+    "through2": "~0.4.1",
     "uglify-save-license": "~0.4.1",
     "wiredep": "~2.2.0"
   },

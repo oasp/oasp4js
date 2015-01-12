@@ -8,3 +8,4 @@ test
 java/target
 .settings
 .project
+.sonar

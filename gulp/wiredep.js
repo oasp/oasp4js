@@ -1,8 +1,7 @@
+/*global config*/
 'use strict';
 
 var gulp = require('gulp');
-var config = require('./config.js');
-
 // inject bower components
 gulp.task('wiredep', function () {
     var wiredep = require('wiredep').stream;
