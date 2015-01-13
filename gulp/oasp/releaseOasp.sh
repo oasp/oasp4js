@@ -12,4 +12,5 @@ shopt -s extglob dotglob
 rm -rf !(.git)
 cd ..
 gulp build:oasp
-git commit -am "$1"
+git add *
+git commit -m "$1"

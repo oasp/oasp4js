@@ -1,4 +1,4 @@
-/*global config, isProd*/
+/*global config*/
 'use strict';
 var gulp = require('gulp');
 
