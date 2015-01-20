@@ -30,7 +30,7 @@ module.exports = function (grunt) {
                         https: false,
                         changeOrigin: true,
                         rewrite: {
-                            '^/oasp4j-example-application': '/'
+                            '^/oasp4j-sample-server': '/'
                         }
                     }
                 ]

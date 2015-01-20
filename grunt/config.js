@@ -36,7 +36,7 @@ module.exports = (function () {
             };
         }());
     return {
-        context: "oasp4j-example-application",
+        context: "oasp4j-sample-server",
         paths: paths,
         //generating configuration for particular tasks
         tasks: {
