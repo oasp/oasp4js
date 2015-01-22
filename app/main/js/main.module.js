@@ -3,8 +3,19 @@ angular.module('app.main', ['ngRoute', 'oasp.oaspUi', 'oasp.oaspSecurity', 'app.
     .config(function (SIGN_IN_DLG_PATH, $routeProvider, oaspTranslationProvider) {
         'use strict';
         $routeProvider
-            .when('/', {redirectTo: SIGN_IN_DLG_PATH})
-            .when(SIGN_IN_DLG_PATH, {templateUrl: 'main/html/sign-in.html'})
+            .when('/', {
+                templateUrl: 'main/html/blank.html',
+                controller: 'RedirectorCntl'
+            })
+            .when(SIGN_IN_DLG_PATH, {
+                templateUrl: 'main/html/sign-in.html',
+                controller: 'SignInCntl',
+                resolve: {
+                    check: ['homePageRedirector', function (homePageRedirector) {
+                        return homePageRedirector.rejectAndRedirectToHomePageIfUserLoggedIn();
+                    }]
+                }
+            })
             .otherwise({templateUrl: 'main/html/page-not-found.html'});
 
         oaspTranslationProvider.enableTranslationForModule('main', true);
