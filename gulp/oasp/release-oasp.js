@@ -1,0 +1,44 @@
+/*global config*/
+'use strict';
+var gulp = require('gulp');
+var git = require('gulp-git');
+var argv = require('yargs').argv;
+var gulpsync = require('gulp-sync')(gulp);
+
+var handleGitError = function (err) {
+    if (err) {
+        throw err;
+    }
+}, execGitChain = function (commands, dir, done) {
+    if (commands.length) {
+        git.exec({args: commands[0], cwd: dir}, function (err) {
+            handleGitError(err);
+            if (commands.length > 1) {
+                commands.shift();
+                execGitChain(commands, dir, done);
+            } else {
+                done();
+            }
+        });
+    }
+};
+gulp.task('release:oasp', [], function () {
+    if (!argv.version || argv.version === true) {
+        throw  new Error('Please call release:oasp with --version parameter');
+    } else {
+        gulp.start('release:oasp:internal');
+    }
+});
+gulp.task('release:oasp:internal', gulpsync.sync(['build:oasp:init', 'release:oasp:prepareRepo', 'build:oasp', 'release:oasp:publish']));
+
+gulp.task('release:oasp:prepareRepo', ['clean'], function (done) {
+    git.clone(config.app.externalConfig('releaseRepo'), {args: config.app.dist()}, function (err) {
+        handleGitError(err);
+        execGitChain(['rm -r -f *'], config.app.dist(), done);
+    });
+});
+
+gulp.task('release:oasp:publish', [], function (done) {
+    execGitChain(['add -A', 'commit -am "release ' + argv.version + '"', 'tag -a ' + argv.version + ' -m "' + argv.version + '"'], config.app.dist(), done);
+});
+

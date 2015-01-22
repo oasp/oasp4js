@@ -65,8 +65,8 @@ var configFactory = function (externalConfig) {
             dist: function () {
                 return builder.build('{dist}');
             },
-            buildLibName: function () {
-                return externalConfig.buildLibName;
+            externalConfig: function (rawKey) {
+                return externalConfig[rawKey];
             }
         },
         js: {

@@ -9,7 +9,7 @@ gulp.task('scripts', ['ngTemplates'], function () {
     return gulp.src(config.js.src())
         .pipe($.sourcemaps.init())
         .pipe($.ngAnnotate())
-        .pipe($.concat(config.app.buildLibName()))
+        .pipe($.concat(config.app.externalConfig('buildLibName')))
         .pipe($.if(isProd(), $.uglify({preserveComments: $.uglifySaveLicense})))
         .pipe($.sourcemaps.write('./'))
         .pipe($.if(isProd(), gulp.dest(config.app.dist())))
