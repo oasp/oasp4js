@@ -13,5 +13,6 @@
     ],
     "appBuild": false,
     "releaseRepo": "https://github.com/oasp/oasp4js.git",
-    "buildLibName": "oasp/oasp.js"
+    "buildLibName": "oasp/oasp.js",
+    "buildLibMinName": "oasp/oasp.min.js"
 }

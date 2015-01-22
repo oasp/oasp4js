@@ -1,4 +1,4 @@
-/*global config, isProd*/
+/*global config*/
 'use strict';
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')({
@@ -10,10 +10,11 @@ gulp.task('scripts', ['ngTemplates'], function () {
         .pipe($.sourcemaps.init())
         .pipe($.ngAnnotate())
         .pipe($.concat(config.app.externalConfig('buildLibName')))
-        .pipe($.if(isProd(), $.uglify({preserveComments: $.uglifySaveLicense})))
+        .pipe(gulp.dest(config.app.dist()))
+        .pipe($.concat(config.app.externalConfig('buildLibMinName')))
+        .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
         .pipe($.sourcemaps.write('./'))
-        .pipe($.if(isProd(), gulp.dest(config.app.dist())))
-        .pipe($.if(!isProd(), gulp.dest(config.app.tmp())))
+        .pipe(gulp.dest(config.app.dist()))
         .pipe($.size());
 });
 
