@@ -8,7 +8,7 @@ module.exports = function (config) {
     //merge libraries configured by bower, application sources, and specs
     var libs = require('wiredep')({
         devDependencies: true
-    }).js, _ = require('lodash'), pathsConf = require('./gulp/config.js');
+    }).js, _ = require('lodash'), pathsConf = require('./gulp/configFactory.js')(require('./config.json'));
 
     config.set({
         // enable / disable watching file and executing tests whenever any file changes
