@@ -22,23 +22,26 @@ var handleGitError = function (err) {
         });
     }
 };
-gulp.task('release:oasp', [], function () {
+gulp.task('oasp:release', [], function () {
     if (!argv.version || argv.version === true) {
-        throw  new Error('Please call release:oasp with --version parameter');
+        throw  new Error('Please call oasp:release with --version parameter');
     } else {
-        gulp.start('release:oasp:internal');
+        gulp.start('oasp:release:internal');
     }
 });
-gulp.task('release:oasp:internal', gulpsync.sync(['build:oasp:init', 'release:oasp:prepareRepo', 'build:oasp', 'release:oasp:publish']));
+gulp.task('oasp:release:internal', gulpsync.sync(['build:oasp:init', 'oasp:release:prepareRepo', 'build:oasp', 'oasp:release:publish']));
 
-gulp.task('release:oasp:prepareRepo', ['clean'], function (done) {
+gulp.task('oasp:release:prepareRepo', ['clean'], function (done) {
     git.clone(config.app.externalConfig('releaseRepo'), {args: config.app.dist()}, function (err) {
         handleGitError(err);
         execGitChain(['rm -r -f *'], config.app.dist(), done);
     });
 });
 
-gulp.task('release:oasp:publish', [], function (done) {
+gulp.task('oasp:release:publish', [], function (done) {
     execGitChain(['add -A', 'commit -am "release ' + argv.version + '"', 'tag -a ' + argv.version + ' -m "' + argv.version + '"'], config.app.dist(), done);
 });
 
+gulp.task('oasp:deploy', [], function (done) {
+    execGitChain(['push origin master','push origin --tags'], config.app.dist(), done);
+});
