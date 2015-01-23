@@ -50,6 +50,7 @@ var configFactory = function (externalConfig) {
             };
         }());
     return {
+        builder: builder,
         context: externalConfig.proxyContext,
         proxy: externalConfig.proxy + externalConfig.proxyContext,
         app: {

@@ -36,9 +36,13 @@ gulp.task('apptemplate:release:prepareRepo', ['clean'], function (done) {
     git.clone('https://github.com/oasp/oasp4js-app-template.git', {args: config.app.dist()}, function (err) {
         handleGitError(err);
         var conf = [
-            'dist/*','dist/.*','!**/dist/Gruntfile.js'
+            config.builder.build('{dist}/*'),
+            config.builder.build('{dist}/.*'),
+            config.builder.build('!{dist}/.git'),
+            config.builder.build('!{dist}/README.md'),
+            config.builder.build('!{dist}/config.json'),
+            config.builder.build('!**/{dist}/{app}')
         ];
-        console.log(conf);
         del(conf, done);
     });
 });
