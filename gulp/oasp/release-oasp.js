@@ -39,9 +39,9 @@ gulp.task('oasp:release:prepareRepo', ['clean'], function (done) {
 });
 
 gulp.task('oasp:release:publish', [], function (done) {
-    execGitChain(['add -A', 'commit -am "release ' + argv.version + '"', 'tag -a ' + argv.version + ' -m "' + argv.version + '"'], config.app.dist(), done);
+    execGitChain(['add -A', 'commit -am "release ' + argv.version + '"', 'tag -a ' + argv.version + ' -f -m "' + argv.version + '"'], config.app.dist(), done);
 });
 
 gulp.task('oasp:deploy', [], function (done) {
-    execGitChain(['push origin master','push origin --tags'], config.app.dist(), done);
+    execGitChain(['push origin master','push origin --tags -f'], config.app.dist(), done);
 });
