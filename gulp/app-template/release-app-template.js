@@ -48,7 +48,7 @@ gulp.task('apptemplate:release:prepareRepo', ['clean'], function (done) {
 });
 
 gulp.task('apptemplate:release:publish', [], function (done) {
-    execGitChain(['add -A', 'commit -am "release ' + argv.version + '"', 'tag -a ' + argv.version + ' -f -m "' + argv.version + '"'], config.app.dist(), done);
+    execGitChain(['config --global core.autocrlf false', 'add -A', 'commit -am "release ' + argv.version + '"', 'tag -a ' + argv.version + ' -f -m "' + argv.version + '"'], config.app.dist(), done);
 });
 
 gulp.task('apptemplate:deploy', [], function (done) {
