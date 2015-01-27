@@ -1,7 +1,22 @@
 {
-    "version": "v0.6.6",
-    "tmp": ".tmp",
-    "dist": "dist",
-    "app": "app",
-    "modules": ["main"]
+    "paths": {
+        "tmp": ".tmp",
+        "dist": "dist",
+        "app": "app",
+        "test": "test"
+    },
+    "modules": [
+        "main",
+        "oasp-mock",
+        "oasp",
+        "oasp/oasp-security",
+        "oasp/oasp-ui",
+        "oasp/oasp-i18n",
+        "offer-mgmt",
+        "sales-mgmt",
+        "table-mgmt"
+    ],
+    "appBuild": true,
+    "proxy": "http://localhost:8081",
+    "proxyContext": "/oasp4j-example-application"
 }

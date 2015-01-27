@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Sign In</h2>
+        <alert data-ng-show="errorMessage.hasOne()" data-close="errorMessage.clear()" data-type="danger"><span data-ng-bind="errorMessage.text"></span></alert>
+        <form name="loginForm" novalidate>
+            <p>
+                <span class="label label-danger" data-ng-show="validation.userNameNotProvided()">Please enter your user name!</span>
+                <input type="text" placeholder="User Name" name="userName" class="form-control" data-ng-model="credentials.username" data-ng-required="true">
+            </p>
+            <p>
+                <span class="label label-danger" data-ng-show="validation.passwordNotProvided()">Please enter your password!</span>
+                <input type="password" placeholder="Password" name="password" class="form-control" data-ng-model="credentials.password" data-ng-required="true">
+            </p>
+            <p>
+            <button type="submit" class="btn btn-success" data-ng-click="signIn()">Sign In</button>
+            </p>
+        </form>
+    </div>
+    <div class="col-md-8"></div>
+</div>
+</body>
+</html>

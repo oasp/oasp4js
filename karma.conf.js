@@ -4,6 +4,12 @@
 // generator-karma 0.8.2
 
 module.exports = function (config) {
+    'use strict';
+    //merge libraries configured by bower, application sources, and specs
+    var libs = require('wiredep')({
+        devDependencies: true
+    }).js, _ = require('lodash'), pathsConf = require('./gulp/configFactory.js')(require('./config.json'));
+
     config.set({
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
@@ -15,22 +21,13 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: [
-            'app/bower_components/angular/angular.js',
-            'app/bower_components/angular-mocks/angular-mocks.js',
-            'app/bower_components/angular-animate/angular-animate.js',
-            'app/bower_components/angular-route/angular-route.js',
-            'app/bower_components/angular-sanitize/angular-sanitize.js',
-            'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
-            'app/js/**/*.js',
-            'app/js/**/*-test.js'
-        ],
+        files: _.flatten([libs, pathsConf.js.src(), pathsConf.js.testSrc()]),
 
         // list of files / patterns to exclude
         exclude: [],
 
         // web server port
-        port: 8888,
+        port: 7777,
 
         // Start these browsers, currently available:
         // - Chrome
@@ -46,9 +43,7 @@ module.exports = function (config) {
 
         // Which plugins to enable
         plugins: [
-            'karma-phantomjs-launcher',
-            'karma-chrome-launcher',
-            'karma-jasmine'
+            'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-junit-reporter', 'karma-jasmine', 'karma-coverage'
         ],
 
         // Continuous Integration mode
@@ -59,14 +54,23 @@ module.exports = function (config) {
 
         // level of logging
         // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-        logLevel: config.LOG_INFO
+        logLevel: config.LOG_INFO,
 
-        // Uncomment the following lines if you are using grunt's server to run the tests
-//        proxies: {
-//            '/': 'http://localhost:9000/'
-//
-//        }
-        // URL root prevent conflicts with the site root
-        //urlRoot: '_karma_'
+        // coverage reporter generates the coverage
+        reporters: ['progress', 'coverage'],
+
+        preprocessors: {
+            'app/!(bower_components)/**/!(*spec|*mock).js': ['coverage']
+        },
+
+        // optionally, configure the reporter
+        coverageReporter: {
+            type: 'lcov',
+            dir: 'test/coverage',
+            subdir: '/'
+        },
+        junitReporter: {
+            outputFile: 'test/test-results.xml'
+        }
     });
 };
