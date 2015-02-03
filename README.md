@@ -74,7 +74,7 @@ Edit the `<tomcat_dir>\conf\server.xml` file. Change the Tomcat port to 8081:
 
 Set up the server part's configuration. Under `<tomcat_dir>\lib\config` create the `application.properties` file: 
 
-```
+```ini
 database.user.login = sa
 database.user.password =
 database.url = jdbc:h2:~/restaurant-db;INIT=create schema if not exists public
@@ -116,4 +116,6 @@ Start the application using Gulp:
 gulp serve
 ```
 
-The above Gulp's task opens the client part of the application in your default browser and watches for any changes in HTML/JavaScript/CSS files. Once you make one, the page is reloaded automatically! 
+The above Gulp's task opens the client part of the application in your default browser and watches for any changes in HTML/JavaScript/CSS files. Once you change one, the page is reloaded automatically!
+ 
+ You can sign in using the following credentials: waiter/waiter or cook/cook.
