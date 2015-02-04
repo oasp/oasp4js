@@ -118,4 +118,4 @@ gulp serve
 
 The above Gulp's task opens the client part of the application in your default browser and watches for any changes in HTML/JavaScript/CSS files. Once you change one, the page is reloaded automatically!
  
- You can sign in using the following credentials: waiter/waiter or cook/cook.
+You can sign in using the following credentials: waiter/waiter or cook/cook.
