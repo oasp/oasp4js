@@ -55,14 +55,10 @@ Edit the `<tomcat_dir>\conf\tomcat-users.xml` file. Add the following roles and 
 
 ```xml
 <tomcat-users>
-  <role rolename="Chief"/>
-  <role rolename="Waiter"/>
-  <role rolename="Cook"/>
-  <role rolename="Barkeeper"/>
-  <user password="chief" roles="Chief" username="chief"/>
-  <user password="waiter" roles="Waiter" username="waiter"/>
-  <user password="barkeeper" roles="Barkeeper" username="barkeeper"/>
-  <user password="cook" roles="Cook" username="cook"/>
+  <user username="chief" password="chief" />
+  <user username="waiter" password="waiter" />
+  <user username="barkeeper" password="barkeeper" />
+  <user username="cook" password="cook" />
 </tomcat-users>
 ```
 
