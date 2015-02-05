@@ -38,7 +38,7 @@ cd oasp4j
 mvn clean install 
 ```
 
-After a successful build, the 'oasp4j-sample-server.war' file should appear in the following directory: 
+After a successful build, the `oasp4j-sample-server.war` file should appear in the following directory: 
 
 ``` 
 <oasp_dir>\oasp4j\oasp4j-samples\oasp4j-sample-server\target
