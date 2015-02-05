@@ -72,13 +72,21 @@ Edit the `<tomcat_dir>\conf\server.xml` file. Change the Tomcat port to 8081:
 <Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8443"/>
 ```
 
-Set up the server part's configuration. Under `<tomcat_dir>\lib\config` create the `application.properties` file: 
+Set up the server part's configuration. Under `<tomcat_dir>\lib` create the `config\env` directories:
+ 
+```
+cd <tomcat_dir>\lib
+mkdir config\env
+```
+
+Create the `application.properties` file and put it under `<tomcat_dir>\lib\config\env`:
 
 ```ini
 database.user.login = sa
 database.user.password =
 database.url = jdbc:h2:~/restaurant-db;INIT=create schema if not exists public
 database.migration.auto = true
+database.migration.clean = true
 ```
 
 Start the Tomcat: 
@@ -86,7 +94,6 @@ Start the Tomcat:
 ```
 <tomcat_dir>\bin\startup.bat 
 ```
-
 
 Set up the client part of the application
 ---
