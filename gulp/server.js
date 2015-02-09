@@ -32,6 +32,6 @@ gulp.task('serve', gulpsync.sync(['build', 'watch']), function () {
     ]));
 });
 
-gulp.task('serve:dist', ['build'], function () {
+gulp.task('serve:dist', ['build:dist'], function () {
     browserSyncInit('dist');
 });

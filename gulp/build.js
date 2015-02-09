@@ -52,7 +52,9 @@ gulp.task('index', ['wiredep', 'ngTemplates', 'sprite', 'less'], function () {
             includeBase: config.app.src()}))
         .pipe($.if(isProd(), $.usemin({
             css: [$.minifyCss(), 'concat', $.rev()],
-            js: [$.sourcemaps.init(), $.ngAnnotate(), $.uglify({preserveComments: $.uglifySaveLicense}), $.rev(), $.sourcemaps.write('./')]
+            jsModernizr: [$.ngAnnotate(), $.uglify({preserveComments: $.uglifySaveLicense}), $.rev()],
+            jsVendor: [$.ngAnnotate(), $.uglify({preserveComments: $.uglifySaveLicense}), $.rev()],
+            jsApp: [$.ngAnnotate(), $.uglify({preserveComments: $.uglifySaveLicense}), $.rev()]
         })))
         .pipe($.if(isProd(), gulp.dest(config.app.dist())))
         .pipe($.if(!isProd(), gulp.dest(config.app.tmp())))

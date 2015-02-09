@@ -59,13 +59,13 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>grunt</id>
+                        <id>gulp</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>grunt</executable>
+                            <executable>gulp</executable>
                             <arguments>
                                 <argument>build:dist</argument>
                             </arguments>
