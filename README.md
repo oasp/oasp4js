@@ -1,4 +1,4 @@
-Sample Application
+Sample Application [![Build Status](https://travis-ci.org/oasp/oasp4js.svg)](https://travis-ci.org/oasp/oasp4js)
 ===
  
 The sample application is built on top of the [application template](https://github.com/oasp/oasp4js-app-template) and is an AngularJS application. Some of AngularJS modules (e.g. oasp-security, oasp-i18n, etc.) which can be reused in your application are available in [this repository](https://github.com/oasp/oasp4js-bower) either directly or using the Bower package manager. The sample application needs the [oasp4j](https://github.com/oasp/oasp4j) (Java) server part to be installed.
