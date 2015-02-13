@@ -9,6 +9,7 @@
   "devDependencies": {
     "browser-sync": "~1.8.1",
     "chalk": "~0.5.1",
+    "coveralls": "^2.11.2",
     "del": "^1.1.1",
     "gulp": "~3.8.10",
     "gulp-concat": "^2.4.2",
@@ -60,6 +61,6 @@
   "engine": "node >= 0.10.0",
   "scripts": {
     "postinstall": "bower install -F",
-	"test": "gulp test"
+    "test": "gulp test"
   }
 }
