@@ -94,7 +94,7 @@ Start the Tomcat:
 Set up the client part of the application
 ---
 
-Go back the `<oasp_dir>` directory 
+Go back to the `<oasp_dir>` directory: 
 
 ```
 cd ..
