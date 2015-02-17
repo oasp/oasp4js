@@ -75,7 +75,7 @@ cd <tomcat_dir>\lib
 mkdir config\env
 ```
 
-Create the `application.properties` file and put it under `<tomcat_dir>\lib\config\env`:
+Create the `application.properties` file, put it under `<tomcat_dir>\lib\config\env` and add the following content to it: 
 
 ```ini
 database.user.login = sa
