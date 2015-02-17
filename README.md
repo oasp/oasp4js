@@ -100,7 +100,7 @@ Go back the `<oasp_dir>` directory
 cd ..
 ```
 
-Clone the oasp4j repository:
+Clone the oasp4js repository:
 
 ``` 
 git clone https://github.com/oasp/oasp4js.git 
