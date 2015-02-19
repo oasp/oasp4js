@@ -75,7 +75,7 @@ cd <tomcat_dir>\lib
 mkdir config\env
 ```
 
-Create the `application.properties` file and put it under `<tomcat_dir>\lib\config\env`:
+Create the `application.properties` file, put it under `<tomcat_dir>\lib\config\env` and add the following content to it: 
 
 ```ini
 database.user.login = sa
@@ -94,13 +94,13 @@ Start the Tomcat:
 Set up the client part of the application
 ---
 
-Go back the `<oasp_dir>` directory 
+Go back to the `<oasp_dir>` directory: 
 
 ```
 cd ..
 ```
 
-Clone the oasp4j repository:
+Clone the oasp4js repository:
 
 ``` 
 git clone https://github.com/oasp/oasp4js.git 
