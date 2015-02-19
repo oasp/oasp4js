@@ -85,6 +85,7 @@ database.url = jdbc:h2:~/restaurant-db;INIT=create schema if not exists public
 database.migration.auto = true
 database.migration.clean = true
 ```
+_Hint: The value of the `database.user.password` should be left empty, exactly as shown above._
 
 Start the Tomcat: 
 
