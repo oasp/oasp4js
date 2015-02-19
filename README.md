@@ -63,7 +63,7 @@ Edit the `<tomcat_dir>\conf\tomcat-users.xml` file. Add the following roles and 
 ```
 
 <a name="changeTomcatsPortInServerXml"></a>
-Edit the `<tomcat_dir>\conf\server.xml` file. Change the Tomcat port to 8081 (if you don't want to change the Tomcat's port, then see the "[hint about how to configure a different port on the client side](#howToChangeTomcatsPortInConfigJson)"): 
+Edit the `<tomcat_dir>\conf\server.xml` file. Change the Tomcat port to 8081 (if you don't want to change the Tomcat's port, then see the _[hint about how to configure a different port on the client side](#howToChangeTomcatsPortInConfigJson)_): 
 
 ```xml
 <Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8443"/>
