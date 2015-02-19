@@ -12,7 +12,7 @@ Install prerequisites
 ---
 
 You need a Git client to clone the repositories and the Node.js platform (including its package manager - npm) which allows Gulp and Bower to install the dependencies and build the application. [Here](https://github.com/oasp/oasp4js/wiki/Prerequisites) you can learn how to install the prerequisites. 
-Also, for the server part you need Maven (required version: 3.x) and Tomcat (min. version: 7, recommended version: 8) to be installed. For installation details please refer to the [Tomcat's](http://tomcat.apache.org/download-80.cgi) and [Maven's](http://maven.apache.org/download.cgi) home pages. 
+Also, for the server part you need Maven (required version: 3.x) and Tomcat (min. version: 7.x, recommended version: 8.x) to be installed. For installation details please refer to the [Tomcat's](http://tomcat.apache.org/download-80.cgi) and [Maven's](http://maven.apache.org/download.cgi) home pages. 
 
 Create the `<oasp_dir>` directory for the sample application
 ---
