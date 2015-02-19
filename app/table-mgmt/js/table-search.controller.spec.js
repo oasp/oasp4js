@@ -1,29 +1,187 @@
 describe('Module: tableMgmt, Controller: table-search', function () {
     'use strict';
-    var $scope, table = {
+    var $scope, deferred, table = {
         id: '1',
         state: 'FREE',
         waiter: ''
     }, tablesMock = {
-        getAllTables: function () {
-            return [table];
-        },
-        reserve: jasmine.createSpy(),
-        free: jasmine.createSpy(),
-        occupy: jasmine.createSpy(),
-        cancelReservation: jasmine.createSpy()
+        loadTable: jasmine.createSpy(),
+        reserve: angular.noop,
+        cancelReservation: angular.noop,
+        occupy: angular.noop,
+        free: angular.noop
+    }, offersMock = {
+        loadAllOffers: jasmine.createSpy()
+    }, salesMock = {
+        loadOrderForTable: jasmine.createSpy()
     };
 
     beforeEach(module('ui.bootstrap'));
     beforeEach(module('app.table-mgmt'));
 
-    beforeEach(inject(function ($rootScope, $controller) {
+    beforeEach(inject(function ($rootScope, $controller, $q) {
         //given
         $scope = $rootScope.$new();
-        $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock, initialTableList: [table] });
+        deferred = $q.defer();
+        spyOn(tablesMock, 'reserve').and.returnValue(deferred.promise);
+        spyOn(tablesMock, 'cancelReservation').and.returnValue(deferred.promise);
+        spyOn(tablesMock, 'occupy').and.returnValue(deferred.promise);
+        spyOn(tablesMock, 'free').and.returnValue(deferred.promise);
+        $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock, sales: salesMock, offers: offersMock, initialTableList: [table] });
     }));
 
     it('exposes tables referencing tables from service on $scope', function () {
         expect($scope.gridOptions.data).toBeDefined();
+    });
+
+    it('should call $modal.open when edit button is clicked', inject(function ($modal) {
+        //given
+        var tableRow = {
+            id: 104
+        };
+        spyOn($modal, 'open').and.callThrough();
+        //when
+        $scope.openEditDialog(tableRow);
+        //then
+        expect($modal.open).toHaveBeenCalled();
+        expect(tablesMock.loadTable).toHaveBeenCalledWith(tableRow.id);
+        expect(offersMock.loadAllOffers).toHaveBeenCalled();
+        expect(salesMock.loadOrderForTable).toHaveBeenCalledWith(tableRow.id);
+    }));
+
+    describe('testing buttons definitions', function () {
+
+        it('should define buttons', function () {
+            //given when then
+            expect($scope.buttonDefs).toBeDefined();
+            expect($scope.buttonDefs.length).toEqual(5);
+        });
+
+        it('should call $scope.openEditDialog when edit button is clicked', function () {
+            //given
+            $scope.selectedItems = [
+                {id: 1}
+            ];
+            spyOn($scope, 'openEditDialog');
+            //when
+            $scope.buttonDefs[0].onClick();
+            //then
+            expect($scope.openEditDialog).toHaveBeenCalledWith($scope.selectedItems[0]);
+            expect($scope.buttonDefs[0].isActive()).toBeTruthy();
+        });
+
+        it('should call activate edit button only when there are selected items', function () {
+            //given
+            $scope.selectedItems = [
+                {id: 1}
+            ];
+            //when then
+            expect($scope.buttonDefs[0].isActive()).toBeTruthy();
+        });
+
+        it('should call tables.reserve when reserve button is clicked', inject(function (globalSpinner) {
+            //given
+            $scope.selectedItems = [
+                {id: 1}
+            ];
+            spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
+            //when
+            $scope.buttonDefs[1].onClick();
+            //then
+            expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
+            expect(tablesMock.reserve).toHaveBeenCalledWith($scope.selectedItems[0]);
+        }));
+
+        it('should activate reserve button when there is a selected item in the FREE state', function () {
+            //given
+            $scope.selectedItems = [
+                {
+                    id: 1,
+                    state: 'FREE'
+                }
+            ];
+            //when then
+            expect($scope.buttonDefs[1].isActive()).toBeTruthy();
+        });
+
+        it('should call tables.cancelReservation when reserve button is clicked', inject(function (globalSpinner) {
+            //given
+            $scope.selectedItems = [
+                {id: 1}
+            ];
+            spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
+            //when
+            $scope.buttonDefs[2].onClick();
+            //then
+            expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
+            expect(tablesMock.cancelReservation).toHaveBeenCalledWith($scope.selectedItems[0]);
+        }));
+
+        it('should activate cancel reservation button when there is a selected item in the RESERVED state', function () {
+            //given
+            $scope.selectedItems = [
+                {
+                    id: 1,
+                    state: 'RESERVED'
+                }
+            ];
+            //when then
+            expect($scope.buttonDefs[2].isActive()).toBeTruthy();
+        });
+
+        it('should call tables.occupy when occupy button is clicked', inject(function (globalSpinner) {
+            //given
+            $scope.selectedItems = [
+                {id: 1}
+            ];
+            spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
+            //when
+            $scope.buttonDefs[3].onClick();
+            //then
+            expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
+            expect(tablesMock.occupy).toHaveBeenCalledWith($scope.selectedItems[0]);
+        }));
+
+        it('should activate occupy button when there is a selected item in the RESERVED or FREE state', function () {
+            //given
+            $scope.selectedItems = [
+                {
+                    id: 1,
+                    state: 'RESERVED'
+                }
+            ];
+            //when then
+            expect($scope.buttonDefs[3].isActive()).toBeTruthy();
+            //when
+            $scope.selectedItems[0].state = 'FREE';
+            //then
+            expect($scope.buttonDefs[3].isActive()).toBeTruthy();
+        });
+
+        it('should call tables.free when free button is clicked', inject(function (globalSpinner) {
+            //given
+            $scope.selectedItems = [
+                {id: 1}
+            ];
+            spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
+            //when
+            $scope.buttonDefs[4].onClick();
+            //then
+            expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
+            expect(tablesMock.free).toHaveBeenCalledWith($scope.selectedItems[0]);
+        }));
+
+        it('should activate free button when there is a selected item in the OCCUPIED state', function () {
+            //given
+            $scope.selectedItems = [
+                {
+                    id: 1,
+                    state: 'OCCUPIED'
+                }
+            ];
+            //when then
+            expect($scope.buttonDefs[4].isActive()).toBeTruthy();
+        });
+
     });
 });

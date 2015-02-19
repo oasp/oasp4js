@@ -95,6 +95,9 @@ var configFactory = function (externalConfig) {
                     ),
                     builder.buildForModules(
                         '{app}/{module}/js/**/*.spec.js'
+                    ),
+                    builder.buildForModules(
+                        '{app}/*.spec.js'
                     )
                 ]);
             },
