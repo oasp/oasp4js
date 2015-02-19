@@ -62,7 +62,8 @@ Edit the `<tomcat_dir>\conf\tomcat-users.xml` file. Add the following roles and 
 </tomcat-users>
 ```
 
-Edit the `<tomcat_dir>\conf\server.xml` file. Change the Tomcat port to 8081: 
+<a name="changeTomcatsPortInServerXml"></a>
+Edit the `<tomcat_dir>\conf\server.xml` file. Change the Tomcat port to 8081 (if you don't want to change the Tomcat's port, then see the [hint below](howToChangeTomcatsPortInConfigJson) how to configure a different port on the client side): 
 
 ```xml
 <Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8443"/>
@@ -111,6 +112,13 @@ Install the client part's dependencies:
 ```
 cd oasp4js
 npm install
+```
+
+<a name="howToChangeTomcatsPortInConfigJson"></a>
+*Hint:* If you did not want to change the Tomcat's port to 8081 as [described here](#changeTomcatsPortInServerXml), then you have to change the default port which is configured in the client part of the application, in the '<oasp_dir>\oasp4js\config.json' file. You have to set the correct port number in the following line of the aforementioned configuration file (replace '8888' with the port number which you configured for your Tomcat): 
+
+```
+"proxy": "http://localhost:8888",
 ```
 
 Start the application using Gulp:
