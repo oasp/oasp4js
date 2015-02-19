@@ -115,7 +115,7 @@ npm install
 ```
 
 <a name="howToChangeTomcatsPortInConfigJson"></a>
-*Hint:* If you did not want to change the Tomcat's port to 8081 as [described here](#changeTomcatsPortInServerXml), then you have to change the default port which is configured in the client part of the application, in the '<oasp_dir>\oasp4js\config.json' file. You have to set the correct port number in the following line of the aforementioned configuration file (replace '8888' with the port number which you configured for your Tomcat): 
+**Hint about how to configure a different Tomcat's port to be used on the client side:** If you did not want to change the Tomcat's port to 8081 as [described here](#changeTomcatsPortInServerXml), then you have to change the default port which is configured in the client part of the application, in the '<oasp_dir>\oasp4js\config.json' file. You have to set the correct port number in the following line of the aforementioned configuration file (replace '8888' with the port number which you configured for your Tomcat): 
 
 ```
 "proxy": "http://localhost:8888",
