@@ -33,15 +33,13 @@ gulp.task('apptemplate:release', [], function () {
 gulp.task('apptemplate:release:internal', gulpsync.sync(['apptemplate:release:prepareRepo', 'build:apptemplate', 'apptemplate:release:publish']));
 
 gulp.task('apptemplate:release:prepareRepo', ['clean'], function (done) {
-    git.clone('https://github.com/oasp/oasp4js-app-template.git', {args: config.app.dist()}, function (err) {
+    git.clone('https://github.com/oasp/generator-oasp.git', {args: config.app.dist()}, function (err) {
         handleGitError(err);
         var conf = [
-            config.builder.build('{dist}/*'),
-            config.builder.build('{dist}/.*'),
-            config.builder.build('!{dist}/.git'),
-            config.builder.build('!{dist}/README.md'),
-            config.builder.build('!{dist}/config.json'),
-            config.builder.build('!**/{dist}/{app}')
+            config.builder.build('{dist}/app/templates/*'),
+            config.builder.build('{dist}/app/templates/.*'),
+            config.builder.build('!{dist}/app/templates/config.json'),
+            config.builder.build('!**/{dist}/app/templates/{app}')
         ];
         del(conf, done);
     });

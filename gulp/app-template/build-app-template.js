@@ -11,11 +11,9 @@ gulp.task('build:apptemplate', function () {
         'bower.json',
         'gulp/*.js',
         'gulpfile.js',
-        'jenkins-build-sonar.sh',
-        'jenkins-build.sh',
         'karma.conf.js',
         'package.json'
     ];
     return gulp.src(conf,{base: '.'})
-        .pipe(gulp.dest(config.app.dist()));
+        .pipe(gulp.dest(config.app.dist() + '/app/templates'));
 });
