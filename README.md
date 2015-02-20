@@ -1,7 +1,7 @@
 Sample Application [![Build Status](https://travis-ci.org/oasp/oasp4js.svg)](https://travis-ci.org/oasp/oasp4js) [![Coverage Status](https://coveralls.io/repos/oasp/oasp4js/badge.svg?branch=development)](https://coveralls.io/r/oasp/oasp4js?branch=development)                                                                                                                
 ===
  
-The sample application is built on top of the [application template](https://github.com/oasp/oasp4js-app-template) and is an AngularJS application. Some of AngularJS modules (e.g. oasp-security, oasp-i18n, etc.) which can be reused in your application are available in [this repository](https://github.com/oasp/oasp4js-bower) either directly or using the Bower package manager. The sample application needs the [oasp4j](https://github.com/oasp/oasp4j) (Java) server part to be installed.
+The sample application is built on top of the [application template](https://github.com/oasp/oasp4js-app-template) and is an AngularJS application. Some of the AngularJS modules (e.g. oasp-security, oasp-i18n, etc.) which can be reused in your application are available in [this repository](https://github.com/oasp/oasp4js-bower) either directly or using the Bower package manager. The sample application needs the [oasp4j](https://github.com/oasp/oasp4j) (Java) server part to be installed.
 
 Getting Started
 ---
@@ -12,7 +12,7 @@ Install prerequisites
 ---
 
 You need a Git client to clone the repositories and the Node.js platform (including its package manager - npm) which allows Gulp and Bower to install the dependencies and build the application. [Here](https://github.com/oasp/oasp4js/wiki/Prerequisites) you can learn how to install the prerequisites. 
-Also, for the server part you need Maven and Tomcat to be installed. For installation details please refer to the [Tomcat's](http://tomcat.apache.org/download-80.cgi) and [Maven's](http://maven.apache.org/download.cgi) home pages. 
+Also, for the server part you need Maven (required version: 3.x) and Tomcat (min. version: 7.x, recommended version: 8.x) to be installed. For installation details please refer to the [Tomcat's](http://tomcat.apache.org/download-80.cgi) and [Maven's](http://maven.apache.org/download.cgi) home pages. 
 
 Create the `<oasp_dir>` directory for the sample application
 ---
@@ -62,7 +62,8 @@ Edit the `<tomcat_dir>\conf\tomcat-users.xml` file. Add the following roles and 
 </tomcat-users>
 ```
 
-Edit the `<tomcat_dir>\conf\server.xml` file. Change the Tomcat port to 8081: 
+<a name="changeTomcatsPortInServerXml"></a>
+Edit the `<tomcat_dir>\conf\server.xml` file. Change the Tomcat port to 8081 (if you don't want to change the Tomcat's port, then see the _[hint about how to configure a different port on the client side](#howToChangeTomcatsPortInConfigJson)_): 
 
 ```xml
 <Connector connectionTimeout="20000" port="8081" protocol="HTTP/1.1" redirectPort="8443"/>
@@ -84,6 +85,7 @@ database.url = jdbc:h2:~/restaurant-db;INIT=create schema if not exists public
 database.migration.auto = true
 database.migration.clean = true
 ```
+_Hint: The value of the `database.user.password` property should be left empty, exactly as shown above._
 
 Start the Tomcat: 
 
@@ -111,6 +113,13 @@ Install the client part's dependencies:
 ```
 cd oasp4js
 npm install
+```
+
+<a name="howToChangeTomcatsPortInConfigJson"></a> 
+_**Hint about how to configure a different Tomcat's port to be used on the client side:** If you did not want to change the Tomcat's port to 8081 as [described here](#changeTomcatsPortInServerXml), then you have to change the default port which is configured in the client part of the application, in the `<oasp_dir>\oasp4js\config.json` file. You have to set the correct port number in the following line of the aforementioned configuration file (replace '8888' with the port number which you configured for your Tomcat):_
+
+```
+"proxy": "http://localhost:8888",
 ```
 
 Start the application using Gulp:
