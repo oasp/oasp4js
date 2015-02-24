@@ -16,7 +16,6 @@ describe('Module: tableMgmt, Controller: table-search', function () {
         loadOrderForTable: jasmine.createSpy()
     };
 
-    beforeEach(module('ui.bootstrap'));
     beforeEach(module('app.table-mgmt'));
 
     beforeEach(inject(function ($rootScope, $controller, $q) {
