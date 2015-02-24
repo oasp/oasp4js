@@ -122,6 +122,4 @@ describe('Module: tableMgmt, Controller: table-details', function () {
             expect($scope.buttonDefs[0].isActive()).toBeTruthy();
         });
     });
-
-
 });
