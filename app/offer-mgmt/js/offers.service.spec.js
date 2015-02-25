@@ -20,7 +20,7 @@ describe('Module: \'app.offer-mgmt\', Service: \'offers\'', function () {
         // given
         var allOffers = [{
             id: '1'
-        }], loadedOffers;
+        }], loadedOffers = {};
         $httpBackend.whenGET(contextPath + 'services/rest/offermanagement/offer').respond(allOffers);
         // when
         offers.loadAllOffers()
@@ -30,5 +30,21 @@ describe('Module: \'app.offer-mgmt\', Service: \'offers\'', function () {
         $httpBackend.flush();
         // then
         expect(loadedOffers).toEqual(allOffers);
+    });
+
+    it('should load all products', function () {
+        // given
+        var allProducts = [{
+            id: '1'
+        }], loadedProducts = {};
+        $httpBackend.whenGET(contextPath + 'services/rest/offermanagement/product').respond(allProducts);
+        // when
+        offers.loadAllProducts()
+            .then(function (response) {
+                loadedProducts = response;
+            });
+        $httpBackend.flush();
+        // then
+        expect(loadedProducts).toEqual(allProducts);
     });
 });

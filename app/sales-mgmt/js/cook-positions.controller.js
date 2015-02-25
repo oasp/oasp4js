@@ -21,7 +21,7 @@ angular.module('app.sales-mgmt')
         };
 
         $scope.assignCookToPosition = function () {
-            if ($scope.availablePositionSelected) {
+            if ($scope.availablePositionSelected()) {
                 globalSpinner.decorateCallOfFunctionReturningPromise(function () {
                     return positions.assignCookToPosition($scope.positionsAvailableSelected[0].id);
                 });
