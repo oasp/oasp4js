@@ -11,6 +11,7 @@
     "chalk": "~0.5.1",
     "coveralls": "^2.11.2",
     "del": "^1.1.1",
+    "fs": "0.0.2",
     "gulp": "~3.8.10",
     "gulp-concat": "^2.4.2",
     "gulp-filter": "~1.0.2",
@@ -50,8 +51,11 @@
     "karma-phantomjs-launcher": "~0.1.4",
     "lodash": "^3.0.0",
     "main-bower-files": "~2.4.0",
+    "mocha": "^2.1.0",
     "protractor": "~1.4.0",
     "require-dir": "~0.1.0",
+    "rimraf": "^2.2.8",
+    "should": "^5.0.1",
     "string": "^3.0.0",
     "through2": "~0.4.1",
     "uglify-save-license": "~0.4.1",
@@ -61,6 +65,7 @@
   "engine": "node >= 0.10.0",
   "scripts": {
     "postinstall": "bower install -F",
-    "test": "gulp test"
+    "test": "gulp test",
+    "test-template": "mocha ./template-test"
   }
 }
