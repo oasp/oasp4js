@@ -19,7 +19,7 @@ describe('Module: \'app.sales-mgmt\', Service: \'sales\'', function () {
     it('loads an order for a given table', function () {
         // given
         var orders = [{id: '1'}, {id: '2'}], loadedOrder;
-        $httpBackend.whenGET(contextPath + 'services/rest/salesmanagement/order?state=OPEN&tableId=1').respond(orders);
+        $httpBackend.whenGET(contextPath + 'services/rest/salesmanagement/v1/order?state=OPEN&tableId=1').respond(orders);
 
         // when
         sales.loadOrderForTable(1)
@@ -33,7 +33,7 @@ describe('Module: \'app.sales-mgmt\', Service: \'sales\'', function () {
     it('returns undefined when no orders exist', function () {
         // given
         var loadedOrder;
-        $httpBackend.whenGET(contextPath + 'services/rest/salesmanagement/order?state=OPEN&tableId=1').respond([]);
+        $httpBackend.whenGET(contextPath + 'services/rest/salesmanagement/v1/order?state=OPEN&tableId=1').respond([]);
 
         // when
         sales.loadOrderForTable(1)
@@ -47,7 +47,7 @@ describe('Module: \'app.sales-mgmt\', Service: \'sales\'', function () {
     it('saves an order', function () {
         // given
         var createdOrder, returnedOrder = {order: {id: 1}};
-        $httpBackend.whenPOST(contextPath + 'services/rest/salesmanagement/order').respond(returnedOrder);
+        $httpBackend.whenPOST(contextPath + 'services/rest/salesmanagement/v1/order').respond(returnedOrder);
         // when
         sales.saveOrUpdateOrder({order: {}})
             .then(function (order) {
@@ -60,7 +60,7 @@ describe('Module: \'app.sales-mgmt\', Service: \'sales\'', function () {
     it('saves an order', function () {
         // given
         var createdOrder, returnedOrder = {order: {id: 1}};
-        $httpBackend.whenPOST(contextPath + 'services/rest/salesmanagement/order').respond(returnedOrder);
+        $httpBackend.whenPOST(contextPath + 'services/rest/salesmanagement/v1/order').respond(returnedOrder);
         // when
         sales.saveOrUpdateOrder({order: {}})
             .then(function (order) {
@@ -73,7 +73,7 @@ describe('Module: \'app.sales-mgmt\', Service: \'sales\'', function () {
     it('updates an existing order', function () {
         // given
         var updatedOrder, returnedOrder = {order: {id: 1, status : 'NEW'}};
-        $httpBackend.whenPUT(contextPath + 'services/rest/salesmanagement/order/1').respond(returnedOrder);
+        $httpBackend.whenPUT(contextPath + 'services/rest/salesmanagement/v1/order/1').respond(returnedOrder);
         // when
         sales.saveOrUpdateOrder({order: {id : 1}})
             .then(function (order) {
