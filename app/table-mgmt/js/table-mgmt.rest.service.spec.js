@@ -47,7 +47,7 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         //when
         tableManagementRestService.deleteTable(id);
         //then
-        expect($http.delete).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/table/' + id);
+        expect($http.delete).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id);
     }));
 
     it('should call $http.post when tableManagementRestService.marktableas is called', inject(function ($http) {
