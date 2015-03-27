@@ -1,7 +1,7 @@
 angular.module('app.sales-mgmt').factory('salesManagementRestService', function ($http, currentContextPath) {
     'use strict';
 
-    var servicePath = currentContextPath.get() + 'services/rest/salesmanagement';
+    var servicePath = currentContextPath.get() + 'services/rest/salesmanagement/v1';
 
     return {
         findOrders: function (params) {

@@ -5,7 +5,7 @@ describe('Service: tables', function () {
     var tables, $httpBackend, listOfTables,
         contextPath = '/oasp-app/',
         mockAllTableResponse = function () {
-            $httpBackend.whenGET(contextPath + 'services/rest/tablemanagement/table/').respond([
+            $httpBackend.whenGET(contextPath + 'services/rest/tablemanagement/v1/table/').respond([
                 {
                     id: '1',
                     state: 'FREE',
@@ -19,7 +19,7 @@ describe('Service: tables', function () {
             ]);
         },
         mockTableStatusChange = function (tableId, status) {
-            $httpBackend.whenPOST(contextPath + 'services/rest/tablemanagement/table/' + tableId + '/marktableas/' + status).respond(200);
+            $httpBackend.whenPOST(contextPath + 'services/rest/tablemanagement/v1/table/' + tableId + '/marktableas/' + status).respond(200);
         };
     beforeEach(module('app.table-mgmt'));
 
@@ -60,7 +60,7 @@ describe('Service: tables', function () {
             state: 'FREE',
             waiter: ''
         }, loadedTable;
-        $httpBackend.whenGET(contextPath + 'services/rest/tablemanagement/table/1').respond(table);
+        $httpBackend.whenGET(contextPath + 'services/rest/tablemanagement/v1/table/1').respond(table);
         // when
         tables.loadTable(1)
             .then(function (table) {
