@@ -8,7 +8,7 @@ module.exports = function (config) {
     //merge libraries configured by bower, application sources, and specs
     var libs = require('wiredep')({
         devDependencies: true
-    }).js, _ = require('lodash'), pathsConf = require('./gulp/configFactory.js')(require('./config.json'));
+    }).js, _ = require('lodash'), pathsConf = require('./gulp/lib/config-factory.js')(require('./config.json'));
 
     config.set({
         // enable / disable watching file and executing tests whenever any file changes
@@ -21,7 +21,7 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: _.flatten([libs, pathsConf.js.src(), pathsConf.js.testSrc()]),
+        files: _.flatten([libs, pathsConf.scripts.src(), pathsConf.scripts.testSrc()]),
 
         // list of files / patterns to exclude
         exclude: [],
@@ -66,11 +66,11 @@ module.exports = function (config) {
         // optionally, configure the reporter
         coverageReporter: {
             type: 'lcov',
-            dir: 'test/coverage',
+            dir: pathsConf.paths.testOutput + '/coverage',
             subdir: '/'
         },
         junitReporter: {
-            outputFile: 'test/test-results.xml'
+            outputFile: pathsConf.paths.testOutput + '/test-results.xml'
         }
     });
 };

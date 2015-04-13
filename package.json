@@ -7,10 +7,11 @@
     "connect": "3.3.3"
   },
   "devDependencies": {
-    "browser-sync": "~1.8.1",
+    "browser-sync": "^1.8.3",
     "chalk": "~0.5.1",
     "coveralls": "^2.11.2",
     "del": "^1.1.1",
+    "glob": "^5.0.3",
     "gulp": "~3.8.10",
     "gulp-concat": "^2.4.2",
     "gulp-filter": "~1.0.2",
@@ -28,6 +29,7 @@
     "gulp-minify-html": "~0.1.7",
     "gulp-newer": "^0.5.0",
     "gulp-ng-annotate": "~0.5.2",
+    "gulp-ng-html2js": "^0.2.0",
     "gulp-ng-templates": "0.0.5",
     "gulp-processhtml": "1.0.2",
     "gulp-protractor": "~0.0.11",
@@ -51,6 +53,7 @@
     "lodash": "^3.0.0",
     "main-bower-files": "~2.4.0",
     "mocha": "^2.1.0",
+    "ng-parse-module": "^0.1.0",
     "protractor": "~1.4.0",
     "require-dir": "~0.1.0",
     "string": "^3.0.0",
@@ -61,7 +64,6 @@
   },
   "engine": "node >= 0.10.0",
   "scripts": {
-    "postinstall": "bower install -F",
     "test": "gulp test"
   }
 }

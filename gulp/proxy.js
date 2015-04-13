@@ -3,10 +3,9 @@
 
 var httpProxy = require('http-proxy');
 var chalk = require('chalk');
-//var config = require('./config.js');
 
 var proxy = httpProxy.createProxyServer({
-    target: config.proxy,
+    target: config.proxy.url(),
     ws: true
 });
 /**
@@ -24,7 +23,7 @@ proxy.on('error', function (error, req, res) {
  */
 proxy.on('proxyRes', function (proxyRes) {
     if (proxyRes.headers['set-cookie']) {
-        proxyRes.headers['set-cookie'][0] = proxyRes.headers['set-cookie'][0].replace(config.context, '');
+        proxyRes.headers['set-cookie'][0] = proxyRes.headers['set-cookie'][0].replace(config.proxy.context(), '');
     }
 });
 /**
