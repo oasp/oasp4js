@@ -21,7 +21,7 @@ describe('Module: \'app.offer-mgmt\', Service: \'offers\'', function () {
         var allOffers = [{
             id: '1'
         }], loadedOffers = {};
-        $httpBackend.whenGET(contextPath + 'services/rest/offermanagement/offer').respond(allOffers);
+        $httpBackend.whenGET(contextPath + 'services/rest/offermanagement/v1/offer').respond(allOffers);
         // when
         offers.loadAllOffers()
             .then(function (table) {
@@ -37,7 +37,7 @@ describe('Module: \'app.offer-mgmt\', Service: \'offers\'', function () {
         var allProducts = [{
             id: '1'
         }], loadedProducts = {};
-        $httpBackend.whenGET(contextPath + 'services/rest/offermanagement/product').respond(allProducts);
+        $httpBackend.whenGET(contextPath + 'services/rest/offermanagement/v1/product').respond(allProducts);
         // when
         offers.loadAllProducts()
             .then(function (response) {

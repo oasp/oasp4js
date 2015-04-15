@@ -18,7 +18,7 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         //when
         tableManagementRestService.getTable(id);
         //then
-        expect($http.get).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/table/' + id);
+        expect($http.get).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id);
     }));
 
     it('should call $http.get when tableManagementRestService.getAllTables is called', inject(function ($http) {
@@ -27,7 +27,7 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         //when
         tableManagementRestService.getAllTables();
         //then
-        expect($http.get).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/table/');
+        expect($http.get).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/');
     }));
 
     it('should call $http.put when tableManagementRestService.createTable is called', inject(function ($http) {
@@ -37,7 +37,7 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         //when
         tableManagementRestService.createTable(id, table);
         //then
-        expect($http.put).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/table/' + id, table);
+        expect($http.put).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id, table);
     }));
 
     it('should call $http.delete when tableManagementRestService.deleteTable is called', inject(function ($http) {
@@ -47,7 +47,7 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         //when
         tableManagementRestService.deleteTable(id);
         //then
-        expect($http.delete).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/table/' + id);
+        expect($http.delete).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id);
     }));
 
     it('should call $http.post when tableManagementRestService.marktableas is called', inject(function ($http) {
@@ -57,7 +57,7 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         //when
         tableManagementRestService.markTableAs(id, state);
         //then
-        expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/table/' + id + '/marktableas/' + state);
+        expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id + '/marktableas/' + state);
     }));
 
     it('should call $http.get when tableManagementRestService.isTableReleasable is called', inject(function ($http) {
@@ -67,6 +67,6 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         //when
         tableManagementRestService.isTableReleasable(id);
         //then
-        expect($http.get).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/table/' + id + '/istablereleasable/');
+        expect($http.get).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id + '/istablereleasable/');
     }));
 });
