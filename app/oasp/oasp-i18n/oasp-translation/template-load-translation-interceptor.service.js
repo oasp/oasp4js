@@ -1,6 +1,6 @@
 angular.module('oasp.oaspI18n').service('templateLoadTranslationInterceptor', function ($rootScope, oaspTranslation) {
     'use strict';
-    var regexp = new RegExp('/?([^/]+)/html/');
+    var regexp = new RegExp('/?([^/]+)/.*html');
     return {
         'request': function (config) {
             if (config.url) {

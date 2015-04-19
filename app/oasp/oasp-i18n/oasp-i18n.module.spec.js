@@ -30,22 +30,22 @@ describe('Module: oasp-i18n', function () {
         //then
         expect($translatePartialLoader.addPart).toHaveBeenCalledWith('main');
     }));
-    it('interceptor should load part on template request if context is present', inject(function ($httpBackend, $http, $translatePartialLoader) {
-        //given
-        $httpBackend.whenGET('/anycontext/main/dialog.html').respond(200);
-        spyOn($translatePartialLoader, 'addPart').and.callThrough();
-        //when
-        $http.get('/anycontext/main/dialog.html');
-        $httpBackend.flush();
-        //then
-        expect($translatePartialLoader.addPart).toHaveBeenCalledWith('main');
-    }));
     it('interceptor should not load part on template request if module does not provide translations', inject(function ($httpBackend, $http, $translatePartialLoader) {
         //given
         $httpBackend.whenGET('notranslation/dialog.html').respond(200);
         spyOn($translatePartialLoader, 'addPart').and.callThrough();
         //when
         $http.get('notranslation/dialog.html');
+        $httpBackend.flush();
+        //then
+        expect($translatePartialLoader.addPart).not.toHaveBeenCalled();
+    }));
+    it('interceptor should not load part on template request if no template request', inject(function ($httpBackend, $http, $translatePartialLoader) {
+        //given
+        $httpBackend.whenGET('main/dialog').respond(200);
+        spyOn($translatePartialLoader, 'addPart').and.callThrough();
+        //when
+        $http.get('main/dialog');
         $httpBackend.flush();
         //then
         expect($translatePartialLoader.addPart).not.toHaveBeenCalled();
