@@ -3,7 +3,7 @@ angular.module('app.sales-mgmt').factory('sales', function (salesManagementRestS
     return {
         loadOrderForTable: function (tableId) {
             return salesManagementRestService.findOrders({tableId: tableId, state: 'OPEN'}).then(function (response) {
-                return response.data && response.data.length ? response.data[0] : undefined;
+                return response.data.result && response.data.result.length ? response.data.result[0] : undefined;
             });
         },
         saveOrUpdateOrder: function (order) {

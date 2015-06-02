@@ -7,6 +7,27 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
         $scope.model.order = currentOrder;
         $scope.model.selected = allOffers.length ? allOffers[0] : undefined;
         $scope.selectedItems = [];
+        
+        $scope.positionsShown = [];
+        
+        $scope.totalItems = $scope.model.order.positions.length;
+  			$scope.numPerPage = 2;
+  			$scope.currentPage = 1;
+
+  			$scope.setPage = function (pageNo) {
+    			$scope.currentPage = pageNo;
+				};
+
+  			$scope.pageChanged = function() {
+    			$log.log('Page changed to: ' + $scope.currentPage);
+  			};
+  			$scope.maxSize = 4;
+  			
+  			$scope.$watch("currentPage + numPerPage + model.order", function() {
+    			var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
+					$scope.positionsShown = $scope.model.order.positions.slice(begin, end);
+ 				 });
+        
 
         $scope.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);

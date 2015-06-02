@@ -50,13 +50,13 @@
                         &nbsp;
                     </div>
                 </div>
-                <div class="row">
+                <div class="row"> <!--  ng-repeat="order in model.order" -->
                     <div class="col-md-12">
                         <table class="raw-table" tr-ng-grid=""
                                selection-mode="SingleRow"
                                enable-filtering="false"
                                selected-items="selectedItems"
-                               items="model.order.positions">
+                               items="positionsShown">
                             <thead>
                             <tr>
                                 <th field-name="id" display-name="Number" cell-width="7em"></th>
@@ -71,6 +71,7 @@
                         <button-bar button-defs="buttonDefs"></button-bar>
                     </div>
                 </div>
+                <pagination total-items="totalItems" items-per-page="numPerPage" ng-model="currentPage" num-pages="numPages" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false"></pagination> <!--  -->
             </div>
         </form>
     </div>
