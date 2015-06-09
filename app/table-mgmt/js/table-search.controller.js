@@ -37,7 +37,7 @@ angular.module('app.table-mgmt')
   		  $scope.numPerPage = $scope.paginatedTableList.pagination.size;
   		  $scope.currentPage = $scope.paginatedTableList.pagination.page;
   			
-  		  $scope.$watch("currentPage", function() {
+  		  $scope.$watch('currentPage', function() {
 				  tables.getPaginatedTables($scope.currentPage, $scope.numPerPage).then(function(paginatedTables) {
                   return paginatedTables;
                   }).then(function(res){

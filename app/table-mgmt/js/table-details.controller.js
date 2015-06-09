@@ -19,12 +19,10 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
             $scope.currentPage = pageNo;
         };
 
-        $scope.pageChanged = function () {
-            $log.log('Page changed to: ' + $scope.currentPage);
-        };
+
         $scope.maxSize = 4;
   			
-        $scope.$watch("totalItems + currentPage + numPerPage + model.order + model.order.positions", function () {
+        $scope.$watch('totalItems + currentPage + numPerPage + model.order + model.order.positions', function () {
             if ($scope.model.order !== undefined) {
                 var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
                 $scope.positionsShown = $scope.model.order.positions.slice(begin, end);
