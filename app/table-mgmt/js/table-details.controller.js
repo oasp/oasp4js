@@ -10,24 +10,29 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
         
         $scope.positionsShown = [];
         
-        $scope.totalItems = $scope.model.order.positions.length;
-  			$scope.numPerPage = 2;
-  			$scope.currentPage = 1;
-
-  			$scope.setPage = function (pageNo) {
-    			$scope.currentPage = pageNo;
-				};
-
-  			$scope.pageChanged = function() {
-    			$log.log('Page changed to: ' + $scope.currentPage);
-  			};
-  			$scope.maxSize = 4;
-  			
-  			$scope.$watch("currentPage + numPerPage + model.order", function() {
-    			var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
-					$scope.positionsShown = $scope.model.order.positions.slice(begin, end);
- 				 });
+        $scope.totalItems = $scope.model.order !== undefined ? $scope.model.order.positions.length : 0;
         
+        $scope.numPerPage = 3;
+        $scope.currentPage = 1;
+
+        $scope.setPage = function (pageNo) {
+            $scope.currentPage = pageNo;
+        };
+
+        $scope.pageChanged = function () {
+            $log.log('Page changed to: ' + $scope.currentPage);
+        };
+        $scope.maxSize = 4;
+  			
+        $scope.$watch("totalItems + currentPage + numPerPage + model.order + model.order.positions", function () {
+            if ($scope.model.order !== undefined) {
+                var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
+                $scope.positionsShown = $scope.model.order.positions.slice(begin, end);
+                $scope.totalItems = $scope.model.order.positions !== undefined ? $scope.model.order.positions.length : 0;
+            } else {
+                console.log('No order available');
+            }
+        });
 
         $scope.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);
@@ -65,7 +70,6 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
             });
         };
         $scope.addPosition = function (offer) {
-            //$scope.gridOptions.data = $scope.model.order.positions;
             $scope.model.order.positions.push({
                 revision: null,
                 orderId: $scope.model.order.order.id,
@@ -75,6 +79,7 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
                 price: offer.price,
                 comment: ''
             });
+            $scope.totalItems = $scope.model.order.positions.length;
         };
 
         $scope.buttonDefs = [

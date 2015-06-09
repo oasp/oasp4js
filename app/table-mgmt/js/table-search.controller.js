@@ -5,7 +5,6 @@ angular.module('app.table-mgmt')
         var selectedTable = function () {
             return $scope.selectedItems && $scope.selectedItems.length ? $scope.selectedItems[0] : undefined;
         };
-
         $scope.openEditDialog = function (tableRow) {
             $modal.open({
                 templateUrl: 'table-mgmt/html/table-details.html',
@@ -23,10 +22,32 @@ angular.module('app.table-mgmt')
                 }
             });
         };
+    
         $scope.selectedItems = [];
+        
+        $scope.paginatedTableList = initialTableList;
+
         $scope.gridOptions = {
-            data: initialTableList
+            data: $scope.paginatedTableList.result
         };
+        
+        $scope.maxSize = 5;
+        $scope.totalItems = $scope.paginatedTableList.pagination.total;
+  		$scope.numPerPage = $scope.paginatedTableList.pagination.size;
+  		$scope.currentPage = $scope.paginatedTableList.pagination.page;
+  			
+  		$scope.$watch("currentPage", function() {
+            //kommt immer einen Klick später??
+            console.log("change detected");
+			tables.getPaginatedTables($scope.currentPage, $scope.numPerPage).then(function(paginatedTables) {
+                return paginatedTables;
+                }).then(function(res){
+                    $scope.paginatedTableList = res;
+                    $scope.gridOptions.data=$scope.paginatedTableList.result;
+                }); 
+        });
+    
+    
         $scope.buttonDefs = [
             {
                 label: 'Edit...',

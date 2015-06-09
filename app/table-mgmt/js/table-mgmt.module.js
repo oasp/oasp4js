@@ -6,7 +6,9 @@ angular.module('app.table-mgmt', ['ngRoute', 'app.offer-mgmt', 'app.sales-mgmt',
         controller: 'TableSearchCntl',
         resolve: {
             initialTableList: ['tables', function (tables) {
-                return tables.getAllTables();
+                return tables.getPaginatedTables(1, 4).then(function(paginatedTables) {
+                    return paginatedTables;
+                });
             }]
         }
     });

@@ -1,11 +1,12 @@
 angular.module('app.table-mgmt').factory('tables', function (tableManagementRestService) {
     'use strict';
     var tables = [];
+    var paginatedTables = {};
     return {
-        getAllTables: function () {
-            return tableManagementRestService.getAllTables().then(function (response) {
-                angular.copy(response.data, tables);
-                return tables;
+        getPaginatedTables: function (pagenumber, pagesize) {
+            return tableManagementRestService.getPaginatedTables(pagenumber, pagesize).then(function (response) {
+                angular.copy(response.data, paginatedTables);
+                return paginatedTables;
             });
         },
         loadTable: function (tableId) {
