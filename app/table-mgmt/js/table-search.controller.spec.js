@@ -1,20 +1,60 @@
 describe('Module: tableMgmt, Controller: table-search', function () {
     'use strict';
-    var $scope, deferred, table = {
-        id: '1',
-        state: 'FREE',
-        waiter: ''
-    }, tablesMock = {
-        loadTable: jasmine.createSpy(),
-        reserve: angular.noop,
-        cancelReservation: angular.noop,
-        occupy: angular.noop,
-        free: angular.noop
-    }, offersMock = {
-        loadAllOffers: jasmine.createSpy()
-    }, salesMock = {
-        loadOrderForTable: jasmine.createSpy()
-    };
+    var $scope, deferred,
+        tableResults = {
+            pagination: {
+                size: 4,
+                page: 1,
+                total: 5
+            },
+            result: [
+                {
+                    id: 101,
+                    modificationCounter: 1,
+                    revision: null,
+                    waiterId: null,
+                    number: 1,
+                    state: 'OCUPIED'
+                },
+                {
+                    id: 102,
+                    modificationCounter: 1,
+                    revision: null,
+                    waiterId: null,
+                    number: 2,
+                    state: 'FREE'
+                },
+                {
+                    id: 103,
+                    modificationCounter: 1,
+                    revision: null,
+                    waiterId: null,
+                    number: 3,
+                    state: 'FREE'
+                },
+                {
+                    id: 104,
+                    modificationCounter: 1,
+                    revision: null,
+                    waiterId: null,
+                    number: 4,
+                    state: 'FREE'
+                }
+            ]
+        },
+        tablesMock = {
+            loadTable: jasmine.createSpy(),
+            reserve: angular.noop,
+            cancelReservation: angular.noop,
+            occupy: angular.noop,
+            free: angular.noop
+        },
+        offersMock = {
+            loadAllOffers: jasmine.createSpy()
+        },
+        salesMock = {
+            loadOrderForTable: jasmine.createSpy()
+        };
 
     beforeEach(module('app.table-mgmt'));
 
@@ -26,7 +66,7 @@ describe('Module: tableMgmt, Controller: table-search', function () {
         spyOn(tablesMock, 'cancelReservation').and.returnValue(deferred.promise);
         spyOn(tablesMock, 'occupy').and.returnValue(deferred.promise);
         spyOn(tablesMock, 'free').and.returnValue(deferred.promise);
-        $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock, sales: salesMock, offers: offersMock, initialTableList: [table] });
+        $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock, sales: salesMock, offers: offersMock, initialTableList: tableResults });
     }));
 
     it('exposes tables referencing tables from service on $scope', function () {

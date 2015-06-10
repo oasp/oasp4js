@@ -18,25 +18,62 @@ describe('Module: \'app.sales-mgmt\', Service: \'sales\'', function () {
     });
     it('loads an order for a given table', function () {
         // given
-        var orders = [{id: '1'}, {id: '2'}], loadedOrder;
-        $httpBackend.whenGET(contextPath + 'services/rest/salesmanagement/v1/order?state=OPEN&tableId=1').respond(orders);
+        var paginatedOrders = {
+            pagination: {size: 500, page: 1, total: null},
+            result: [
+                {
+                    order: {
+                        id: 10000000,
+                        modificationCounter: 0,
+                        revision: null,
+                        tableId: 102,
+                        state: 'OPEN'
+                    },
+                    positions: [
+                        {id: 10000010},
+                        {id: 10000011}
+                    ]
+                }
+            ]
+        },
+            loadedOrder,
+            orderSearchCriteria = {
+                state: 'OPEN',
+                tableId: 102
+            };
+        $httpBackend.whenPOST(contextPath + 'services/rest/salesmanagement/v1/order/search', orderSearchCriteria).respond(paginatedOrders);
 
         // when
-        sales.loadOrderForTable(1)
-            .then(function (order) {
-                loadedOrder = order;
+        sales.loadOrderForTable(102)
+            .then(function (result) {
+                loadedOrder = result;
             });
         $httpBackend.flush();
         // then
-        expect(loadedOrder).toEqual({id: '1'});
+        expect(loadedOrder.order).toEqual({
+            id: 10000000,
+            modificationCounter: 0,
+            revision: null,
+            tableId: 102,
+            state: 'OPEN'
+        });
     });
     it('returns undefined when no orders exist', function () {
         // given
-        var loadedOrder;
-        $httpBackend.whenGET(contextPath + 'services/rest/salesmanagement/v1/order?state=OPEN&tableId=1').respond([]);
+        var paginatedOrders = {
+            pagination: {size: 500, page: 1, total: null},
+            result: [
+            ]
+        },
+            loadedOrder,
+            orderSearchCriteria = {
+                state: 'OPEN',
+                tableId: 102
+            };
+        $httpBackend.whenPOST(contextPath + 'services/rest/salesmanagement/v1/order/search', orderSearchCriteria).respond(paginatedOrders);
 
         // when
-        sales.loadOrderForTable(1)
+        sales.loadOrderForTable(102)
             .then(function (order) {
                 loadedOrder = order;
             });
