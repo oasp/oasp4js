@@ -158,7 +158,7 @@ describe('Service: tables', function () {
         };
         mockTableStatusChange(table);
         //when
-        tables.free(table);
+        tables.cancelReservation(table);
         $httpBackend.flush();
         // then
     });
