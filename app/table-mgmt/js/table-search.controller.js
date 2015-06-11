@@ -1,4 +1,3 @@
-/*jslint todo: true */
 angular.module('app.table-mgmt')
     .controller('TableSearchCntl', function ($scope, tables, initialTableList, $modal, globalSpinner, offers, sales) {
         'use strict';
@@ -34,16 +33,16 @@ angular.module('app.table-mgmt')
         
         $scope.maxSize = 5;
         $scope.totalItems = $scope.paginatedTableList.pagination.total;
-  		  $scope.numPerPage = $scope.paginatedTableList.pagination.size;
-  		  $scope.currentPage = $scope.paginatedTableList.pagination.page;
-  			
-  		  $scope.$watch('currentPage', function() {
-				  tables.getPaginatedTables($scope.currentPage, $scope.numPerPage).then(function(paginatedTables) {
-                  return paginatedTables;
-                  }).then(function(res){
-                      $scope.paginatedTableList = res;
-                      $scope.gridOptions.data=$scope.paginatedTableList.result;
-                  }); 
+        $scope.numPerPage = $scope.paginatedTableList.pagination.size;
+        $scope.currentPage = $scope.paginatedTableList.pagination.page;
+
+        $scope.$watch('currentPage', function () {
+            tables.getPaginatedTables($scope.currentPage, $scope.numPerPage).then(function (paginatedTables) {
+                return paginatedTables;
+            }).then(function (res) {
+                $scope.paginatedTableList = res;
+                $scope.gridOptions.data = $scope.paginatedTableList.result;
+            });
         });
     
     

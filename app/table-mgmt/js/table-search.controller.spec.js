@@ -14,7 +14,7 @@ describe('Module: tableMgmt, Controller: table-search', function () {
                     revision: null,
                     waiterId: null,
                     number: 1,
-                    state: 'OCUPIED'
+                    state: 'OCCUPIED'
                 },
                 {
                     id: 102,
@@ -47,7 +47,8 @@ describe('Module: tableMgmt, Controller: table-search', function () {
             reserve: angular.noop,
             cancelReservation: angular.noop,
             occupy: angular.noop,
-            free: angular.noop
+            free: angular.noop,
+            getPaginatedTables: function() { return {then: function() { return {then: function(callback) { return callback({});}};}};}
         },
         offersMock = {
             loadAllOffers: jasmine.createSpy()
@@ -62,10 +63,12 @@ describe('Module: tableMgmt, Controller: table-search', function () {
         //given
         $scope = $rootScope.$new();
         deferred = $q.defer();
+        //var res = {result: []};
         spyOn(tablesMock, 'reserve').and.returnValue(deferred.promise);
         spyOn(tablesMock, 'cancelReservation').and.returnValue(deferred.promise);
         spyOn(tablesMock, 'occupy').and.returnValue(deferred.promise);
         spyOn(tablesMock, 'free').and.returnValue(deferred.promise);
+        spyOn(tablesMock, 'getPaginatedTables').and.callThrough();//and.callFake(function() {return {then: function(callback) { return callback(res); } };});
         $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock, sales: salesMock, offers: offersMock, initialTableList: tableResults });
     }));
 
@@ -220,6 +223,15 @@ describe('Module: tableMgmt, Controller: table-search', function () {
             ];
             //when then
             expect($scope.buttonDefs[4].isActive()).toBeTruthy();
+        });
+        
+        it('should reload displayed tables when the page selected on the pagination element changes', function () {
+            //given
+            //when
+            $scope.currentPage = 2;
+            $scope.$digest();
+            //then
+            expect(tablesMock.getPaginatedTables).toHaveBeenCalledWith(2, 4);
         });
 
     });

@@ -28,12 +28,13 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         tableManagementRestService.getPaginatedTables(1, 3);
         //then
         expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/search',
-        																				{pagination: {
-        																											size: 3,
-                    																					page: 1,
-                   																						total: true
-                																							}
-        });
+            {
+                pagination: {
+                    size: 3,
+                    page: 1,
+                    total: true
+                }
+            });
     }));
 
     it('should call $http.put when tableManagementRestService.createTable is called', inject(function ($http) {
