@@ -57,14 +57,14 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         expect($http.delete).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id);
     }));
 
-    it('should call $http.post when tableManagementRestService.marktableas is called', inject(function ($http) {
+    it('should call $http.post when tableManagementRestService.saveTable is called', inject(function ($http) {
         //given
-        var id = 'tableId', state = 'FREE';
+        var table = {state: 'FREE'};
         spyOn($http, 'post');
         //when
-        tableManagementRestService.markTableAs(id, state);
+        tableManagementRestService.saveTable(table);
         //then
-        expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id + '/marktableas/' + state);
+        expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/', table);
     }));
 
     it('should call $http.get when tableManagementRestService.isTableReleasable is called', inject(function ($http) {

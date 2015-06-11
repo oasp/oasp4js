@@ -1,6 +1,5 @@
 angular.module('app.table-mgmt').factory('tables', function (tableManagementRestService) {
     'use strict';
-    var tables = [];
     var paginatedTables = {};
     return {
         getPaginatedTables: function (pagenumber, pagesize) {
@@ -15,35 +14,23 @@ angular.module('app.table-mgmt').factory('tables', function (tableManagementRest
             });
         },
         reserve: function (table) {
-            return tableManagementRestService.markTableAs(table.id, 'RESERVED').then(function () {
-                var tableIndex = tables.indexOf(table);
-                if (tableIndex >= 0) {
-                    tables[tableIndex].state = 'RESERVED';
-                }
+            table.state = 'RESERVED';
+            return tableManagementRestService.saveTable(table).then(function () {
             });
         },
         free: function (table) {
-            return tableManagementRestService.markTableAs(table.id, 'FREE').then(function () {
-                var tableIndex = tables.indexOf(table);
-                if (tableIndex >= 0) {
-                    tables[tableIndex].state = 'FREE';
-                }
+            table.state = 'FREE';
+            return tableManagementRestService.saveTable(table).then(function () {
             });
         },
         occupy: function (table) {
-            return tableManagementRestService.markTableAs(table.id, 'OCCUPIED').then(function () {
-                var tableIndex = tables.indexOf(table);
-                if (tableIndex >= 0) {
-                    tables[tableIndex].state = 'OCCUPIED';
-                }
+            table.state = 'OCCUPIED';
+            return tableManagementRestService.saveTable(table).then(function () {
             });
         },
         cancelReservation: function (table) {
-            return tableManagementRestService.markTableAs(table.id, 'FREE').then(function () {
-                var tableIndex = tables.indexOf(table);
-                if (tableIndex >= 0) {
-                    tables[tableIndex].state = 'FREE';
-                }
+            table.state = 'FREE';
+            return tableManagementRestService.saveTable(table).then(function () {
             });
         }
     };

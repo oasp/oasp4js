@@ -69,7 +69,7 @@ describe('Module: tableMgmt, Controller: table-search', function () {
         spyOn(tablesMock, 'occupy').and.returnValue(deferred.promise);
         spyOn(tablesMock, 'free').and.returnValue(deferred.promise);
         spyOn(tablesMock, 'getPaginatedTables').and.callThrough();//and.callFake(function() {return {then: function(callback) { return callback(res); } };});
-        $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock, sales: salesMock, offers: offersMock, initialTableList: tableResults });
+        $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock, sales: salesMock, offers: offersMock, paginatedTableList: tableResults });
     }));
 
     it('exposes tables referencing tables from service on $scope', function () {

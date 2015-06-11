@@ -1,5 +1,5 @@
 angular.module('app.table-mgmt')
-    .controller('TableSearchCntl', function ($scope, tables, initialTableList, $modal, globalSpinner, offers, sales) {
+    .controller('TableSearchCntl', function ($scope, tables, paginatedTableList, $modal, globalSpinner, offers, sales) {
         'use strict';
         var selectedTable = function () {
             return $scope.selectedItems && $scope.selectedItems.length ? $scope.selectedItems[0] : undefined;
@@ -24,28 +24,28 @@ angular.module('app.table-mgmt')
         };
     
         $scope.selectedItems = [];
-        
-        $scope.paginatedTableList = initialTableList;
+        $scope.maxSize = 5;
+        $scope.totalItems = paginatedTableList.pagination.total;
+        $scope.numPerPage = paginatedTableList.pagination.size;
+        $scope.currentPage = paginatedTableList.pagination.page;
 
         $scope.gridOptions = {
-            data: $scope.paginatedTableList.result
+            data: paginatedTableList.result
         };
         
-        $scope.maxSize = 5;
-        $scope.totalItems = $scope.paginatedTableList.pagination.total;
-        $scope.numPerPage = $scope.paginatedTableList.pagination.size;
-        $scope.currentPage = $scope.paginatedTableList.pagination.page;
-
-        $scope.$watch('currentPage', function () {
+        $scope.reloadTables = function () {
             tables.getPaginatedTables($scope.currentPage, $scope.numPerPage).then(function (paginatedTables) {
                 return paginatedTables;
             }).then(function (res) {
-                $scope.paginatedTableList = res;
-                $scope.gridOptions.data = $scope.paginatedTableList.result;
+                paginatedTableList = res;
+                $scope.gridOptions.data = paginatedTableList.result;
             });
+        };
+        
+        $scope.$watch('currentPage', function () {
+            $scope.reloadTables();
         });
-    
-    
+        
         $scope.buttonDefs = [
             {
                 label: 'Edit...',
@@ -60,7 +60,7 @@ angular.module('app.table-mgmt')
                 label: 'Reserve',
                 onClick: function () {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return tables.reserve(selectedTable());
+                        return tables.reserve(selectedTable()).then($scope.reloadTables);
                     });
                 },
                 isActive: function () {
@@ -71,7 +71,7 @@ angular.module('app.table-mgmt')
                 label: 'Cancel Reservation',
                 onClick: function () {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return tables.cancelReservation(selectedTable());
+                        return tables.cancelReservation(selectedTable()).then($scope.reloadTables);
                     });
                 },
                 isActive: function () {
@@ -82,7 +82,7 @@ angular.module('app.table-mgmt')
                 label: 'Occupy',
                 onClick: function () {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return tables.occupy(selectedTable());
+                        return tables.occupy(selectedTable()).then($scope.reloadTables);
                     });
                 },
                 isActive: function () {
@@ -93,7 +93,7 @@ angular.module('app.table-mgmt')
                 label: 'Free',
                 onClick: function () {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return tables.free(selectedTable());
+                        return tables.free(selectedTable()).then($scope.reloadTables);
                     });
                 },
                 isActive: function () {
@@ -101,4 +101,6 @@ angular.module('app.table-mgmt')
                 }
             }
         ];
+    
+
     });

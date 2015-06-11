@@ -23,8 +23,8 @@ angular.module('app.table-mgmt').factory('tableManagementRestService', function 
         deleteTable: function (id) {
             return $http.delete(servicePath + '/table/' + id);
         },
-        markTableAs: function (id, state) {
-            return $http.post(servicePath + '/table/' + id + '/marktableas/' + state);
+        saveTable: function (table) {
+            return $http.post(servicePath + '/table/', table);
         },
         isTableReleasable: function (id) {
             return $http.get(servicePath + '/table/' + id + '/istablereleasable/');

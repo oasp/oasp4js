@@ -56,12 +56,10 @@ describe('Service: tables', function () {
                     ]
                 }
             );
-        };/*,
-        
-        The markTableAs function will be replaced by using a saveTable() function, so this mock is obsolete
-        mockTableStatusChange = function (tableId, status) {
-            $httpBackend.whenPOST(contextPath + 'services/rest/tablemanagement/v1/table/' + tableId + '/marktableas/' + status).respond(200);
-        }*/
+        },
+        mockTableStatusChange = function (table) {
+            $httpBackend.whenPOST(contextPath + 'services/rest/tablemanagement/v1/table/', table).respond(200);
+        };
     
     beforeEach(module('app.table-mgmt'));
 
@@ -116,40 +114,53 @@ describe('Service: tables', function () {
         expect(loadedTable).toEqual(table);
     });
     
-    /*
-    The markTableAs function will be replaced by using a saveTable() function, so these tests are obsolete
-    
     it('frees one table', function () {
         //given
-        mockTableStatusChange(1, 'FREE');
+        var table = {
+            id: 101,
+            state: 'FREE'
+        };
+        mockTableStatusChange(table);
         //when
-        tables.free(1);
+        tables.free(table);
         $httpBackend.flush();
         // then
     });
     it('reserves one table', function () {
         //given
-        mockTableStatusChange(1, 'RESERVED');
+        var table = {
+            id: 101,
+            state: 'RESERVE'
+        };
+        mockTableStatusChange(table);
         //when
-        tables.reserve(1);
+        tables.reserve(table);
         $httpBackend.flush();
         // then
     });
     it('occupies one table', function () {
         //given
-        mockTableStatusChange(1, 'OCCUPIED');
+        var table = {
+            id: 101,
+            state: 'OCCUPIED'
+        };
+        mockTableStatusChange(table);
         //when
-        tables.occupy(1);
+        tables.occupy(table);
         $httpBackend.flush();
         // then
     });
     it('cancels reservation', function () {
         //given
-        mockTableStatusChange(1, 'FREE');
+        var table = {
+            id: 101,
+            state: 'FREE'
+        };
+        mockTableStatusChange(table);
         //when
-        tables.cancelReservation(1);
+        tables.free(table);
         $httpBackend.flush();
         // then
-    });*/
+    });
     
 });
