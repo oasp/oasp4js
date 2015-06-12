@@ -5,9 +5,7 @@ angular.module('app.sales-mgmt').factory('salesManagementRestService', function 
 
     return {
         findOrders: function (params) {
-            return $http.get(servicePath + '/order', {
-                params: params
-            });
+            return $http.post(servicePath + '/order/search', params);
         },
         updateOrder: function (order, orderId) {
             return $http.put(servicePath + '/order/' + orderId, order);

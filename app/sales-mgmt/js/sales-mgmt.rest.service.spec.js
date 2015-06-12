@@ -11,14 +11,17 @@ describe('Module: salesMgmt, Service: salesManagementRestService', function () {
         salesManagementRestService = _salesManagementRestService_;
     }));
 
-    it('should call $http.get when salesManagementRestService.findOrders is called', inject(function ($http) {
+    it('should call $http.post when salesManagementRestService.findOrders is called', inject(function ($http) {
         //given
-        var params = {id: 'orderId'};
-        spyOn($http, 'get');
+        var params = {
+                			state: 'OPEN',
+                			tableId: 101
+            					};
+        spyOn($http, 'post');
         //when
         salesManagementRestService.findOrders(params);
         //then
-        expect($http.get).toHaveBeenCalledWith(contextPath + 'services/rest/salesmanagement/v1/order', {params: params});
+        expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/salesmanagement/v1/order/search', params);
     }));
 
     it('should call $http.put when salesManagementRestService.updateOrder is called', inject(function ($http) {

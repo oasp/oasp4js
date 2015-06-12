@@ -5,8 +5,10 @@ angular.module('app.table-mgmt', ['ngRoute', 'app.offer-mgmt', 'app.sales-mgmt',
         templateUrl: 'table-mgmt/html/table-search.html',
         controller: 'TableSearchCntl',
         resolve: {
-            initialTableList: ['tables', function (tables) {
-                return tables.getAllTables();
+            paginatedTableList: ['tables', function (tables) {
+                return tables.getPaginatedTables(1, 4).then(function(paginatedTables) {
+                    return paginatedTables;
+                });
             }]
         }
     });

@@ -2,8 +2,12 @@ angular.module('app.sales-mgmt').factory('sales', function (salesManagementRestS
     'use strict';
     return {
         loadOrderForTable: function (tableId) {
-            return salesManagementRestService.findOrders({tableId: tableId, state: 'OPEN'}).then(function (response) {
-                return response.data && response.data.length ? response.data[0] : undefined;
+            var orderSearchCriteria = {
+                state: 'OPEN',
+                tableId: tableId
+            };
+            return salesManagementRestService.findOrders(orderSearchCriteria).then(function (response) {
+                return response.data.result && response.data.result.length ? response.data.result[0] : undefined;
             });
         },
         saveOrUpdateOrder: function (order) {

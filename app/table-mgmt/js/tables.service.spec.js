@@ -1,26 +1,66 @@
 /*globals oasp*/
 describe('Service: tables', function () {
     'use strict';
-
-    var tables, $httpBackend, listOfTables,
-        contextPath = '/oasp-app/',
-        mockAllTableResponse = function () {
-            $httpBackend.whenGET(contextPath + 'services/rest/tablemanagement/v1/table/').respond([
-                {
-                    id: '1',
-                    state: 'FREE',
-                    waiter: ''
-                },
-                {
-                    id: '2',
-                    state: 'FREE',
-                    waiter: ''
-                }
-            ]);
+    var tableSearchCriteria = {
+            pagination: {
+                size: 4,
+                page: 1,
+                total: true
+            }
         },
-        mockTableStatusChange = function (tableId, status) {
-            $httpBackend.whenPOST(contextPath + 'services/rest/tablemanagement/v1/table/' + tableId + '/marktableas/' + status).respond(200);
+        tables,
+        $httpBackend,
+        listOfTables,
+        contextPath = '/oasp-app/',
+        mockPaginatedTableResponse = function () {
+            $httpBackend.whenPOST(contextPath + 'services/rest/tablemanagement/v1/table/search', tableSearchCriteria).respond(
+                {
+                    pagination: {
+                        size: 4,
+                        page: 1,
+                        total: 5
+                    },
+                    result: [
+                        {
+                            id: 101,
+                            modificationCounter: 1,
+                            revision: null,
+                            waiterId: null,
+                            number: 1,
+                            state: 'OCCUPIED'
+                        },
+                        {
+                            id: 102,
+                            modificationCounter: 1,
+                            revision: null,
+                            waiterId: null,
+                            number: 2,
+                            state: 'FREE'
+                        },
+                        {
+                            id: 103,
+                            modificationCounter: 1,
+                            revision: null,
+                            waiterId: null,
+                            number: 3,
+                            state: 'FREE'
+                        },
+                        {
+                            id: 104,
+                            modificationCounter: 1,
+                            revision: null,
+                            waiterId: null,
+                            number: 4,
+                            state: 'FREE'
+                        }
+                    ]
+                }
+            );
+        },
+        mockTableStatusChange = function (table) {
+            $httpBackend.whenPOST(contextPath + 'services/rest/tablemanagement/v1/table/', table).respond(200);
         };
+    
     beforeEach(module('app.table-mgmt'));
 
     beforeEach(function () {
@@ -35,9 +75,9 @@ describe('Service: tables', function () {
     });
     beforeEach(function () {
         // given // when
-        mockAllTableResponse();
-        tables.getAllTables().then(function (allTables) {
-            listOfTables = allTables;
+        mockPaginatedTableResponse();
+        tables.getPaginatedTables(1, 4).then(function (paginatedTables) {
+            listOfTables = paginatedTables.result;
         });
         $httpBackend.flush();
 
@@ -49,20 +89,23 @@ describe('Service: tables', function () {
 
     it('loads tables from server', function () {
         // then
-        expect(listOfTables.length).toBe(2);
-        expect(listOfTables[0].id).toEqual('1');
+        expect(listOfTables.length).toBe(4);
+        expect(listOfTables[0].id).toEqual(101);
 
     });
     it('loads a table', function () {
         // given
         var table = {
-            id: '1',
-            state: 'FREE',
-            waiter: ''
+            id: 101,
+            modificationCounter: 1,
+            revision: null,
+            waiterId: null,
+            number: 1,
+            state: 'OCCUPIED'
         }, loadedTable;
-        $httpBackend.whenGET(contextPath + 'services/rest/tablemanagement/v1/table/1').respond(table);
+        $httpBackend.whenGET(contextPath + 'services/rest/tablemanagement/v1/table/101').respond(table);
         // when
-        tables.loadTable(1)
+        tables.loadTable(101)
             .then(function (table) {
                 loadedTable = table;
             });
@@ -70,36 +113,54 @@ describe('Service: tables', function () {
         // then
         expect(loadedTable).toEqual(table);
     });
+    
     it('frees one table', function () {
         //given
-        mockTableStatusChange('1', 'FREE');
+        var table = {
+            id: 101,
+            state: 'FREE'
+        };
+        mockTableStatusChange(table);
         //when
-        tables.free(listOfTables[0]);
+        tables.free(table);
         $httpBackend.flush();
         // then
     });
     it('reserves one table', function () {
         //given
-        mockTableStatusChange('1', 'RESERVED');
+        var table = {
+            id: 101,
+            state: 'RESERVE'
+        };
+        mockTableStatusChange(table);
         //when
-        tables.reserve(listOfTables[0]);
+        tables.reserve(table);
         $httpBackend.flush();
         // then
     });
     it('occupies one table', function () {
         //given
-        mockTableStatusChange('1', 'OCCUPIED');
+        var table = {
+            id: 101,
+            state: 'OCCUPIED'
+        };
+        mockTableStatusChange(table);
         //when
-        tables.occupy(listOfTables[0]);
+        tables.occupy(table);
         $httpBackend.flush();
         // then
     });
     it('cancels reservation', function () {
         //given
-        mockTableStatusChange('1', 'FREE');
+        var table = {
+            id: 101,
+            state: 'FREE'
+        };
+        mockTableStatusChange(table);
         //when
-        tables.cancelReservation(listOfTables[0]);
+        tables.cancelReservation(table);
         $httpBackend.flush();
         // then
     });
+    
 });
