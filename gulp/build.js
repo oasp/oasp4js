@@ -35,7 +35,7 @@ gulp.task('styles', function () {
         .pipe($.less({
             paths: config.styles.includePaths()
         }))
-        .pipe(gulp.dest(config.output()))
+        .pipe(gulp.dest(config.paths.tmp))
         .pipe($.size());
 });
 
@@ -57,9 +57,9 @@ gulp.task('indexHtml', ['styles', 'img:sprite', 'ngTemplates'], function () {
             addRootSlash: false,
             ignorePath: [config.paths.src, config.paths.tmp]
         }))
-        .pipe($.inject(gulp.src(config.paths.tmp + '/**/*.css', {read: false}), {
+        .pipe($.inject(gulp.src(config.styles.injects(), {read: false}), {
             addRootSlash: false,
-            ignorePath: [config.paths.src, config.paths.tmp]
+            ignorePath: [config.paths.src, config.paths.tmp, config.paths.dist]
         }))
         .pipe($.processhtml({commentMarker: 'process',
             recursive: true,
@@ -84,11 +84,26 @@ gulp.task('img:sprite', function () {
             imgName: config.img.sprite.output.img(),
             cssName: config.img.sprite.output.css()
         }))
-        .pipe(gulp.dest(config.output()))
+        .pipe(gulp.dest(config.paths.tmp))
         .pipe($.size());
 });
 
-gulp.task('img:copy', function (done) {
+gulp.task('img:sprite:copy', ['img:sprite'], function (done) {
+    if (isBuildForProd()) {
+        return gulp.src(config.paths.tmp + '/' + config.img.sprite.output.img(), {base: config.paths.tmp})
+            .pipe($.imagemin({
+                optimizationLevel: 3,
+                progressive: true,
+                interlaced: true
+            }))
+            .pipe(gulp.dest(config.output()))
+            .pipe($.size());
+    } else {
+        done();
+    }
+});
+
+gulp.task('img:copy', ['img:sprite:copy'], function (done) {
     if (isBuildForProd()) {
         return gulp.src(config.img.src(), {base: config.paths.src})
             .pipe($.imagemin({
@@ -108,7 +123,7 @@ gulp.task('fonts', function (done) {
     //TODO check font awesome
     if (isBuildForProd()) {
         return gulp.src($.mainBowerFiles())
-            .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
+            .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
             .pipe($.flatten())
             .pipe(gulp.dest(config.output() + '/fonts/'));
     } else {

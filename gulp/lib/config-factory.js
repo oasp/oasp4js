@@ -6,11 +6,14 @@ var configFactory = function (externalConfig) {
 
     var modulesConfig = moduleParser.parseModules(externalConfig.paths.src);
     var pathsBuilder = builderFactory(externalConfig.paths, modulesConfig.modules, modulesConfig.topLevelModules);
+    var currentOutput = function () {
+        return  isBuildForProd() ? externalConfig.paths.dist : externalConfig.paths.tmp;
+    };
     return {
         paths: externalConfig.paths,
         //outputs
         output: function () {
-            return isBuildForProd() ? externalConfig.paths.dist : externalConfig.paths.tmp;
+            return currentOutput();
         },
         testOutput: function () {
             return externalConfig.paths.testOutput;
@@ -43,6 +46,9 @@ var configFactory = function (externalConfig) {
             },
             output: function () {
                 return externalConfig.styles.output;
+            },
+            injects: function () {
+                return [pathsBuilder.build('{tmp}/**/*.css'), pathsBuilder.build('{src}/**/*.css')];
             },
             includePaths: function () {
                 return [
