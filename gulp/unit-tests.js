@@ -15,18 +15,21 @@ var createKarmaTask = function (options) {
         });
 };
 gulp.task('test', ['lint', 'ngTemplates'], function () {
+    process.env.generateCoverage = true;
     return createKarmaTask({
         configFile: 'karma.conf.js',
         action: 'run'
     });
 });
 gulp.task('test:tdd', ['ngTemplates'], function () {
+    process.env.generateCoverage = false;
     return createKarmaTask({
         configFile: 'karma.conf.js',
         action: 'watch'
     });
 });
 gulp.task('test:tdd:debug', ['ngTemplates'], function () {
+    process.env.generateCoverage = false;
     return createKarmaTask({
         configFile: 'karma.conf.js',
         action: 'watch',

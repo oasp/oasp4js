@@ -63,10 +63,10 @@ var configFactory = function (externalConfig) {
             },
             testSrc: function () {
                 return _.flatten([
-                    pathsBuilder.buildForModules(
+                    pathsBuilder.buildForTopLevelModules(
                         '{src}/{moduleDir}/**/*.mock.js'
                     ),
-                    pathsBuilder.buildForModules(
+                    pathsBuilder.buildForTopLevelModules(
                         '{src}/{moduleDir}/**/*.spec.js'
                     )
                 ]);

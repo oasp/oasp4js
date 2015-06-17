@@ -10,7 +10,26 @@ module.exports = function (config) {
         devDependencies: true
     }).js, _ = require('lodash'), pathsConf = require('./gulp/lib/config-factory.js')(require('./config.json'));
 
-    config.set({
+    var coverageConfig = {
+        plugins: [
+            'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-junit-reporter', 'karma-jasmine', 'karma-coverage'
+        ],
+        // coverage reporter generates the coverage
+        reporters: ['progress', 'coverage'],
+
+        preprocessors: {
+            'app/**/!(*spec|*mock).js': ['coverage']
+        },
+
+        // optionally, configure the reporter
+        coverageReporter: {
+            type: 'lcov',
+            dir: pathsConf.paths.testOutput + '/coverage',
+            subdir: '/'
+        }
+    };
+
+    var karmaDefaultConfig = {
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
 
@@ -43,7 +62,7 @@ module.exports = function (config) {
 
         // Which plugins to enable
         plugins: [
-            'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-junit-reporter', 'karma-jasmine', 'karma-coverage'
+            'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-junit-reporter', 'karma-jasmine'
         ],
 
         // Continuous Integration mode
@@ -57,20 +76,16 @@ module.exports = function (config) {
         logLevel: config.LOG_INFO,
 
         // coverage reporter generates the coverage
-        reporters: ['progress', 'coverage'],
-
-        preprocessors: {
-            'app/**/!(*spec|*mock).js': ['coverage']
-        },
+        reporters: ['progress'],
 
         // optionally, configure the reporter
-        coverageReporter: {
-            type: 'lcov',
-            dir: pathsConf.paths.testOutput + '/coverage',
-            subdir: '/'
-        },
         junitReporter: {
             outputFile: pathsConf.paths.testOutput + '/test-results.xml'
         }
-    });
+    };
+    if (process.env.generateCoverage === true) {
+        config.set(_.assign(karmaDefaultConfig, coverageConfig));
+    } else {
+        config.set(karmaDefaultConfig);
+    }
 };
