@@ -13,6 +13,5 @@
     "proxy": {
         "baseUrl": "http://localhost:8081",
         "context": "/oasp4j-sample-server"
-    },
-    "appBuild": true
+    }
 }

@@ -4,13 +4,15 @@ var builderFactory = require('./builder-factory.js');
 var _ = require('lodash');
 var configFactory = function (externalConfig) {
 
-    var modulesConfig = moduleParser.parseModules(externalConfig.paths.src);
+    var modulesConfig = moduleParser.parseModules(externalConfig.paths.src, externalConfig.libRegexp || '');
     var pathsBuilder = builderFactory(externalConfig.paths, modulesConfig.modules, modulesConfig.topLevelModules);
     var currentOutput = function () {
         return  isBuildForProd() ? externalConfig.paths.dist : externalConfig.paths.tmp;
     };
     return {
         paths: externalConfig.paths,
+
+        externalConfig: externalConfig,
         //outputs
         output: function () {
             return currentOutput();

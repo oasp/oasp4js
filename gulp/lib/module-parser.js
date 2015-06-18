@@ -3,8 +3,8 @@ var glob = require('glob'),
     ngParseModule = require('ng-parse-module');
 
 module.exports = {
-    parseModules: function (basePath) {
-        var moduleFiles = glob.sync('**/*.module.js', {cwd: basePath}), modules = [], moduleFile, topLevelModules = [], module;
+    parseModules: function (basePath, libRegexp) {
+        var moduleFiles = glob.sync(libRegexp + '**/*.module.js', {cwd: basePath}), modules = [], moduleFile, topLevelModules = [], module;
 
         for (var i = 0; i < moduleFiles.length; i++) {
             moduleFile = moduleFiles[i];
