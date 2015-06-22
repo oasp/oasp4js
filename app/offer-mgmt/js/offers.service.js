@@ -2,13 +2,25 @@ angular.module('app.offer-mgmt').factory('offers', function (offerManagementRest
     'use strict';
     return {
         loadAllOffers: function () {
-            return offerManagementRestService.getAllOffers().then(function (response) {
-                return response.data;
+            var searchCriteria = {
+                pagination: {
+                    page: 1,
+                    total: true
+                }
+            };
+            return offerManagementRestService.getPaginatedOffers(searchCriteria).then(function (response) {
+                return response.data.result;
             });
         },
         loadAllProducts: function () {
-            return offerManagementRestService.getAllProducts().then(function (response) {
-                return response.data;
+            var searchCriteria = {
+                pagination: {
+                    page: 1,
+                    total: true
+                }
+            };
+            return offerManagementRestService.getPaginatedProducts(searchCriteria).then(function (response) {
+                return response.data.result;
             });
         }
     };

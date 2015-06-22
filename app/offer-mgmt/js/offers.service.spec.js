@@ -18,33 +18,62 @@ describe('Module: \'app.offer-mgmt\', Service: \'offers\'', function () {
     });
     it('loads all offers', function () {
         // given
-        var allOffers = [{
-            id: '1'
-        }], loadedOffers = {};
-        $httpBackend.whenGET(contextPath + 'services/rest/offermanagement/v1/offer').respond(allOffers);
+        var allOffers = {
+            pagination: {},
+            result: [
+                {
+                    id: '1'
+                }
+            ]
+        },
+            allOffersResult,
+            expectedOffer = {
+                id: '1'
+            },
+            searchCriteria = {
+                pagination: {
+                    page: 1,
+                    total: true
+                }
+            };
+        $httpBackend.whenPOST(contextPath + 'services/rest/offermanagement/v1/offer/search', searchCriteria).respond(allOffers);
         // when
         offers.loadAllOffers()
-            .then(function (table) {
-                loadedOffers = table;
+            .then(function (response) {
+                allOffersResult = response;
             });
         $httpBackend.flush();
         // then
-        expect(loadedOffers).toEqual(allOffers);
+        expect(allOffersResult[0]).toEqual(expectedOffer);
     });
 
     it('should load all products', function () {
         // given
-        var allProducts = [{
-            id: '1'
-        }], loadedProducts = {};
-        $httpBackend.whenGET(contextPath + 'services/rest/offermanagement/v1/product').respond(allProducts);
+        var allProducts = {
+            pagination: {},
+            result: [
+                {
+                    id: '1'
+                }
+            ]
+        }, allProductsResult = {},
+            expectedProduct = {
+                id: '1'
+            },
+            searchCriteria = {
+                pagination: {
+                    page: 1,
+                    total: true
+                }
+            };
+        $httpBackend.whenPOST(contextPath + 'services/rest/offermanagement/v1/product/search', searchCriteria).respond(allProducts);
         // when
         offers.loadAllProducts()
             .then(function (response) {
-                loadedProducts = response;
+                allProductsResult = response;
             });
         $httpBackend.flush();
         // then
-        expect(loadedProducts).toEqual(allProducts);
+        expect(allProductsResult[0]).toEqual(expectedProduct);
     });
 });

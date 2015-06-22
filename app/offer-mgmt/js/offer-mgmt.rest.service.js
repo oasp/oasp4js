@@ -2,13 +2,13 @@ angular.module('app.offer-mgmt').factory('offerManagementRestService', function 
     'use strict';
 
     var servicePath = currentContextPath.get() + 'services/rest/offermanagement/v1';
-
+    
     return {
-        getAllOffers: function () {
-            return $http.get(servicePath + '/offer');
+        getPaginatedOffers: function (searchCriteria) {
+            return $http.post(servicePath + '/offer/search', searchCriteria);
         },
-        getAllProducts: function () {
-            return $http.get(servicePath + '/product');
+        getPaginatedProducts: function (searchCriteria) {
+            return $http.post(servicePath + '/product/search', searchCriteria);
         }
     };
 });
