@@ -4,7 +4,7 @@ var builderFactory = require('./builder-factory.js');
 var _ = require('lodash');
 var configFactory = function (externalConfig) {
 
-    var modulesConfig = moduleParser.parseModules(externalConfig.paths.src, externalConfig.libRegexp || '');
+    var modulesConfig = moduleParser.parseModules(externalConfig.paths.src, externalConfig.libRegexp || '', externalConfig.mainModule);
     var pathsBuilder = builderFactory(externalConfig.paths, modulesConfig.modules, modulesConfig.topLevelModules);
     var currentOutput = function () {
         return  isBuildForProd() ? externalConfig.paths.dist : externalConfig.paths.tmp;

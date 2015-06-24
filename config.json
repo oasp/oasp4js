@@ -10,6 +10,7 @@
         "type": "less",
         "output": "css/oasp.css"
     },
+    "mainModule": "main",
     "proxy": {
         "baseUrl": "http://localhost:8081",
         "context": "/oasp4j-sample-server"
