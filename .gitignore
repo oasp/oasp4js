@@ -9,3 +9,4 @@ java/target
 .settings
 .project
 .sonar
+*.bak

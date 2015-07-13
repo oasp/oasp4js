@@ -21,13 +21,20 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         expect($http.get).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id);
     }));
 
-    it('should call $http.get when tableManagementRestService.getAllTables is called', inject(function ($http) {
+    it('should call $http.post when tableManagementRestService.getPaginatedTables is called', inject(function ($http) {
         //given
-        spyOn($http, 'get');
+        spyOn($http, 'post');
         //when
-        tableManagementRestService.getAllTables();
+        tableManagementRestService.getPaginatedTables(1, 3);
         //then
-        expect($http.get).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/');
+        expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/search',
+            {
+                pagination: {
+                    size: 3,
+                    page: 1,
+                    total: true
+                }
+            });
     }));
 
     it('should call $http.put when tableManagementRestService.createTable is called', inject(function ($http) {
@@ -50,14 +57,14 @@ describe('Module: tableMgmt, Service: tableManagementRestService', function () {
         expect($http.delete).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id);
     }));
 
-    it('should call $http.post when tableManagementRestService.marktableas is called', inject(function ($http) {
+    it('should call $http.post when tableManagementRestService.saveTable is called', inject(function ($http) {
         //given
-        var id = 'tableId', state = 'FREE';
+        var table = {state: 'FREE'};
         spyOn($http, 'post');
         //when
-        tableManagementRestService.markTableAs(id, state);
+        tableManagementRestService.saveTable(table);
         //then
-        expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/' + id + '/marktableas/' + state);
+        expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/tablemanagement/v1/table/', table);
     }));
 
     it('should call $http.get when tableManagementRestService.isTableReleasable is called', inject(function ($http) {

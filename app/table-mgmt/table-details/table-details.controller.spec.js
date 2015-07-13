@@ -4,14 +4,23 @@ describe('Module: tableMgmt, Controller: table-details', function () {
         id: 103,
         number: 3,
         state: 'FREE'
-    }, allOffersMock = {}, currentOrderMock = {
-        order: {
-            id: 1,
-            state: 'OPEN',
-            tableId: 103
-        }}, salesMock = {
-        saveOrUpdateOrder: angular.noop
-    };
+    }, allOffersMock = {},
+        currentOrderMock = {
+            order: {
+                id: 10000000,
+                modificationCounter: 0,
+                revision: null,
+                tableId: 102,
+                state: 'OPEN'
+            },
+            positions: [
+                {id: 10000010},
+                {id: 10000011}
+            ]
+        },
+        salesMock = {
+            saveOrUpdateOrder: angular.noop
+        };
 
     beforeEach(module('ui.bootstrap'));
     beforeEach(module('app.table-mgmt'));
@@ -94,7 +103,7 @@ describe('Module: tableMgmt, Controller: table-details', function () {
             expect($scope.model.order.positions.length).toEqual(2);
             expect($scope.model.order.positions[1]).toEqual({
                 revision: null,
-                orderId: 1,
+                orderId: 10000000,
                 offerId: offer.id,
                 offerName: offer.description,
                 state: 'ORDERED',
