@@ -7,7 +7,7 @@ angular.module('app.table-mgmt')
         
         $scope.openEditDialog = function (tableRow) {
             $modal.open({
-                templateUrl: 'table-mgmt/html/table-details.html',
+                templateUrl: 'table-mgmt/table-details/table-details.html',
                 controller: 'TableDetailsCntl',
                 resolve: {
                     tableDetails: function () {
