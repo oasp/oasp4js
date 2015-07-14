@@ -4,7 +4,7 @@ String.prototype.replaceAll = function (find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
 };
 
-module.exports = function (paths, modules, topLevelModules) {
+module.exports = function (paths, modules) {
     var builder = {
         build: function (path, module) {
             module = module || {};
@@ -17,15 +17,6 @@ module.exports = function (paths, modules, topLevelModules) {
         },
         buildForTopLevelModules: function () {
             var i, j, result = [];
-            for (i = 0; i < topLevelModules.length; i += 1) {
-                for (j = 0; j < arguments.length; j += 1) {
-                    result.push(builder.build(arguments[j], topLevelModules[i]));
-                }
-            }
-            return result;
-        },
-        buildForModules: function () {
-            var i, j, result = [];
             for (i = 0; i < modules.length; i += 1) {
                 for (j = 0; j < arguments.length; j += 1) {
                     result.push(builder.build(arguments[j], modules[i]));
@@ -33,7 +24,7 @@ module.exports = function (paths, modules, topLevelModules) {
             }
             return result;
         },
-        visitModules: function (factoryFn) {
+        visitTopLevelModules: function (factoryFn) {
             var i, result = [], item;
             for (i = 0; i < modules.length; i += 1) {
                 item = factoryFn(modules[i]);
@@ -42,21 +33,6 @@ module.exports = function (paths, modules, topLevelModules) {
                 }
             }
             return result;
-        },
-        visitTopLevelModules: function (factoryFn, excludeRoot) {
-            var i, result = [], item;
-            for (i = 0; i < topLevelModules.length; i += 1) {
-                if (!(excludeRoot && this.isRootModule(topLevelModules[i]))) {
-                    item = factoryFn(topLevelModules[i]);
-                    if (item) {
-                        result.push(item);
-                    }
-                }
-            }
-            return result;
-        },
-        isRootModule: function (module) {
-            return module.moduleDir === '.';
         }
     };
     return builder;

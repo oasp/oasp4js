@@ -5,7 +5,7 @@ var _ = require('lodash');
 var configFactory = function (externalConfig) {
 
     var modulesConfig = moduleParser.parseModules(externalConfig.paths.src, externalConfig.libRegexp || '', externalConfig.mainModule);
-    var pathsBuilder = builderFactory(externalConfig.paths, modulesConfig.modules, modulesConfig.topLevelModules);
+    var pathsBuilder = builderFactory(externalConfig.paths, modulesConfig.modules);
     var currentOutput = function () {
         return  isBuildForProd() ? externalConfig.paths.dist : externalConfig.paths.tmp;
     };
@@ -61,20 +61,30 @@ var configFactory = function (externalConfig) {
         },
         scripts: {
             src: function () {
-                return pathsBuilder.buildForTopLevelModules('{src}/{moduleFile}', '{src}/{moduleDir}/**/*.module.js', '{src}/{moduleDir}/**/!(*spec|*mock).js', '{tmp}/**/*.js');
+                return _.flatten([
+                    pathsBuilder.build('{src}/*.module.js'),
+                    pathsBuilder.buildForTopLevelModules(
+                        '{src}/{moduleFile}', '{src}/{moduleDir}/**/*.module.js', '{src}/{moduleDir}/**/!(*spec|*mock).js', '{tmp}/{moduleDir}/**/*.js')
+                ]);
             },
             testSrc: function () {
                 return _.flatten([
+                    pathsBuilder.build('{src}/*.mock.js'),
                     pathsBuilder.buildForTopLevelModules(
                         '{src}/{moduleDir}/**/*.mock.js'
                     ),
+                    pathsBuilder.build('{src}/*.spec.js'),
                     pathsBuilder.buildForTopLevelModules(
                         '{src}/{moduleDir}/**/*.spec.js'
                     )
                 ]);
             },
             lintSrc: function () {
-                return pathsBuilder.buildForTopLevelModules('{src}/{moduleFile}', '{src}/{moduleDir}/**/*.module.js', '{src}/{moduleDir}/**/!(*spec|*mock).js');
+                return _.flatten([
+                    pathsBuilder.build('{src}/*.module.js'),
+                    pathsBuilder.buildForTopLevelModules(
+                        '{src}/{moduleFile}', '{src}/{moduleDir}/**/*.module.js', '{src}/{moduleDir}/**/!(*spec|*mock).js')
+                ]);
             }
         },
         i18n: {
@@ -111,13 +121,15 @@ var configFactory = function (externalConfig) {
         ngTemplates: {
             conf: function () {
                 return pathsBuilder.visitTopLevelModules(function (module) {
-                    return {
-                        module: module.ngModule + '.templates',
-                        moduleDir: module.moduleDir,
-                        file: pathsBuilder.build('{moduleDir}/{module}.templates.js', module),
-                        src: pathsBuilder.build('{src}/{moduleDir}/**/*.tpl.html', module)
-                    };
-                }, true);
+                    if(module.ngModule) {
+                        return {
+                            module: module.ngModule + '.templates',
+                            moduleDir: module.moduleDir,
+                            file: pathsBuilder.build('{moduleDir}/{module}.templates.js', module),
+                            src: pathsBuilder.build('{src}/{moduleDir}/**/*.tpl.html', module)
+                        };
+                    }
+                });
             }
         }
     };

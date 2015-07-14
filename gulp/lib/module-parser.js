@@ -1,12 +1,13 @@
 var glob = require('glob'),
     paths = require('path'),
+    fs = require('fs'),
     ngParseModule = require('ng-parse-module'),
-    pushMainAndAppModuleOnTopOfList = function (moduleFiles, mainModule) {
+    pushMainOnTopOfList = function (moduleFiles, mainModule) {
         if (mainModule) {
             var mainModules = [], otherModules = [], i, dirname;
             for (i = 0; i < moduleFiles.length; i++) {
-                dirname = paths.dirname(moduleFiles[i]);
-                if (dirname.indexOf(mainModule) === 0 || dirname === '.') {
+                dirname = paths.basename(moduleFiles[i]);
+                if (dirname.indexOf(mainModule) === 0) {
                     mainModules.push(moduleFiles[i]);
                 } else {
                     otherModules.push(moduleFiles[i]);
@@ -25,28 +26,26 @@ var glob = require('glob'),
 
 module.exports = {
     parseModules: function (basePath, libRegexp, mainModule) {
-        var moduleFiles = glob.sync(libRegexp + '**/*.module.js', {cwd: basePath}), modules = [], moduleFile, topLevelModules = [], module;
-        moduleFiles = pushMainAndAppModuleOnTopOfList(moduleFiles, mainModule);
-        for (var i = 0; i < moduleFiles.length; i++) {
-            moduleFile = moduleFiles[i];
+        var moduleDirectories = glob.sync(libRegexp + '*/', {cwd: basePath}), modules = [], moduleName, moduleDirectory, module, moduleFile, joinFn = paths.posix ? paths.posix.join : paths.join;
+        moduleDirectories = pushMainOnTopOfList(moduleDirectories, mainModule);
+        for (var i = 0; i < moduleDirectories.length; i++) {
+            moduleDirectory = moduleName = moduleDirectories[i];
+            moduleName = paths.basename(moduleDirectory);
+            moduleFile = joinFn(moduleDirectory, moduleName + '.module.js');
             module = {
-                name: paths.basename(moduleFile).replace('.module.js', ''),
+                name: moduleName,
                 moduleFile: moduleFile,
                 moduleDir: paths.dirname(moduleFile),
-                moduleAbsDir: paths.join(basePath, paths.dirname(moduleFile)),
-                ngModule: ngParseModule.parse(paths.join(basePath, moduleFile)).name
+                moduleAbsDir: joinFn(basePath, moduleDirectory)
             };
-
-            modules.push(module);
-
-            if (paths.dirname(moduleFile).indexOf('/') < 0) {
-                topLevelModules.push(module);
+            if (fs.existsSync(paths.join(basePath, module.moduleFile))) {
+                module.ngModule = ngParseModule.parse(paths.join(basePath, module.moduleFile)).name;
             }
+            modules.push(module);
         }
 
         return {
-            modules: modules,
-            topLevelModules: topLevelModules
+            modules: modules
         };
     }
 };
