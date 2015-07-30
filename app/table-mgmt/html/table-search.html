@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html>
 <body>
+
+<!--dialog template for the table-search dialog-->
+
 <div class="row">
     <div class="col-md-12">
         <h2>Tables</h2>
 
-        <table class="raw-table" tr-ng-grid=""
-               selection-mode="SingleRow"
-               enable-filtering="false"
-               selected-items="selectedItems"
-               items="gridOptions.data">
+        <!--trNgGrid directive usage. For detail please see: https://github.com/MoonStorm/trNgGrid-->
+        <!--items and selected-items attributes are provided with data from TableSearchCntl $scope model variables-->
+        <table class="raw-table"
+               data-tr-ng-grid=""
+               data-selection-mode="SingleRow"
+               data-enable-filtering="false"
+               data-selected-items="selectedItems"
+               data-items="gridOptions.data">
             <thead>
             <tr>
-                <th field-name="number" display-name="Number" cell-width="7em"></th>
-                <th field-name="state" display-name="State"></th>
-                <th field-name="waiter" display-name="waiter"></th>
+                <th data-field-name="number" data-display-name="Number" data-cell-width="7em"></th>
+                <th data-field-name="state" data-display-name="State"></th>
+                <th data-field-name="waiter" data-display-name="waiter"></th>
             </tr>
             </thead>
         </table>
 
+        <!--button-bar directive usage with button definition created in the TableSearchCntl (table-search.controller.js file)-->
         <button-bar button-defs="buttonDefs"></button-bar>
         <br>
         <br>
         <br>
-        <pagination total-items="totalItems" items-per-page="numPerPage" ng-model="currentPage" num-pages="numPages" class="pagination-sm" boundary-links="true" rotate="false" max-size="maxSize"></pagination>
+        <!--pagination directive usage. For details please see https://angular-ui.github.io/bootstrap/#/pagination-->
+        <!--total-items, items-per-page, ng-model, num-pages, max-size attributes are provided with data from TableSearchCntl $scope model variables-->
+        <pagination
+                total-items="totalItems"
+                items-per-page="numPerPage"
+                ng-model="currentPage"
+                num-pages="numPages"
+                class="pagination-sm"
+                boundary-links="true"
+                rotate="false"
+                max-size="maxSize">
+        </pagination>
     </div>
 </div>
 </body>
