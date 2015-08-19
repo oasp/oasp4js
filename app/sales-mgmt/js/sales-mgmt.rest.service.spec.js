@@ -24,24 +24,13 @@ describe('Module: salesMgmt, Service: salesManagementRestService', function () {
         expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/salesmanagement/v1/order/search', params);
     }));
 
-    it('should call $http.put when salesManagementRestService.updateOrder is called', inject(function ($http) {
-        //given
-        var orderId = 1, order = {description: 'desc'};
-
-        spyOn($http, 'put');
-        //when
-        salesManagementRestService.updateOrder(order, orderId);
-        //then
-        expect($http.put).toHaveBeenCalledWith(contextPath + 'services/rest/salesmanagement/v1/order/' + orderId, order);
-    }));
-
-    it('should call $http.post when salesManagementRestService.createOrder is called', inject(function ($http) {
+    it('should call $http.post when salesManagementRestService.saveOrder is called', inject(function ($http) {
         //given
         var order = {description: 'desc'};
 
         spyOn($http, 'post');
         //when
-        salesManagementRestService.createOrder(order);
+        salesManagementRestService.saveOrder(order);
         //then
         expect($http.post).toHaveBeenCalledWith(contextPath + 'services/rest/salesmanagement/v1/order', order);
     }));

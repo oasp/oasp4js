@@ -83,42 +83,16 @@ describe('Module: \'app.sales-mgmt\', Service: \'sales\'', function () {
     });
     it('saves an order', function () {
         // given
-        var createdOrder, returnedOrder = {order: {id: 1}};
+        var savedOrder, returnedOrder = {order: {id: 1}};
         $httpBackend.whenPOST(contextPath + 'services/rest/salesmanagement/v1/order').respond(returnedOrder);
         // when
         sales.saveOrUpdateOrder({order: {}})
             .then(function (order) {
-                createdOrder = order;
+                savedOrder = order;
             });
         $httpBackend.flush();
         // then
-        expect(createdOrder).toEqual(returnedOrder);
-    });
-    it('saves an order', function () {
-        // given
-        var createdOrder, returnedOrder = {order: {id: 1}};
-        $httpBackend.whenPOST(contextPath + 'services/rest/salesmanagement/v1/order').respond(returnedOrder);
-        // when
-        sales.saveOrUpdateOrder({order: {}})
-            .then(function (order) {
-                createdOrder = order;
-            });
-        $httpBackend.flush();
-        // then
-        expect(createdOrder).toEqual(returnedOrder);
-    });
-    it('updates an existing order', function () {
-        // given
-        var updatedOrder, returnedOrder = {order: {id: 1, status : 'NEW'}};
-        $httpBackend.whenPUT(contextPath + 'services/rest/salesmanagement/v1/order/1').respond(returnedOrder);
-        // when
-        sales.saveOrUpdateOrder({order: {id : 1}})
-            .then(function (order) {
-                updatedOrder = order;
-            });
-        $httpBackend.flush();
-        // then
-        expect(updatedOrder).toEqual(returnedOrder);
+        expect(savedOrder).toEqual(returnedOrder);
     });
 });
 

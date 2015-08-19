@@ -12,15 +12,10 @@ angular.module('app.sales-mgmt').factory('sales', function (salesManagementRestS
         },
         saveOrUpdateOrder: function (order) {
             var promise;
-            if (order.order.id) {
-                promise = salesManagementRestService.updateOrder(order, order.order.id).then(function (response) {
-                    return response.data;
-                });
-            } else {
-                promise = salesManagementRestService.createOrder(order).then(function (response) {
-                    return response.data;
-                });
-            }
+            //with the new REST API, there is no destinction between updating and creating an order
+            promise = salesManagementRestService.saveOrder(order).then(function (response) {
+                return response.data;
+            });
             return promise;
         }
     };

@@ -83,7 +83,7 @@ var configFactory = function (externalConfig) {
                     appModule,
                     builder.buildForModules(
                         '{app}/{module}/js/**/**.module.js',
-                        '{app}/{module}/js/**/!(*spec|*mock).js',
+                        '{app}/{module}/js/**/!(*.spec|*.mock).js',
                         '{tmp}/{module}/js/**/*.js'
                     )
                 ]);
