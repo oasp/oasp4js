@@ -3,8 +3,8 @@ var moduleParser = require('./module-parser.js');
 var builderFactory = require('./builder-factory.js');
 var _ = require('lodash');
 var configFactory = function (externalConfig) {
-
-    var modulesConfig = moduleParser.parseModules(externalConfig.paths.src, externalConfig.libRegexp || '', externalConfig.mainModule);
+    'use strict';
+    var modulesConfig = moduleParser.parseModules(externalConfig.paths.src, externalConfig.libRegexp || '');
     var pathsBuilder = builderFactory(externalConfig.paths, modulesConfig.modules);
     var currentOutput = function () {
         return  isBuildForProd() ? externalConfig.paths.dist : externalConfig.paths.tmp;
@@ -40,11 +40,11 @@ var configFactory = function (externalConfig) {
         styles: {
             /** include only root files*/
             src: function () {
-                return pathsBuilder.buildForTopLevelModules('{src}/{moduleDir}/{module}.' + externalConfig.styles.type);
+                return pathsBuilder.build('{src}/*.' + externalConfig.styles.type);
             },
             /** include all*/
             allSrc: function () {
-                return pathsBuilder.buildForTopLevelModules('{src}/{moduleDir}/**/*.' + externalConfig.styles.type);
+                return pathsBuilder.build('{src}/**/*.' + externalConfig.styles.type);
             },
             output: function () {
                 return externalConfig.styles.output;
@@ -69,13 +69,13 @@ var configFactory = function (externalConfig) {
             },
             testSrc: function () {
                 return _.flatten([
-                    pathsBuilder.build('{src}/*.mock.js'),
+                    pathsBuilder.build('{testSrc}/*.mock.js'),
                     pathsBuilder.buildForTopLevelModules(
-                        '{src}/{moduleDir}/**/*.mock.js'
+                        '{testSrc}/{moduleDir}/**/*.mock.js'
                     ),
-                    pathsBuilder.build('{src}/*.spec.js'),
+                    pathsBuilder.build('{testSrc}/*.spec.js'),
                     pathsBuilder.buildForTopLevelModules(
-                        '{src}/{moduleDir}/**/*.spec.js'
+                        '{testSrc}/{moduleDir}/**/*.spec.js'
                     )
                 ]);
             },
@@ -121,7 +121,7 @@ var configFactory = function (externalConfig) {
         ngTemplates: {
             conf: function () {
                 return pathsBuilder.visitTopLevelModules(function (module) {
-                    if(module.ngModule) {
+                    if (module.ngModule) {
                         return {
                             module: module.ngModule + '.templates',
                             moduleDir: module.moduleDir,

@@ -8,20 +8,27 @@ var gulpsync = require('gulp-sync')(gulp);
 
 
 /** ======================================== build ======================================== **/
-gulp.task('build:develop', [], function () {
-    process.env.NODE_ENV = 'dev';
-    gulp.start('build');
+
+gulp.task('env:develop', function () {
+    $.env({
+        vars: {
+            NODE_ENV: 'dev'
+        }
+    });
 });
 
-gulp.task('build:ci', ['test'], function () {
-    process.env.NODE_ENV = 'prod';
-    gulp.start('build');
+gulp.task('env:prod', function () {
+    $.env({
+        vars: {
+            NODE_ENV: 'prod'
+        }
+    });
 });
+gulp.task('build:develop', ['env:develop', 'build']);
 
-gulp.task('build:dist', [], function () {
-    process.env.NODE_ENV = 'prod';
-    gulp.start('build');
-});
+gulp.task('build:ci', gulpsync.sync(['test', 'build:dist']));
+
+gulp.task('build:dist', ['env:prod', 'build']);
 
 gulp.task('build', ['indexHtml', 'styles', 'img', 'fonts', 'i18n', 'html']);
 
@@ -35,6 +42,7 @@ gulp.task('styles', function () {
         .pipe($.less({
             paths: config.styles.includePaths()
         }))
+        .pipe($.plumber())
         .pipe(gulp.dest(config.paths.tmp))
         .pipe($.size());
 });
@@ -46,7 +54,13 @@ gulp.task('style:copy', function () {
 });
 
 /** ======================================== indexHtml ======================================== **/
-gulp.task('indexHtml', ['styles', 'img:sprite', 'ngTemplates'], function () {
+gulp.task('indexHtml', gulpsync.sync([
+    ['styles', 'img:sprite', 'ngTemplates'],
+    'indexHtml:html'
+]));
+
+//only build index.html without dependencies
+gulp.task('indexHtml:html', function () {
     return gulp.src(config.indexHtml.src())
         //TODO fix it
         .pipe($.wiredep.stream({
@@ -65,6 +79,7 @@ gulp.task('indexHtml', ['styles', 'img:sprite', 'ngTemplates'], function () {
             recursive: true,
             includeBase: config.paths.src}))
         .pipe($.if(isBuildForProd(), $.usemin({
+            path: '{' + config.paths.tmp + ',' + config.paths.src + '}',
             css: [$.minifyCss(), 'concat', $.rev()],
             jsModernizr: [$.ngAnnotate(), $.uglify({preserveComments: $.uglifySaveLicense}), $.rev()],
             jsVendor: [$.ngAnnotate(), $.uglify({preserveComments: $.uglifySaveLicense}), $.rev()],
@@ -73,7 +88,6 @@ gulp.task('indexHtml', ['styles', 'img:sprite', 'ngTemplates'], function () {
         .pipe(gulp.dest(config.output()))
         .pipe($.size());
 });
-
 
 /** ======================================== img ======================================== **/
 gulp.task('img', ['img:sprite', 'img:copy']);
@@ -122,8 +136,7 @@ gulp.task('img:copy', ['img:sprite:copy'], function (done) {
 gulp.task('fonts', function (done) {
     //TODO check font awesome
     if (isBuildForProd()) {
-        return gulp.src($.mainBowerFiles())
-            .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
+        return gulp.src('bower_components/**/*.{eot,svg,ttf,woff,woff2}')
             .pipe($.flatten())
             .pipe(gulp.dest(config.output() + '/fonts/'));
     } else {

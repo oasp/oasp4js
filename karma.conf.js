@@ -15,11 +15,9 @@ module.exports = function (config) {
             'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-junit-reporter', 'karma-jasmine', 'karma-coverage'
         ],
         // coverage reporter generates the coverage
-        reporters: ['progress', 'coverage'],
+        reporters: ['progress', 'coverage', 'junit'],
 
-        preprocessors: {
-            'app/**/!(*spec|*mock).js': ['coverage']
-        },
+        preprocessors: {},
 
         // optionally, configure the reporter
         coverageReporter: {
@@ -28,6 +26,7 @@ module.exports = function (config) {
             subdir: '/'
         }
     };
+    coverageConfig.preprocessors[pathsConf.paths.src + '/**/!(*spec|*mock).js'] = ['coverage'];
 
     var karmaDefaultConfig = {
         // enable / disable watching file and executing tests whenever any file changes
@@ -76,14 +75,15 @@ module.exports = function (config) {
         logLevel: config.LOG_INFO,
 
         // coverage reporter generates the coverage
-        reporters: ['progress'],
+        reporters: ['progress', 'junit'],
 
         // optionally, configure the reporter
         junitReporter: {
-            outputFile: pathsConf.paths.testOutput + '/test-results.xml'
+            outputDir: pathsConf.paths.testOutput,
+            outputFile: 'test-results.xml'
         }
     };
-    if (process.env.generateCoverage === true) {
+    if (process.env.generateCoverage === 'true') {
         config.set(_.assign(karmaDefaultConfig, coverageConfig));
     } else {
         config.set(karmaDefaultConfig);
