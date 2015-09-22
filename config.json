@@ -2,21 +2,17 @@
     "paths": {
         "tmp": ".tmp",
         "dist": "dist",
-        "app": "app",
-        "test": "test"
+        "src": "app",
+        "testSrc": "app",
+        "testOutput": "test"
     },
-    "modules": [
-        "main",
-        "oasp-mock",
-        "oasp",
-        "oasp/oasp-security",
-        "oasp/oasp-ui",
-        "oasp/oasp-i18n",
-        "offer-mgmt",
-        "sales-mgmt",
-        "table-mgmt"
-    ],
-    "appBuild": true,
-    "proxy": "http://localhost:8081",
-    "proxyContext": "/oasp4j-sample-server"
+    "styles": {
+        "type": "less",
+        "output": "css/oasp.css"
+    },
+    "mainModule": "main",
+    "proxy": {
+        "baseUrl": "http://localhost:8081",
+        "context": "/oasp4j-sample-server"
+    }
 }

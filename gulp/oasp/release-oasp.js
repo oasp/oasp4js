@@ -32,16 +32,16 @@ gulp.task('oasp:release', [], function () {
 gulp.task('oasp:release:internal', gulpsync.sync(['build:oasp:init', 'oasp:release:prepareRepo', 'build:oasp', 'oasp:release:publish']));
 
 gulp.task('oasp:release:prepareRepo', ['clean'], function (done) {
-    git.clone(config.app.externalConfig('releaseRepo'), {args: config.app.dist()}, function (err) {
+    git.clone(config.externalConfig.releaseRepo, {args: config.output()}, function (err) {
         handleGitError(err);
-        execGitChain(['rm -r -f *'], config.app.dist(), done);
+        execGitChain(['rm -r -f *'], config.output(), done);
     });
 });
 
 gulp.task('oasp:release:publish', [], function (done) {
-    execGitChain(['config --global core.autocrlf false', 'add -A', 'commit -am "release ' + argv.version + '"', 'tag -a ' + argv.version + ' -f -m "' + argv.version + '"'], config.app.dist(), done);
+    execGitChain(['config --global core.autocrlf false', 'add -A', 'commit -am "release ' + argv.version + '"', 'tag -a ' + argv.version + ' -f -m "' + argv.version + '"'], config.output(), done);
 });
 
 gulp.task('oasp:deploy', [], function (done) {
-    execGitChain(['push origin master','push origin --tags -f'], config.app.dist(), done);
+    execGitChain(['push origin master','push origin --tags -f'], config.output(), done);
 });

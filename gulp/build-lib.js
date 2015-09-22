@@ -6,16 +6,16 @@ var $ = require('gulp-load-plugins')({
 });
 
 gulp.task('scripts', ['ngTemplates'], function () {
-    return gulp.src(config.js.src())
+    return gulp.src(config.scripts.src())
         .pipe($.sourcemaps.init())
         .pipe($.ngAnnotate())
-        .pipe($.concat(config.app.externalConfig('buildLibName')))
-        .pipe(gulp.dest(config.app.dist()))
-        .pipe($.concat(config.app.externalConfig('buildLibMinName')))
+        .pipe($.concat(config.externalConfig.buildLibName))
+        .pipe(gulp.dest(config.output()))
+        .pipe($.concat(config.externalConfig.buildLibMinName))
         .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
         .pipe($.sourcemaps.write('./'))
-        .pipe(gulp.dest(config.app.dist()))
+        .pipe(gulp.dest(config.output()))
         .pipe($.size());
 });
 
-gulp.task('build:lib', ['scripts', 'html', 'i18n', 'copy-less', 'copy-img']);
+gulp.task('build:lib', ['scripts', 'html', 'i18n', 'style:copy', 'img:copy']);

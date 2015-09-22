@@ -15,7 +15,9 @@ function browserSyncInit(baseDir, files, browser) {
         server: {
             baseDir: baseDir,
             middleware: middleware,
-            routes: null
+            routes: {
+                '/bower_components': 'bower_components'
+            }
         },
         browser: browser,
         ghostMode: false
@@ -24,12 +26,11 @@ function browserSyncInit(baseDir, files, browser) {
 
 gulp.task('serve', gulpsync.sync(['build', 'watch']), function () {
     browserSyncInit([
-        config.app.tmp(),
-        config.app.src(),
-        'app/bower_components/bootstrap/dist'
+        config.paths.tmp,
+        config.paths.src,
+        'bower_components/bootstrap/dist'
     ], _.flatten([
-        config.css.dest.path(),
-        config.js.src()
+            config.paths.tmp + '/**'
     ]));
 });
 
