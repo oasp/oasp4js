@@ -16,9 +16,9 @@ describe('language-change directive specs', function () {
         //when
         element = $compile('<language-change></language-change>')($rootScope);
         $rootScope.$digest();
-        dropdownToggle = $('.dropdown-toggle', element);
-        dropdownToggleSpans = $('span', dropdownToggle);
-        dropdownMenu = $('.dropdown-menu', element);
+        dropdownToggle = angular.element('.dropdown-toggle', element);
+        dropdownToggleSpans = angular.element('span', dropdownToggle);
+        dropdownMenu = angular.element('.dropdown-menu', element);
 
         //then
         expect(dropdownToggleSpans[0].className).toEqual('icon-container');

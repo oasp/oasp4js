@@ -5,17 +5,20 @@ angular.module('oasp.oaspI18n').provider('oaspTranslation', function ($translate
         defaultModule,
         supportedLanguages = [],
         getDefaultLanguage = function () {
-            var i, defaultLanguage;
+            var i;
             if (supportedLanguages && supportedLanguages.length) {
-                defaultLanguage = supportedLanguages[0];
                 for (i = 0; i < supportedLanguages.length; i += 1) {
                     if (supportedLanguages[i].default === true) {
-                        defaultLanguage = supportedLanguages[i];
+                        return supportedLanguages[i];
                     }
                 }
+                return supportedLanguages[0];
             }
-            return defaultLanguage;
+            return undefined;
         };
+
+
+
 
     this.enableTranslationForModule = function (module, isDefault) {
         if (modulesWithTranslations.indexOf(module) < 0) {
@@ -35,8 +38,9 @@ angular.module('oasp.oaspI18n').provider('oaspTranslation', function ($translate
             throw new Error('Supported languages already specified');
         }
         supportedLanguages = langs;
-        if (getDefaultLanguage()) {
-            $translateProvider.preferredLanguage(getDefaultLanguage().key);
+        var defaultLanguage = getDefaultLanguage();
+        if (defaultLanguage) {
+            $translateProvider.preferredLanguage(defaultLanguage.key);
         }
     };
 
