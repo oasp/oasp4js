@@ -1,13 +1,31 @@
-angular.module('app.main', ['ngRoute', 'oasp.oaspUi', 'oasp.oaspSecurity', 'app.main.templates', 'oasp.oaspI18n', 'ui.bootstrap'])
+angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'app.main.templates', 'oasp.oaspI18n', 'ui.bootstrap'])
     .constant('SIGN_IN_DLG_PATH', '/main/sign-in')
-    .config(function (SIGN_IN_DLG_PATH, $routeProvider, oaspTranslationProvider) {
+    .config(function (SIGN_IN_DLG_PATH, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, oaspTranslationProvider) {
         'use strict';
-        $routeProvider
-            .when('/', {
+
+        // For any unmatched url, redirect to notFound state but keep old URL
+        $urlRouterProvider.otherwise( //'notFound');
+            function($injector, $location){
+            var state = $injector.get('$state');
+            state.go('notFound');
+            return $location.path();
+        });
+        $urlRouterProvider.when('', '/');
+
+
+        $stateProvider
+            .state('notFound', {
+                //do not define URL here
+                //url: '/notFound',
+                templateUrl: 'main/layout/page-not-found.html'
+            })
+            .state('blank', {
+                url: '/',
                 templateUrl: 'main/layout/blank.html',
                 controller: 'RedirectorCntl'
             })
-            .when(SIGN_IN_DLG_PATH, {
+            .state('signIn', {
+                url: SIGN_IN_DLG_PATH,
                 templateUrl: 'main/sign-in/sign-in.html',
                 controller: 'SignInCntl',
                 resolve: {
@@ -15,8 +33,7 @@ angular.module('app.main', ['ngRoute', 'oasp.oaspUi', 'oasp.oaspSecurity', 'app.
                         return homePageRedirector.rejectAndRedirectToHomePageIfUserLoggedIn();
                     }]
                 }
-            })
-            .otherwise({templateUrl: 'main/layout/page-not-found.html'});
+            });
 
         oaspTranslationProvider.enableTranslationForModule('main', true);
         oaspTranslationProvider.setSupportedLanguages(

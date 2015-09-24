@@ -1,7 +1,9 @@
-angular.module('app.sales-mgmt', ['app.main', 'app.offer-mgmt'])
-    .config(function ($routeProvider) {
+angular.module('app.sales-mgmt', ['app.main', 'app.offer-mgmt', 'app.sales-mgmt.templates'])
+    .config(function ($stateProvider) {
         'use strict';
-        $routeProvider.when('/sales-mgmt/cook-positions', {
+
+        $stateProvider.state('salesMgmt', {
+            url: '/sales-mgmt/cook-positions',
             templateUrl: 'sales-mgmt/cook-positions/cook-positions.html',
             controller: 'CookPositionsCntl',
             resolve: {
