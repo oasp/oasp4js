@@ -3,6 +3,18 @@ angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'ap
     .config(function (SIGN_IN_DLG_PATH, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, oaspTranslationProvider) {
         'use strict';
 
+
+        $urlMatcherFactoryProvider.strictMode(false);
+        $urlRouterProvider.rule(function ($injector, $location) {
+            var path = $location.path();
+            var hasTrailingSlash = path && path[path.length - 1] === '/';
+            if (hasTrailingSlash) {
+                //if the last character is a slash, return the same url without the slash
+                return path.substr(0, path.length - 1);
+            }
+        });
+
+
         // For any unmatched url, redirect to notFound state but keep old URL
         $urlRouterProvider.otherwise( //'notFound');
             function($injector, $location){

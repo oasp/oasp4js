@@ -3,7 +3,13 @@ angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main'
     oaspTranslationProvider.enableTranslationForModule('table-mgmt');
 
     $stateProvider.state('tableMgmt', {
-        url: '/table-mgmt/table-search',
+        abstract: true,
+        url: '/table-mgmt',
+        template: '<ui-view/>'
+    });
+
+    $stateProvider.state('tableMgmt.search', {
+        url: '/table-search',
         templateUrl: 'table-mgmt/table-search/table-search.html',
         controller: 'TableSearchCntl',
         resolve: {
