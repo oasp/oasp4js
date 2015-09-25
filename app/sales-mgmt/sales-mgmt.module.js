@@ -12,6 +12,7 @@ angular.module('app.sales-mgmt', ['app.main', 'app.offer-mgmt', 'app.sales-mgmt.
             url: '/cook-positions',
             templateUrl: 'sales-mgmt/cook-positions/cook-positions.html',
             controller: 'CookPositionsCntl',
+            controllerAs: 'CPC',
             resolve: {
                 currentPositions: ['positions', function (positions) {
                     return positions.get();

@@ -16,14 +16,19 @@ angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'ap
 
 
         // For any unmatched url, redirect to notFound state but keep old URL
-        $urlRouterProvider.otherwise( //'notFound');
+        $urlRouterProvider.otherwise(
             function($injector, $location){
             var state = $injector.get('$state');
             state.go('notFound');
             return $location.path();
         });
-        $urlRouterProvider.when('', '/');
 
+        $urlRouterProvider.when('', function (homePageRedirector) {
+            homePageRedirector.redirect();
+        });
+        $urlRouterProvider.when(SIGN_IN_DLG_PATH, function (homePageRedirector) {
+            homePageRedirector.redirect();
+        });
 
         $stateProvider
             .state('notFound', {
@@ -31,20 +36,11 @@ angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'ap
                 //url: '/notFound',
                 templateUrl: 'main/layout/page-not-found.html'
             })
-            .state('blank', {
-                url: '/',
-                templateUrl: 'main/layout/blank.html',
-                controller: 'RedirectorCntl'
-            })
             .state('signIn', {
                 url: SIGN_IN_DLG_PATH,
                 templateUrl: 'main/sign-in/sign-in.html',
                 controller: 'SignInCntl',
-                resolve: {
-                    check: ['homePageRedirector', function (homePageRedirector) {
-                        return homePageRedirector.rejectAndRedirectToHomePageIfUserLoggedIn();
-                    }]
-                }
+                controllerAs: 'SIC'
             });
 
         oaspTranslationProvider.enableTranslationForModule('main', true);
