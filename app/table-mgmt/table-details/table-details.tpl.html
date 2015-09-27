@@ -1,6 +1,6 @@
 <div>
     <div class="modal-header">
-        <h3 class="modal-title">Details for Table #<span data-ng-bind="table.number"></span></h3>
+        <h3 class="modal-title">Details for Table #<span data-ng-bind="TDC.table.number"></span></h3>
     </div>
     <div class="modal-body">
         <form name="forms.tableForm" novalidate>
@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <label>Status:</label>&nbsp;
-                    <span data-ng-bind="table.state"></span>
+                    <span data-ng-bind="TDC.table.state"></span>
                 </div>
             </div>
 
@@ -17,19 +17,19 @@
                 <h4>Order</h4>
             </div>
 
-            <div class="row" data-ng-show="noOrderAssigned()">
+            <div class="row" data-ng-show="TDC.noOrderAssigned()">
                 <div class="col-md-12">
                     <div class="alert alert-info" role="alert">
-                        No order currently assigned to this table. <a data-ng-click="assignNewOrder()">Assign a new
+                        No order currently assigned to this table. <a data-ng-click="TDC.assignNewOrder()">Assign a new
                         order...</a>
                     </div>
                 </div>
             </div>
-            <div data-ng-show="orderAssigned()">
+            <div data-ng-show="TDC.orderAssigned()">
                 <div class="row">
                     <div class="col-md-12">
                         <label>State:</label>&nbsp;
-                        <span data-ng-bind="table.order.orderState"></span>
+                        <span data-ng-bind="TDC.table.order.orderState"></span>
                     </div>
                 </div>
                 <div class="row">
@@ -37,16 +37,16 @@
                         <label>Order Positions:</label>&nbsp;
                     </div>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selected">
+                        <ui-select ng-model="TDC.model.selected">
                             <ui-select-match placeholder="Select offer...">{{$select.selected.description}}
                             </ui-select-match>
-                            <ui-select-choices repeat="o in allOffers | filter: $select.search">
-                                <div ng-bind-html="trustAsHtml((o.description | highlight: $select.search))"></div>
+                            <ui-select-choices repeat="o in TDC.allOffers | filter: $select.search">
+                                <div ng-bind-html="TDC.trustAsHtml((o.description | highlight: $select.search))"></div>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-sm btn-primary" data-ng-click="addPosition(model.selected)">+Add</button>
+                        <button class="btn btn-sm btn-primary" data-ng-click="TDC.addPosition(TDC.model.selected)">+Add</button>
                         &nbsp;
                     </div>
                 </div>
@@ -55,8 +55,8 @@
                         <table class="raw-table" tr-ng-grid=""
                                selection-mode="SingleRow"
                                enable-filtering="false"
-                               selected-items="selectedItems"
-                               items="positionsShown">
+                               selected-items="TDC.selectedItems"
+                               items="TDC.positionsShown">
                             <thead>
                             <tr>
                                 <th field-name="id" display-name="Number" cell-width="7em"></th>
@@ -68,17 +68,19 @@
                             </thead>
                         </table>
 
-                        <button-bar button-defs="buttonDefs"></button-bar>
+                        <button-bar button-defs="TDC.buttonDefs"></button-bar>
                     </div>
                 </div>
-                <pagination total-items="totalItems" items-per-page="numPerPage" ng-model="currentPage" num-pages="numPages" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false"></pagination>
+                <pagination total-items="TDC.totalItems" items-per-page="TDC.numPerPage" ng-model="TDC.currentPage"
+                            num-pages="TDC.numPages" max-size="TDC.maxSize" class="pagination-sm"
+                            boundary-links="true" rotate="false"></pagination>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" data-ng-disabled="!model.order" ng-click="submit()" translate>
+        <button class="btn btn-primary" data-ng-disabled="!TDC.model.order" ng-click="TDC.submit()" translate>
             TABLE_MGMT.SUBMIT
         </button>
-        <button class="btn btn-warning" ng-click="$close()" translate>TABLE_MGMT.CANCEL</button>
+        <button class="btn btn-warning" ng-click="TDC.goToSearchView()" translate>TABLE_MGMT.CANCEL</button>
     </div>
 </div>

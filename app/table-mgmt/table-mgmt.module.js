@@ -21,4 +21,11 @@ angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main'
             }]
         }
     });
+
+    $stateProvider.state('tableMgmt.details', {
+        url: '/table-details/:tableId',
+        templateUrl: 'table-mgmt/table-details/table-details.html',
+        controller: 'TableDetailsCntl',
+        controllerAs: 'TDC'
+    });
 });

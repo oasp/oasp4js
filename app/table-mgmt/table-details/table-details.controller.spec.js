@@ -1,25 +1,30 @@
 describe('Module: tableMgmt, Controller: table-details', function () {
     'use strict';
-    var $scope, deferred, tableDetailsMock = {
-        id: 103,
-        number: 3,
-        state: 'FREE'
-    }, allOffersMock = {},
+    var $scope, TDC,
+        tablesMock,
+        offersMock,
+        salesMock,
+        TABLE_ID = 102,
+        $stateParamsMock = {
+            tableId: TABLE_ID
+        },
+        tableDetailsMock = {
+            id: TABLE_ID,
+            number: 3,
+            state: 'FREE'
+        }, allOffersMock = {},
         currentOrderMock = {
             order: {
                 id: 10000000,
                 modificationCounter: 0,
                 revision: null,
-                tableId: 102,
+                tableId: TABLE_ID,
                 state: 'OPEN'
             },
             positions: [
                 {id: 10000010},
                 {id: 10000011}
             ]
-        },
-        salesMock = {
-            saveOrUpdateOrder: angular.noop
         };
 
     beforeEach(module('ui.bootstrap'));
@@ -27,10 +32,29 @@ describe('Module: tableMgmt, Controller: table-details', function () {
 
     beforeEach(inject(function ($rootScope, $controller, $q) {
         //given
-        deferred = $q.defer();
-        spyOn(salesMock, 'saveOrUpdateOrder').and.returnValue(deferred.promise);
+        tablesMock = {
+            loadTable: function(){
+                return $q.when(tableDetailsMock);
+            }
+        };
+        offersMock = {
+            loadAllOffers: function(){
+                return $q.when(allOffersMock);
+            }
+        };
+        salesMock = {
+            saveOrUpdateOrder: function(){
+                return $q.when();
+            },
+            loadOrderForTable: function(){
+                return $q.when(currentOrderMock);
+            }
+        };
+        spyOn(salesMock, 'saveOrUpdateOrder').and.callThrough();
+
         $scope = $rootScope.$new();
-        $controller('TableDetailsCntl', {$scope: $scope, tableDetails: tableDetailsMock, allOffers: allOffersMock, currentOrder: currentOrderMock, sales: salesMock});
+        TDC = $controller('TableDetailsCntl', {$scope: $scope, $stateParams: $stateParamsMock, tables: tablesMock, offers: offersMock, sales: salesMock});
+        $scope.$digest();
     }));
 
     describe('testing $scope functions', function () {
@@ -39,55 +63,54 @@ describe('Module: tableMgmt, Controller: table-details', function () {
             var value = 'some value';
             spyOn($sce, 'trustAsHtml');
             //when
-            $scope.trustAsHtml(value);
+            TDC.trustAsHtml(value);
             //then
             expect($sce.trustAsHtml).toHaveBeenCalledWith(value);
         }));
 
         it('should return false when there is an order assigned to the table', function () {
             //given when then
-            expect($scope.noOrderAssigned()).toBeFalsy();
+            expect(TDC.noOrderAssigned()).toBeFalsy();
         });
 
         it('should return true then there is an order assigned to the table', function () {
             //given when then
-            expect($scope.orderAssigned()).toBeTruthy();
+            expect(TDC.orderAssigned()).toBeTruthy();
         });
 
         it('should assign new order to the table', function () {
             //given when
-            $scope.assignNewOrder();
+            TDC.assignNewOrder();
             //then
-            expect($scope.model.order).toEqual({order: {
-                tableId: 103,
+            expect(TDC.model.order).toEqual({order: {
+                tableId: TABLE_ID,
                 state: 'OPEN'
             }, positions: []});
         });
 
-        it('should update order when submit button is clicked', inject(function (globalSpinner, positionStateNotification, $q) {
+        it('should update order when submit button is clicked', inject(function (globalSpinner, positionStateNotification, $q, $state) {
             //given
             var positionStateNotificationDeferred = $q.defer();
-            $scope.model.order.positions = [];
-            $scope.model.order.positions.push({id: 1, status: 'STATUS'});
+            TDC.model.order.positions = [];
+            TDC.model.order.positions.push({id: 1, status: 'STATUS'});
             spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
             spyOn(positionStateNotification, 'connect').and.returnValue(positionStateNotificationDeferred.promise);
             spyOn(positionStateNotification, 'notify');
-            $scope.$close = angular.noop;
-            spyOn($scope, '$close');
+            spyOn($state, 'go');
+
             //when
-            $scope.submit();
+            TDC.submit();
             //then
             expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
             expect(salesMock.saveOrUpdateOrder).toHaveBeenCalledWith(currentOrderMock);
 
             //when
-            deferred.resolve();
             positionStateNotificationDeferred.resolve();
             $scope.$digest();
             //then
             expect(positionStateNotification.connect).toHaveBeenCalled();
             expect(positionStateNotification.notify).toHaveBeenCalledWith(1, 'STATUS');
-            expect($scope.$close).toHaveBeenCalled();
+            expect($state.go).toHaveBeenCalledWith('tableMgmt.search');
         }));
 
         it('should add position to the order when add button is clicked', function () {
@@ -98,10 +121,10 @@ describe('Module: tableMgmt, Controller: table-details', function () {
                 price: 'price'
             };
             //when
-            $scope.addPosition(offer);
+            TDC.addPosition(offer);
             //then
-            expect($scope.model.order.positions.length).toEqual(2);
-            expect($scope.model.order.positions[1]).toEqual({
+            expect(TDC.model.order.positions.length).toEqual(2);
+            expect(TDC.model.order.positions[1]).toEqual({
                 revision: null,
                 orderId: 10000000,
                 offerId: offer.id,
@@ -116,19 +139,19 @@ describe('Module: tableMgmt, Controller: table-details', function () {
     describe('testing button definitions', function () {
         it('should remove selected position on remove button click', function () {
             //given
-            $scope.selectedItems.push($scope.model.order.positions[1]);
+            TDC.selectedItems.push(TDC.model.order.positions[1]);
             //when
-            $scope.buttonDefs[0].onClick();
+            TDC.buttonDefs[0].onClick();
             //then
-            expect($scope.model.order.positions.length).toEqual(1);
-            expect($scope.selectedItems.length).toEqual(0);
+            expect(TDC.model.order.positions.length).toEqual(1);
+            expect(TDC.selectedItems.length).toEqual(0);
         });
 
         it('should activate remove button where there is an item selected', function () {
             //given
-            $scope.selectedItems.push($scope.model.order.positions[0]);
+            TDC.selectedItems.push(TDC.model.order.positions[0]);
             //when then
-            expect($scope.buttonDefs[0].isActive()).toBeTruthy();
+            expect(TDC.buttonDefs[0].isActive()).toBeTruthy();
         });
     });
 });
