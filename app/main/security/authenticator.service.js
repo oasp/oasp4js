@@ -22,7 +22,7 @@ angular.module('app.main')
                     templateUrl: 'main/sign-in/sign-in-modal.html',
                     backdrop: 'static',
                     keyboard: false,
-                    controller: 'SignInModalCntl',
+                    controller: 'SignInModalCntl as SIC',
                     size: 'sm'
                 }).result;
             }
