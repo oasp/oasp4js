@@ -1,5 +1,5 @@
 angular.module('app.sales-mgmt', ['app.main', 'app.offer-mgmt', 'app.sales-mgmt.templates'])
-.config(function ($stateProvider, oaspAuthorizationServiceProvider, ROLES) {    .config(function ($stateProvider, oaspAuthorizationServiceProvider, ROLES) {
+    .config(function ($stateProvider, oaspAuthorizationServiceProvider, ROLES) {
         'use strict';
 
         $stateProvider.state('salesMgmt', {
