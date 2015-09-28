@@ -62,12 +62,10 @@ angular.module('app.main')
 
         return {
             getUserRoles: function () {
-                var deferred = $q.defer();
-                getCurrentUser()
+                return getCurrentUser()
                     .then(function (userProfile) {
-                        deferred.resolve(userProfile.getUserRoles());
+                        return userProfile.getUserRoles();
                     });
-                return deferred.promise;
             },
             getCurrentUser: getCurrentUser,
             onLoggingIn: function (userProfile) {

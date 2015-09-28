@@ -64,10 +64,9 @@ angular.module('oasp.oaspSecurity')
                 return {
                     authorizationCheckResolver: function (requestedRoles) {
                         var deferredAuthorizationCheck = $q.defer();
-
                         userHasAnyRole(requestedRoles).then(function (authorized) {
                             if (authorized) {
-                                return deferredAuthorizationCheck.resolve(true);
+                                deferredAuthorizationCheck.resolve(true);
                             } else {
                                 $log.warn('Access denied. Any role of \'' + requestedRoles + '\' required to go to this state');
                                 deferredAuthorizationCheck.reject();
