@@ -9,6 +9,9 @@ angular.module('app.main')
                     isLoggedIn: function () {
                         return currentUser.isLoggedIn;
                     },
+                    getUserRoles: function () {
+                        return currentUser.profile && currentUser.profile.role;
+                    },
                     getUserName: function () {
                         var userName = '';
                         if (currentUser.profile && currentUser.profile.firstName && currentUser.profile.lastName) {
@@ -42,10 +45,8 @@ angular.module('app.main')
             switchToAnonymousUser = function () {
                 currentUserInternal.isLoggedIn = false;
                 currentUserInternal.profile = undefined;
-            };
-
-        return {
-            getCurrentUser: function () {
+            },
+            getCurrentUser = function () {
                 var deferred = $q.defer();
                 oaspSecurityService.getCurrentUserProfile()
                     .then(function (userProfile) {
@@ -57,7 +58,18 @@ angular.module('app.main')
                         deferred.resolve(currentUserExternal(currentUserInternal));
                     });
                 return deferred.promise;
+            };
+
+        return {
+            getUserRoles: function () {
+                var deferred = $q.defer();
+                getCurrentUser()
+                    .then(function (userProfile) {
+                        deferred.resolve(userProfile.getUserRoles());
+                    });
+                return deferred.promise;
             },
+            getCurrentUser: getCurrentUser,
             onLoggingIn: function (userProfile) {
                 updateUserProfile(userProfile);
             },

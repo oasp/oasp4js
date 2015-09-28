@@ -13,13 +13,13 @@
         <div class="collapse navbar-collapse" data-ng-class="{'in':!navCollapsed}">
             <ul class="ng-cloak nav navbar-nav" data-ng-show="currentUser.isLoggedIn()">
                 <li><a href="#table-mgmt/table-search">Tables</a></li>
-            </ul>
-            <ul class="ng-cloak nav navbar-nav" data-ng-show="currentUser.getUserName() === 'Carl Cook' || currentUser.getUserName() === 'Charly Chief'">
-                <li><a href="#/sales-mgmt/cook-positions">Kitchen</a></li>
+                <li><a href="#/sales-mgmt/cook-positions"
+                       data-ng-show="currentUser.getUserName() === 'Carl Cook' || currentUser.getUserName() === 'Charly Chief'">Kitchen</a>
+                </li>
             </ul>
             <div class="ng-cloak navbar-right" data-ng-show="currentUser.isLoggedIn()">
                 <span class="navbar-text"><span translate="">OASP.LOGGED_IN_AS</span>:&nbsp;<span
-                        data-ng-bind="currentUser.getUserName()"></span></span>
+                    data-ng-bind="currentUser.getUserName()"></span></span>
                 <button data-ng-click="logOff()" class="btn navbar-btn btn-sm btn-info" translate="">OASP.LOG_OFF
                 </button>
             </div>
