@@ -118,6 +118,9 @@ angular.module('oasp.oaspSecurity')
                                 getAppContextService().onLoggingOff();
                             });
                     },
+                    getCurrentCsrfToken: function () {
+                        return currentCsrfProtectionWrapper;
+                    },
                     checkIfUserIsLoggedInAndIfSoReinitializeAppContext: function () {
                         currentUserProfileHandler.initializationStarts();
                         getSecurityRestService().getCurrentUser()
@@ -132,9 +135,6 @@ angular.module('oasp.oaspSecurity')
                             }, function () {
                                 currentUserProfileHandler.initializationFailed();
                             });
-                    },
-                    getCurrentCsrfToken: function () {
-                        return currentCsrfProtectionWrapper;
                     },
                     getCurrentUserProfile: function () {
                         return currentUserProfileHandler.getProfile();
