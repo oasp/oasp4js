@@ -76,19 +76,16 @@ describe('Module: tableMgmt, Controller: table-search', function () {
         expect($scope.gridOptions.data).toBeDefined();
     });
 
-    it('should call $modal.open when edit button is clicked', inject(function ($modal) {
+    it('should call $state.go when edit button is clicked', inject(function ($state) {
         //given
         var tableRow = {
             id: 104
         };
-        spyOn($modal, 'open').and.callThrough();
+        spyOn($state, 'go').and.callThrough();
         //when
         $scope.openEditDialog(tableRow);
         //then
-        expect($modal.open).toHaveBeenCalled();
-        expect(tablesMock.loadTable).toHaveBeenCalledWith(tableRow.id);
-        expect(offersMock.loadAllOffers).toHaveBeenCalled();
-        expect(salesMock.loadOrderForTable).toHaveBeenCalledWith(tableRow.id);
+        expect($state.go).toHaveBeenCalledWith('tableMgmt.details', {tableId: tableRow.id});
     }));
 
     describe('testing buttons definitions', function () {

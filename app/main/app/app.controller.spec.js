@@ -37,7 +37,7 @@ describe('Controller: AppCntl', function () {
         expect($scope.currentUser.getUserName()).toEqual('');
     });
 
-    it('exposes logOff() on $scope which redirects to the Sign In dialog on success', inject(function ($q, SIGN_IN_DLG_PATH, $location) {
+    it('exposes logOff() on $scope which redirects to the Sign In dialog on success', inject(function ($q, SIGN_IN_DLG_PATH, $location, $state) {
         // given
         security.logOff = jasmine.createSpy().and.returnValue($q.when(undefined));
         $location.path('/some-module/some-dialog');
@@ -46,7 +46,6 @@ describe('Controller: AppCntl', function () {
         $scope.$apply();
         // then
         expect($location.path()).toEqual(SIGN_IN_DLG_PATH);
-        expect($window.location.href).toMatch('.*' + SIGN_IN_DLG_PATH);
-        expect($window.location.reload).toHaveBeenCalled();
+        expect($state.current.name).toEqual('signIn');
     }));
 });

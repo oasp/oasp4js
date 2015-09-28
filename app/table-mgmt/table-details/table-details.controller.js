@@ -1,44 +1,66 @@
 angular.module('app.table-mgmt').controller('TableDetailsCntl',
-    function ($scope, $sce, tableDetails, allOffers, currentOrder, sales, globalSpinner, positionStateNotification) {
+    function ($scope, $sce, $stateParams, tables, offers, sales, globalSpinner, positionStateNotification, $state) {
         'use strict';
-        $scope.table = tableDetails;
-        $scope.allOffers = allOffers;
-        $scope.model = {};
-        $scope.model.order = currentOrder;
-        $scope.model.selected = allOffers.length ? allOffers[0] : undefined;
-        $scope.selectedItems = [];
-        
-        $scope.positionsShown = [];
-        
-        $scope.totalItems = $scope.model.order !== undefined ? $scope.model.order.positions.length : 0;
-        
-        $scope.numPerPage = 3;
-        $scope.currentPage = 1;
 
-        $scope.maxSize = 4;
-  			
-        $scope.$watch('totalItems + currentPage + numPerPage + model.order + model.order.positions', function () {
-            if ($scope.model.order !== undefined) {
-                var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
-                $scope.positionsShown = $scope.model.order.positions.slice(begin, end);
-                $scope.totalItems = $scope.model.order.positions !== undefined ? $scope.model.order.positions.length : 0;
-            }
-        });
+        var tdcSelf = this;
+        tdcSelf.model = {};
+        tdcSelf.totalItems = 0;
+        tdcSelf.table = [];
 
-        $scope.trustAsHtml = function (value) {
+        tables.loadTable($stateParams.tableId)
+            .then(function(table){
+                tdcSelf.table = table;
+            });
+        sales.loadOrderForTable($stateParams.tableId)
+            .then(function (order) {
+                tdcSelf.model.order = order;
+                tdcSelf.totalItems = angular.isDefined(order) ? tdcSelf.model.order.positions.length : 0;
+            });
+        offers.loadAllOffers()
+            .then(function (offers) {
+                tdcSelf.allOffers = offers;
+                tdcSelf.model.selected = offers.length ? offers[0] : undefined;
+            });
+
+
+        tdcSelf.selectedItems = [];
+        tdcSelf.positionsShown = [];
+
+        tdcSelf.numPerPage = 3;
+        tdcSelf.currentPage = 1;
+        tdcSelf.maxSize = 4;
+
+        $scope.$watch(function () {
+                var orderPositions; //TODO: Do we want to watch reference here all the collection changes?
+                if (angular.isDefined(tdcSelf.model.order)) {
+                    orderPositions = tdcSelf.model.order.positions;
+                }
+                return tdcSelf.currentPage + tdcSelf.numPerPage +
+                    tdcSelf.totalItems + tdcSelf.model.order + orderPositions;
+            },
+            function () {
+                if (angular.isDefined(tdcSelf.model.order)) {
+                    var begin = ((tdcSelf.currentPage - 1) * tdcSelf.numPerPage),
+                        end = begin + tdcSelf.numPerPage;
+                    tdcSelf.positionsShown = tdcSelf.model.order.positions.slice(begin, end);
+                    tdcSelf.totalItems = angular.isDefined(tdcSelf.model.order.positions) ? tdcSelf.model.order.positions.length : 0;
+                }
+            });
+
+        tdcSelf.trustAsHtml = function (value) {
             return $sce.trustAsHtml(value);
         };
 
-        $scope.noOrderAssigned = function () {
-            return !$scope.model.order;
+        tdcSelf.noOrderAssigned = function () {
+            return !tdcSelf.model.order;
         };
-        $scope.orderAssigned = function () {
-            return !$scope.noOrderAssigned();
+        tdcSelf.orderAssigned = function () {
+            return !tdcSelf.noOrderAssigned();
         };
-        $scope.assignNewOrder = function () {
-            $scope.model.order = {
+        tdcSelf.assignNewOrder = function () {
+            tdcSelf.model.order = {
                 order: {
-                    tableId: $scope.table.id,
+                    tableId: tdcSelf.table.id,
                     state: 'OPEN'
                 },
                 positions: []
@@ -46,42 +68,46 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
         };
 
         // form container to access forms added in parent scopes
-        $scope.forms = {};
+        //$scope.forms = {};
 
-        $scope.submit = function () {
+        tdcSelf.submit = function () {
             globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                return sales.saveOrUpdateOrder($scope.model.order);
+                return sales.saveOrUpdateOrder(tdcSelf.model.order);
             }).then(function () {
                 positionStateNotification.connect().then(function () {
-                    var pos = $scope.model.order.positions[0];
+                    var pos = tdcSelf.model.order.positions[0];
                     positionStateNotification.notify(pos.id, pos.status);
+                    tdcSelf.goToSearchView();
                 });
-
-                $scope.$close();
             });
         };
-        $scope.addPosition = function (offer) {
-            $scope.model.order.positions.push({
+
+        tdcSelf.goToSearchView = function(){
+            $state.go('tableMgmt.search');
+        };
+
+        tdcSelf.addPosition = function (offer) {
+            tdcSelf.model.order.positions.push({
                 revision: null,
-                orderId: $scope.model.order.order.id,
+                orderId: tdcSelf.model.order.order.id,
                 offerId: offer.id,
                 offerName: offer.description,
                 state: 'ORDERED',
                 price: offer.price,
                 comment: ''
             });
-            $scope.totalItems = $scope.model.order.positions.length;
+            tdcSelf.totalItems = tdcSelf.model.order.positions.length;
         };
 
-        $scope.buttonDefs = [
+        tdcSelf.buttonDefs = [
             {
                 label: 'Remove',
                 onClick: function () {
-                    $scope.model.order.positions.splice($scope.model.order.positions.indexOf($scope.selectedItems[0]), 1);
-                    $scope.selectedItems.length = 0;
+                    tdcSelf.model.order.positions.splice(tdcSelf.model.order.positions.indexOf(tdcSelf.selectedItems[0]), 1);
+                    tdcSelf.selectedItems.length = 0;
                 },
                 isActive: function () {
-                    return $scope.selectedItems.length;
+                    return tdcSelf.selectedItems.length;
                 }
             }
         ];

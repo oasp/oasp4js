@@ -12,6 +12,7 @@ angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main'
         url: '/table-search',
         templateUrl: 'table-mgmt/table-search/table-search.html',
         controller: 'TableSearchCntl',
+        controllerAs: 'TSC',
         resolve: {
             paginatedTableList: ['tables', function (tables) {
                 return tables.getPaginatedTables(1, 4).then(function(paginatedTables) {
@@ -19,5 +20,12 @@ angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main'
                 });
             }]
         }
+    });
+
+    $stateProvider.state('tableMgmt.details', {
+        url: '/table-details/:tableId',
+        templateUrl: 'table-mgmt/table-details/table-details.html',
+        controller: 'TableDetailsCntl',
+        controllerAs: 'TDC'
     });
 });
