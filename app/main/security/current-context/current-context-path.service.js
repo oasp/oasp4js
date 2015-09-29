@@ -1,7 +1,21 @@
+/**
+ * @ngdoc service
+ * @name main.currentContextPath
+ * @module app.main
+ * @requires $window
+ */
 angular.module('app.main').factory('currentContextPath', function ($window) {
     'use strict';
     var contextPath = '';
     return {
+
+        /**
+         * @ngdoc method
+         * @name main.currentContextPath#get
+         * @methodOf main.currentContextPath
+         *
+         * @return {string} context path
+         */
         get: function () {
             var contextPathNotInitializedYet = contextPath ? false : true,
                 path,

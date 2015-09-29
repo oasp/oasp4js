@@ -1,3 +1,10 @@
+/**
+ * @ngdoc service
+ * @name main.appContext
+ * @module app.main
+ * @requires main.oaspSecurityService
+ * @requires $q
+ */
 angular.module('app.main')
     .factory('appContext', function (oaspSecurityService, $q) {
         'use strict';
@@ -61,16 +68,43 @@ angular.module('app.main')
             };
 
         return {
+            /**
+             * @ngdoc method
+             * @name main.appContext#getUserRoles
+             * @methodOf main.appContext
+             *
+             * @return {array} current user roles
+             */
             getUserRoles: function () {
                 return getCurrentUser()
                     .then(function (userProfile) {
                         return userProfile.getUserRoles();
                     });
             },
+            /**
+             * @ngdoc method
+             * @name main.appContext#getCurrentUser
+             * @methodOf main.appContext
+             *
+             * @return {promise} current user promise
+             */
             getCurrentUser: getCurrentUser,
+            /**
+             * @ngdoc method
+             * @name main.appContext#onLoggingIn
+             * @methodOf main.appContext
+             *
+             * @params {object} userProfile current user profile
+             */
             onLoggingIn: function (userProfile) {
                 updateUserProfile(userProfile);
             },
+            /**
+             * @ngdoc method
+             * @name main.appContext#onLoggingOff
+             * @methodOf main.appContext
+             *
+             */
             onLoggingOff: function () {
                 switchToAnonymousUser();
             }

@@ -1,3 +1,8 @@
+/**
+ * @ngdoc object
+ * @name oaspUi.modal
+ * @module oasp.oaspUi
+ */
 angular.module('oasp.oaspUi.modal')
     .constant('oaspUiModalDefaults', {
         backdrop: 'static',

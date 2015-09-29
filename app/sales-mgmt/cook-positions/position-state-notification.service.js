@@ -1,4 +1,11 @@
 /*global Stomp,SockJS*/
+/**
+ * @ngdoc service
+ * @name sales-mgmt.positionStateNotification
+ * @module app.sales-mgmt
+ * @requires main.currentContextPath
+ * @requires $q
+ */
 angular.module('app.sales-mgmt')
     .factory('positionStateNotification', function (currentContextPath, $q) {
         'use strict';
@@ -6,6 +13,14 @@ angular.module('app.sales-mgmt')
         var positionStompClient;
 
         return {
+
+            /**
+             * @ngdoc method
+             * @name sales-mgmt.positionStateNotification#connect
+             * @methodOf sales-mgmt.positionStateNotification
+             *
+             * @return {promise} promise
+             */
             connect: function () {
                 var deferredConnection,
                     connectionPromise,
@@ -33,6 +48,14 @@ angular.module('app.sales-mgmt')
 
                 return connectionPromise;
             },
+
+            /**
+             * @ngdoc method
+             * @name sales-mgmt.positionStateNotification#subscribe
+             * @methodOf sales-mgmt.positionStateNotification
+             *
+             * @params {function} callbackFn
+             */
             subscribe: function (callbackFn) {
                 var internalCallback = function (message) {
                     var parsedMessage = JSON.parse(message.body);
@@ -46,6 +69,15 @@ angular.module('app.sales-mgmt')
                     positionStompClient.subscribe('/topic/positionStatusChange', internalCallback);
                 }
             },
+
+            /**
+             * @ngdoc method
+             * @name sales-mgmt.positionStateNotification#notify
+             * @methodOf sales-mgmt.positionStateNotification
+             *
+             * @params {number} positionId
+             * @params {?} newStatus
+             */
             notify: function (positionId, newStatus) {
                 var positionStatusChange = {
                     id: positionId,

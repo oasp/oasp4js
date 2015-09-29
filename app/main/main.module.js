@@ -1,3 +1,14 @@
+/**
+ * @ngdoc object
+ * @name app.main
+ * @module app
+ * @requires ui.router
+ * @requires oasp.oaspUi
+ * @requires oasp.oaspSecurity
+ * @requires main.templates
+ * @requires oasp.oaspI18n
+ * @requires ui.bootstrap
+ */
 angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'app.main.templates', 'oasp.oaspI18n', 'ui.bootstrap'])
     .constant('SIGN_IN_DLG_PATH', '/main/sign-in')
     .constant('ROLES', {

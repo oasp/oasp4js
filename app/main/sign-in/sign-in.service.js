@@ -1,7 +1,20 @@
+/**
+ * @ngdoc service
+ * @name main.signIn
+ * @module app.main
+ * @requiares oasp.oaspSecurityService
+ * @requires spinner.globalSpinner
+ */
 angular.module('app.main')
     .factory('signIn', function (oaspSecurityService, globalSpinner) {
         'use strict';
 
+        /**
+         * @ngdoc method
+         * @name main.signIn#
+         * @methodOf main.signIn
+         *
+         */
         return function ($scope, signInSuccessCallback) {
             $scope.errorMessage = {
                 text: '',

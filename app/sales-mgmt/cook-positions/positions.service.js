@@ -1,3 +1,12 @@
+/**
+ * @ngdoc service
+ * @name sales-mgmt.positions
+ * @module app.sales-mgmt
+ * @requires sales-mgmt.salesManagementRestService
+ * @requires sales-mgmt.offers
+ * @requires main.appContext
+ * @requires $q
+ */
 angular.module('app.sales-mgmt')
     .factory('positions', function (salesManagementRestService, offers, appContext, $q) {
         'use strict';
@@ -107,6 +116,13 @@ angular.module('app.sales-mgmt')
                 return thisPositionManager;
             }());
 
+        /**
+         * @ngdoc method
+         * @name sales-mgmt.positions#get
+         * @methodOf sales-mgmt.positions
+         *
+         * @return {promise} promise
+         */
         that.get = function () {
             var deferredPositions = $q.defer(), cookId;
 
@@ -135,6 +151,13 @@ angular.module('app.sales-mgmt')
             return deferredPositions.promise;
         };
 
+        /**
+         * @ngdoc method
+         * @name sales-mgmt.positions#assignCookToPosition
+         * @methodOf sales-mgmt.positions
+         *
+         * @return {promise} promise
+         */
         that.assignCookToPosition = function (positionId) {
             var cookId;
             return appContext.getCurrentUser().then(function (currentUser) {
@@ -146,6 +169,13 @@ angular.module('app.sales-mgmt')
             });
         };
 
+        /**
+         * @ngdoc method
+         * @name sales-mgmt.positions#makePositionAvailable
+         * @methodOf sales-mgmt.positions
+         *
+         * @return {promise} promise
+         */
         that.makePositionAvailable = function (positionId) {
             return salesManagementRestService.updateOrderPosition(positionManager.makePositionUnassigned(positionId))
                 .then(function () {
@@ -153,6 +183,13 @@ angular.module('app.sales-mgmt')
                 });
         };
 
+        /**
+         * @ngdoc method
+         * @name sales-mgmt.positions#setPositionStatusToPrepared
+         * @methodOf sales-mgmt.positions
+         *
+         * @return {promise} promise
+         */
         that.setPositionStatusToPrepared = function (positionId) {
             return salesManagementRestService.updateOrderPosition(positionManager.setStatusOfPosition('PREPARED',
                 positionId))
