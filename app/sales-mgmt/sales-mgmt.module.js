@@ -1,3 +1,11 @@
+/**
+ * @ngdoc object
+ * @name app.sales-mgmt
+ * @requires app.main
+ * @requires app.offer-mgmt
+ * @requires sales-mgmt.templates
+ * @module app
+ */
 angular.module('app.sales-mgmt', ['app.main', 'app.offer-mgmt', 'app.sales-mgmt.templates'])
     .config(function ($stateProvider, oaspAuthorizationServiceProvider, ROLES) {
         'use strict';

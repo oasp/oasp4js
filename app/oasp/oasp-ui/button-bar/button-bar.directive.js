@@ -1,3 +1,12 @@
+/**
+ * @ngdoc directive
+ * @name oasp.oaspUi.directive:buttonBar
+ * @module oasp.oaspUi
+ * @directive
+ * @restrict EA
+ * @scope
+ * @property  {object} buttonDefs
+ */
 angular.module('oasp.oaspUi.buttonBar')
     .directive('buttonBar', function () {
         'use strict';

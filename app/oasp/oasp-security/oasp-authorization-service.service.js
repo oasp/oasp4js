@@ -1,3 +1,8 @@
+/**
+ * @ngdoc service
+ * @name oaspSecurity.oaspAuthorizationService
+ * @module oasp.oaspSecurity
+ */
 angular.module('oasp.oaspSecurity')
     .provider('oaspAuthorizationService', function () {
         'use strict';
@@ -62,6 +67,13 @@ angular.module('oasp.oaspSecurity')
                             });
                     };
                 return {
+
+                    /**
+                     * @ngdoc method
+                     * @name oaspSecurity.oaspAuthorizationService#authorizationCheckResolver
+                     * @methodOf oaspSecurity.oaspAuthorizationService
+                     *
+                     */
                     authorizationCheckResolver: function (requestedRoles) {
                         var deferredAuthorizationCheck = $q.defer();
                         userHasAnyRole(requestedRoles).then(function (authorized) {
@@ -75,6 +87,15 @@ angular.module('oasp.oaspSecurity')
 
                         return deferredAuthorizationCheck.promise;
                     },
+
+                    /**
+                     * @ngdoc method
+                     * @name oaspSecurity.oaspAuthorizationService#userHasAnyRole
+                     * @methodOf oaspSecurity.oaspAuthorizationService
+                     *
+                     * @params {array} requestedRoles requested role
+                     * @returns {boolean} true if user has role, false if not
+                     */
                     userHasAnyRole: userHasAnyRole
                 };
             }

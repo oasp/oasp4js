@@ -1,3 +1,12 @@
+/**
+ * @ngdoc object
+ * @name app.table-mgmt
+ * @module app
+ * @requires app.offer-mgmt
+ * @requires app.sales-mgmt
+ * @requires app.main
+ * @requires table-mgmt.templates
+ */
 angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main', 'app.table-mgmt.templates'], function ($stateProvider, oaspTranslationProvider) {
     'use strict';
     oaspTranslationProvider.enableTranslationForModule('table-mgmt');

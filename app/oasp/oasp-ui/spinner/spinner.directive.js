@@ -13,6 +13,15 @@ angular.module('oasp.oaspUi.spinner')
         hwaccel: false,
         zIndex: 2e9
     })
+/**
+ * @ngdoc directive
+ * @name oasp.oaspUi.directive:spinner
+ * @module oasp.oaspUi
+ * @directive
+ * @restrict A
+ * @scope
+ * @property {boolean} spinnerVisible
+ */
     .directive('spinner', function (spinnerOptions) {
         'use strict';
 

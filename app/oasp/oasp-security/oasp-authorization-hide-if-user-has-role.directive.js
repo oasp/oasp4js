@@ -1,3 +1,12 @@
+/**
+ * @ngdoc directive
+ * @name oasp.oaspSecurity.directive:hideIfUserHasRole
+ * @module oasp.oaspSecurity
+ * @directive
+ * @restrict A
+ * @requires oaspSecurity.oaspAuthorizationService
+ * @property  {boolean} hideIfUserHasRole
+ */
 angular.module('oasp.oaspSecurity')
     .directive('hideIfUserHasRole', ['oaspAuthorizationService', function (oaspAuthorizationService) {
         return {

@@ -1,14 +1,18 @@
 angular.module('app.main')
 /**
  * @ngdoc service
- * @name homePageRedirector
+ * @name main.homePageRedirector
  * @module app.main
+ * @requires $location
+ * @requires main.appContext
+ * @requires $q
+ * @requires $state
  * @description
  *
  * Delivers helper for redirecting to user specific home page or login view.
  *
  * @returns {object} Helper object exposing following methods:
- * - `{promise}`  {@link app.main.homePageRedirector#redirect redirect()}
+ * - `{promise}`  {@link main.homePageRedirector redirect()}
  *
  */
     .factory('homePageRedirector', function ($location, appContext, $q, $state) {
@@ -17,7 +21,8 @@ angular.module('app.main')
 
         /**
          * @ngdoc method
-         * @name homePageRedirector#redirect
+         * @name main.homePageRedirector#redirect
+         * @methodOf main.homePageRedirector
          *
          * @description
          * Method executes user specific redirection to home page. When no user is logged in and
