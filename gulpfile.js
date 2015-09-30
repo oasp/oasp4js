@@ -16,3 +16,14 @@ require('require-dir')('./gulp', {recurse: true});
 gulp.task('default', ['clean'], function () {
     gulp.start('build:dist');
 });
+
+gulp.task('ngdocs', [], function () {
+    var gulpDocs = require('gulp-ngdocs');
+    var options = {
+        html5Mode: true,
+        title: "OASP4JS"
+    };
+    return gulp.src('app/**/*.js')
+        .pipe(gulpDocs.process())
+        .pipe(gulp.dest('./docs'));
+});
