@@ -1,26 +1,12 @@
 angular.module('app.table-mgmt')
-    .controller('TableSearchCntl', function ($scope, tables, paginatedTableList, $modal, globalSpinner, offers, sales) {
+    .controller('TableSearchCntl', function ($scope, tables, paginatedTableList, $state, globalSpinner) {
         'use strict';
         var selectedTable = function () {
             return $scope.selectedItems && $scope.selectedItems.length ? $scope.selectedItems[0] : undefined;
         };
         
         $scope.openEditDialog = function (tableRow) {
-            $modal.open({
-                templateUrl: 'table-mgmt/table-details/table-details.html',
-                controller: 'TableDetailsCntl',
-                resolve: {
-                    tableDetails: function () {
-                        return tables.loadTable(tableRow.id);
-                    },
-                    allOffers: function () {
-                        return offers.loadAllOffers();
-                    },
-                    currentOrder: function () {
-                        return sales.loadOrderForTable(tableRow.id);
-                    }
-                }
-            });
+            $state.go('tableMgmt.details', {tableId: tableRow.id});
         };
     
         $scope.selectedItems = [];

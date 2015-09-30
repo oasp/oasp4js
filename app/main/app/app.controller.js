@@ -1,4 +1,4 @@
-angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $scope, $location, $window, appContext, oaspSecurityService, globalSpinner) {
+angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $scope, $location, $window, appContext, oaspSecurityService, globalSpinner, $state) {
     'use strict';
 
     appContext.getCurrentUser().then(function (currentUser) {
@@ -7,9 +7,8 @@ angular.module('app.main').controller('AppCntl', function (SIGN_IN_DLG_PATH, $sc
 
     $scope.logOff = function () {
         var goToSignInDialogFullyReloadingApp = function () {
-            $location.path(SIGN_IN_DLG_PATH);
-            $window.location.href = $location.absUrl();
-            $window.location.reload();
+            $state.go('signIn', {}, {reload: true});
+            //used reload via state instead of $window.location.reload(); to avoid page flickering on logout.
         };
         globalSpinner.decorateCallOfFunctionReturningPromise(function () {
             return oaspSecurityService.logOff();

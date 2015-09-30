@@ -155,4 +155,76 @@ describe('Module: \'oasp-security\', service: \'oaspUnauthenticatedRequestResend
         expect(failureCallback).toHaveBeenCalled();
         expect(originalRequest.headers[csrfProtection.headerName]).toEqual(csrfProtection.token);
     });
+
+    it('rejects with response data from failed request when resending it', function () {
+        // given
+        var csrfProtection = {
+                token: 'SADS8788sa86d8sa',
+                headerName: 'CSRF_TOKEN'
+            },
+            originalRequest = {
+                method: 'GET',
+                url: '/some-url',
+                headers: {}
+            };
+        $httpBackend.whenGET(originalRequest.url).respond(500, 'Internal server error');
+        authenticatorPromise = $q.when(csrfProtection);
+        // when
+        oaspUnauthenticatedRequestResender.addRequest(originalRequest)
+            .then(successCallback, failureCallback);
+        $scope.$apply();
+        $httpBackend.flush();
+        // then
+        expect(successCallback).not.toHaveBeenCalled();
+        expect(failureCallback).toHaveBeenCalled();
+        expect(failureCallback.calls.mostRecent().args[0].data).toEqual('Internal server error');
+        expect(failureCallback.calls.mostRecent().args[0].status).toEqual(500);
+        expect(originalRequest.headers[csrfProtection.headerName]).toEqual(csrfProtection.token);
+    });
+
+    it('resends two different requests upon successful authentication (making sure authentication called only once)',
+        function () {
+            // given
+            var csrfProtection = {
+                    token: 'SADS8788sa86d8sa',
+                    headerName: 'CSRF_TOKEN'
+                },
+                getRequest = {
+                    method: 'GET',
+                    url: '/some-url',
+                    headers: {}
+                },
+                postRequest = {
+                    method: 'POST',
+                    url: '/some-other-resource-url/4',
+                    data: '{"Resource":"ToCreate"}',
+                    headers: {}
+                },
+                otherSuccessCallback = jasmine.createSpy('otherSuccessCallback'),
+                otherFailureCallback = jasmine.createSpy('otherFailureCallback');
+
+            $httpBackend.expectGET(getRequest.url).respond(200, 'Resource Data');
+            $httpBackend.expectPOST(postRequest.url, postRequest.data).respond(400, 'Validation Errors');
+            spyOn(myAuthenticator, 'execute').and.returnValue($q.when(csrfProtection));
+            // when
+            oaspUnauthenticatedRequestResender.addRequest(getRequest)
+                .then(successCallback, failureCallback);
+            oaspUnauthenticatedRequestResender.addRequest(postRequest)
+                .then(otherSuccessCallback, otherFailureCallback);
+
+            $scope.$apply();
+            $httpBackend.flush();
+            // then
+            expect(myAuthenticator.execute.calls.count()).toEqual(1);
+
+            expect(failureCallback).not.toHaveBeenCalled();
+            expect(successCallback).toHaveBeenCalled();
+            expect(successCallback.calls.mostRecent().args[0].data).toEqual('Resource Data');
+            expect(successCallback.calls.mostRecent().args[0].status).toEqual(200);
+
+            expect(otherSuccessCallback).not.toHaveBeenCalled();
+            expect(otherFailureCallback).toHaveBeenCalled();
+            expect(otherFailureCallback.calls.mostRecent().args[0].data).toEqual('Validation Errors');
+            expect(otherFailureCallback.calls.mostRecent().args[0].status).toEqual(400);
+        });
 });

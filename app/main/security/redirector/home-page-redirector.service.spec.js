@@ -51,22 +51,24 @@ describe('Module: \'app.main\', Service: \'homePageRedirector\'', function () {
         user.isLoggedIn()
             .andHisHomeDialogIs(homeDialogPath);
         // when
-        homePageRedirector.rejectAndRedirectToHomePageIfUserLoggedIn().then(successCallback, failureCallback);
+        homePageRedirector.redirect().then(successCallback, failureCallback);
         $scope.$apply();
         // then
-        expect(successCallback).not.toHaveBeenCalled();
-        expect(failureCallback).toHaveBeenCalled();
         expect($location.url()).toBe(homeDialogPath);
+        expect(successCallback).toHaveBeenCalled();
+        expect(failureCallback).not.toHaveBeenCalled();
     }));
 
-    it('resolves if the user is anonymous', function () {
+    it('resolves if the user is anonymous', inject(function ($location, SIGN_IN_DLG_PATH) {
         // given
         user.isAnonymous();
         // when
-        homePageRedirector.rejectAndRedirectToHomePageIfUserLoggedIn().then(successCallback, failureCallback);
+        homePageRedirector.redirect().then(successCallback, failureCallback);
         $scope.$apply();
         // then
+        expect($location.url()).toBe(SIGN_IN_DLG_PATH);
         expect(successCallback).toHaveBeenCalled();
         expect(failureCallback).not.toHaveBeenCalled();
-    });
+
+    }));
 });

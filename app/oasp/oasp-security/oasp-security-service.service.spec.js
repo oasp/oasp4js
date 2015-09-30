@@ -79,7 +79,7 @@ describe('Module: \'oasp-security\', service: \'oaspSecurityService\'', function
         // then
         expect(failureCallback).toHaveBeenCalled();
         expect(successCallback).not.toHaveBeenCalled();
-        expect(myAppContext.onLoggingIn).not.toHaveBeenCalledWith();
+        expect(myAppContext.onLoggingIn).not.toHaveBeenCalled();
     });
 
     it('logIn() rejects after getCsrfToken REST service failed', function () {
@@ -91,7 +91,7 @@ describe('Module: \'oasp-security\', service: \'oaspSecurityService\'', function
         // then
         expect(failureCallback).toHaveBeenCalled();
         expect(successCallback).not.toHaveBeenCalled();
-        expect(myAppContext.onLoggingIn).not.toHaveBeenCalledWith();
+        expect(myAppContext.onLoggingIn).not.toHaveBeenCalled();
     });
 
     it('logIn() rejects after logIn REST service failed', function () {
@@ -103,7 +103,7 @@ describe('Module: \'oasp-security\', service: \'oaspSecurityService\'', function
         // then
         expect(failureCallback).toHaveBeenCalled();
         expect(successCallback).not.toHaveBeenCalled();
-        expect(myAppContext.onLoggingIn).not.toHaveBeenCalledWith();
+        expect(myAppContext.onLoggingIn).not.toHaveBeenCalled();
     });
 
     it('getCurrentUserProfile() resolves to undefined after logging in failed', function () {
@@ -142,7 +142,7 @@ describe('Module: \'oasp-security\', service: \'oaspSecurityService\'', function
         // then
         expect(successCallback).toHaveBeenCalled();
         expect(failureCallback).not.toHaveBeenCalled();
-        expect(myAppContext.onLoggingOff).toHaveBeenCalledWith();
+        expect(myAppContext.onLoggingOff).toHaveBeenCalled();
     });
 
     it('gets current CSRF token when logging in successful', function () {
