@@ -1,3 +1,8 @@
+/**
+ * @ngdoc service
+ * @name oaspSecurity.oaspUnauthenticatedRequestResender
+ * @module oasp.oaspSecurity
+ */
 angular.module('oasp.oaspSecurity')
     .provider('oaspUnauthenticatedRequestResender', function () {
         'use strict';
@@ -51,6 +56,15 @@ angular.module('oasp.oaspSecurity')
                     }());
 
                 return {
+
+                    /**
+                     * @ngdoc method
+                     * @name oaspSecurity.oaspUnauthenticatedRequestResender#addRequest
+                     * @methodOf oaspSecurity.oaspUnauthenticatedRequestResender
+                     *
+                     * @params {object} request
+                     * @return {promise} promise
+                     */
                     addRequest: function (request) {
                         var deferredRetry = $q.defer(),
                             requestToResend = {

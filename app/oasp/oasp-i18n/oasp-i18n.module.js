@@ -1,3 +1,10 @@
+/**
+ * @ngdoc object
+ * @name oasp.oaspI18n
+ * @module oasp
+ * @requires  pascalprecht.translate
+ * @requires  oasp.templates
+ */
 angular.module('oasp.oaspI18n', ['pascalprecht.translate', 'oasp.templates'], function ($translateProvider, $httpProvider) {
     'use strict';
     $httpProvider.interceptors.push('templateLoadTranslationInterceptor');

@@ -10,3 +10,4 @@ java/target
 .project
 .sonar
 *.bak
+docs
