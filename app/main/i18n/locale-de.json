@@ -2,6 +2,7 @@
     "OASP": {
         "LOGGED_IN_AS": "Angemeldet als",
         "LANGUAGE":"Sprache",
-        "LOG_OFF": "Abmelden"
+        "LOG_OFF": "Abmelden",
+        "ERROR_LOG": "Fehler Log"
     }
 }
