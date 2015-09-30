@@ -15,8 +15,8 @@ angular.module('app.main')
          * @methodOf main.signIn
          *
          */
-        return function ($scope, signInSuccessCallback) {
-            $scope.errorMessage = {
+        return function (ctrl, signInSuccessCallback) {
+            ctrl.errorMessage = {
                 text: '',
                 hasOne: function () {
                     return this.text ? true : false;
@@ -26,32 +26,33 @@ angular.module('app.main')
                 }
             };
 
-            $scope.credentials = {};
+            ctrl.credentials = {};
 
-            $scope.validation = {
+            ctrl.validation = {
                 userNameNotProvided: function () {
-                    return ($scope.loginForm.userName.$dirty || this.forceShowingValidationErrors) &&
-                        $scope.loginForm.userName.$error.required;
+                    return (ctrl.getLoginForm().userName.$dirty || this.forceShowingValidationErrors) &&
+                        ctrl.getLoginForm().userName.$error.required;
                 },
                 passwordNotProvided: function () {
-                    return ($scope.loginForm.password.$dirty || this.forceShowingValidationErrors) &&
-                        $scope.loginForm.password.$error.required;
+                    return (ctrl.getLoginForm().password.$dirty || this.forceShowingValidationErrors) &&
+                        ctrl.getLoginForm().password.$error.required;
                 },
                 forceShowingValidationErrors: false
             };
 
-            $scope.signIn = function () {
+            ctrl.signIn = function () {
                 var addErrorMessageAndClearForm = function (message) {
-                    $scope.errorMessage.text = message;
-                    $scope.credentials = {};
-                    $scope.validation.forceShowingValidationErrors = false;
-                    $scope.loginForm.$setPristine();
+                    ctrl.errorMessage.text = message;
+                    ctrl.credentials = {};
+                    ctrl.validation.forceShowingValidationErrors = false;
+                    ctrl.getLoginForm().$setPristine();
+                    ctrl.getLoginForm().$setUntouched();
                 };
-                if ($scope.loginForm.$invalid) {
-                    $scope.validation.forceShowingValidationErrors = true;
+                if (ctrl.getLoginForm().$invalid) {
+                    ctrl.validation.forceShowingValidationErrors = true;
                 } else {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return oaspSecurityService.logIn($scope.credentials.username, $scope.credentials.password);
+                        return oaspSecurityService.logIn(ctrl.credentials.username, ctrl.credentials.password);
                     }).then(function () {
                         signInSuccessCallback();
                     }, function () {

@@ -1,0 +1,6 @@
+<div ng-switch="items().length">
+  <span ng-switch-when="1" data-translate="{{items()[0].text}}" data-translate-values="{{items()[0].params}}"></span>
+  <ol ng-switch-default>
+    <li ng-repeat="item in items()"><span data-translate="{{item.text}}" data-translate-values="{{item.params}}"></span></li>
+  </ol>
+</div>

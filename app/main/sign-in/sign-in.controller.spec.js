@@ -1,6 +1,6 @@
 describe('Module: main, Controller: sign-in', function () {
     'use strict';
-    var $scope, $location, oaspSecurityService, appContext, userHomeDialogPath;
+    var $scope, SIC, $location, oaspSecurityService, appContext, userHomeDialogPath;
 
     beforeEach(function () {
         oaspSecurityService = {
@@ -26,30 +26,30 @@ describe('Module: main, Controller: sign-in', function () {
         $location = _$location_;
         $scope = $rootScope;
 
-        $controller('SignInCntl', {$scope: $scope, $location: $location, appContext: appContext});
+        SIC = $controller('SignInCntl', {$scope: $scope, $location: $location, appContext: appContext});
     }));
 
-    it('exposes errorMessage.text on $scope which is empty string initially', function () {
-        expect($scope.errorMessage.text).toEqual('');
+    it('exposes errorMessage.text on controller instance which is empty string initially', function () {
+        expect(SIC.errorMessage.text).toEqual('');
     });
-    it('exposes errorMessage.hasOne() on $scope which returns false when no message', function () {
-        expect($scope.errorMessage.hasOne()).toBeFalsy();
+    it('exposes errorMessage.hasOne() on controller instance which returns false when no message', function () {
+        expect(SIC.errorMessage.hasOne()).toBeFalsy();
     });
-    it('exposes hasErrorMessage() on $scope which returns true when message present', function () {
+    it('exposes hasErrorMessage() on controller instance which returns true when message present', function () {
         // when
-        $scope.errorMessage.text = 'Error occurred';
+        SIC.errorMessage.text = 'Error occurred';
         // then
-        expect($scope.errorMessage.hasOne()).toBeTruthy();
+        expect(SIC.errorMessage.hasOne()).toBeTruthy();
     });
-    it('exposes clearMessage() on $scope which resets the errorMessage to empty string', function () {
+    it('exposes clearMessage() on controller instance which resets the errorMessage to empty string', function () {
         // given
-        $scope.errorMessage.text = 'Error occurred';
+        SIC.errorMessage.text = 'Error occurred';
         // when
-        $scope.errorMessage.clear();
+        SIC.errorMessage.clear();
         // then
-        expect($scope.errorMessage.text).toEqual('');
+        expect(SIC.errorMessage.text).toEqual('');
     });
-    it('exposes signIn() on $scope which changes to the user\'s home dialog on success', inject(function ($q) {
+    it('exposes signIn() on controller instance which changes to the user\'s home dialog on success', inject(function ($q) {
         // given
         userHomeDialogPath = '/some-module/home';
         spyOn(oaspSecurityService, 'logIn').and.callFake(function () {
@@ -58,45 +58,47 @@ describe('Module: main, Controller: sign-in', function () {
         $scope.loginForm = {
             $invalid: false
         };
-        $scope.validation.forceShowingValidationErrors = true;
+        SIC.validation.forceShowingValidationErrors = true;
         // when
-        $scope.signIn();
+        SIC.signIn();
         $scope.$apply();
         // then
         expect($location.path()).toEqual(userHomeDialogPath);
 
     }));
-    it('exposes signIn() on $scope which adds an error message and clears the form on failure', inject(function ($q) {
+    it('exposes signIn() on controller instance which adds an error message and clears the form on failure', inject(function ($q) {
         // given
         spyOn(oaspSecurityService, 'logIn').and.callFake(function () {
             return $q.reject();
         });
         $scope.loginForm = {
             $invalid: false,
-            $setPristine: jasmine.createSpy('$setPristine')
+            $setPristine: jasmine.createSpy('$setPristine'),
+            $setUntouched: jasmine.createSpy('$setUntouched')
         };
-        $scope.validation.forceShowingValidationErrors = true;
+        SIC.validation.forceShowingValidationErrors = true;
         // when
-        $scope.signIn();
+        SIC.signIn();
         $scope.$apply();
         // then
-        expect($scope.errorMessage.text).toEqual('Authentication failed. Please try again!');
-        expect($scope.credentials).toEqual({});
-        expect($scope.validation.forceShowingValidationErrors).toBeFalsy();
+        expect(SIC.errorMessage.text).toEqual('Authentication failed. Please try again!');
+        expect(SIC.credentials).toEqual({});
+        expect(SIC.validation.forceShowingValidationErrors).toBeFalsy();
         expect($scope.loginForm.$setPristine).toHaveBeenCalled();
+        expect($scope.loginForm.$setUntouched).toHaveBeenCalled();
     }));
-    it('exposes signIn() on $scope which forces showing errors when the form invalid', function () {
+    it('exposes signIn() on controller instance which forces showing errors when the form invalid', function () {
         // given
         $scope.loginForm = {
             $invalid: true
         };
-        $scope.validation.forceShowingValidationErrors = false;
+        SIC.validation.forceShowingValidationErrors = false;
         // when
-        $scope.signIn();
+        SIC.signIn();
         // then
-        expect($scope.validation.forceShowingValidationErrors).toBeTruthy();
+        expect(SIC.validation.forceShowingValidationErrors).toBeTruthy();
     });
-    it('exposes validation.userNameNotProvided() on $scope which returns true if field dirty and empty', function () {
+    it('exposes validation.userNameNotProvided() on controller instance which returns true if field dirty and empty', function () {
         // given // when
         $scope.loginForm = {
             userName: {
@@ -106,11 +108,11 @@ describe('Module: main, Controller: sign-in', function () {
                 }
             }
         };
-        $scope.validation.forceShowingValidationErrors = false;
+        SIC.validation.forceShowingValidationErrors = false;
         // then
-        expect($scope.validation.userNameNotProvided()).toBeTruthy();
+        expect(SIC.validation.userNameNotProvided()).toBeTruthy();
     });
-    it('exposes validation.userNameNotProvided() on $scope which returns true if field empty and forced validation',
+    it('exposes validation.userNameNotProvided() on controller instance which returns true if field empty and forced validation',
         function () {
             // given // when
             $scope.loginForm = {
@@ -121,11 +123,11 @@ describe('Module: main, Controller: sign-in', function () {
                     }
                 }
             };
-            $scope.validation.forceShowingValidationErrors = true;
+            SIC.validation.forceShowingValidationErrors = true;
             // then
-            expect($scope.validation.userNameNotProvided()).toBeTruthy();
+            expect(SIC.validation.userNameNotProvided()).toBeTruthy();
         });
-    it('exposes validation.userNameNotProvided() on $scope which returns false if field empty and neither validation forced nor filed dirty',
+    it('exposes validation.userNameNotProvided() on controller instance which returns false if field empty and neither validation forced nor filed dirty',
         function () {
             // given // when
             $scope.loginForm = {
@@ -136,11 +138,11 @@ describe('Module: main, Controller: sign-in', function () {
                     }
                 }
             };
-            $scope.validation.forceShowingValidationErrors = false;
+            SIC.validation.forceShowingValidationErrors = false;
             // then
-            expect($scope.validation.userNameNotProvided()).toBeFalsy();
+            expect(SIC.validation.userNameNotProvided()).toBeFalsy();
         });
-    it('exposes validation.passwordNotProvided() on $scope which returns true if field dirty and empty', function () {
+    it('exposes validation.passwordNotProvided() on controller instance which returns true if field dirty and empty', function () {
         // given // when
         $scope.loginForm = {
             password: {
@@ -150,11 +152,11 @@ describe('Module: main, Controller: sign-in', function () {
                 }
             }
         };
-        $scope.validation.forceShowingValidationErrors = false;
+        SIC.validation.forceShowingValidationErrors = false;
         // then
-        expect($scope.validation.passwordNotProvided()).toBeTruthy();
+        expect(SIC.validation.passwordNotProvided()).toBeTruthy();
     });
-    it('exposes validation.passwordNotProvided() on $scope which returns true if field empty and forced validation',
+    it('exposes validation.passwordNotProvided() on controller instance which returns true if field empty and forced validation',
         function () {
             // given // when
             $scope.loginForm = {
@@ -165,11 +167,11 @@ describe('Module: main, Controller: sign-in', function () {
                     }
                 }
             };
-            $scope.validation.forceShowingValidationErrors = true;
+            SIC.validation.forceShowingValidationErrors = true;
             // then
-            expect($scope.validation.passwordNotProvided()).toBeTruthy();
+            expect(SIC.validation.passwordNotProvided()).toBeTruthy();
         });
-    it('exposes validation.passwordNotProvided() on $scope which returns false if field empty and neither validation forced nor filed dirty',
+    it('exposes validation.passwordNotProvided() on controller instance which returns false if field empty and neither validation forced nor filed dirty',
         function () {
             // given // when
             $scope.loginForm = {
@@ -180,8 +182,8 @@ describe('Module: main, Controller: sign-in', function () {
                     }
                 }
             };
-            $scope.validation.forceShowingValidationErrors = false;
+            SIC.validation.forceShowingValidationErrors = false;
             // then
-            expect($scope.validation.passwordNotProvided()).toBeFalsy();
+            expect(SIC.validation.passwordNotProvided()).toBeFalsy();
         });
 });

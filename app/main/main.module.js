@@ -9,15 +9,17 @@
  * @requires oasp.oaspI18n
  * @requires ui.bootstrap
  */
-angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'app.main.templates', 'oasp.oaspI18n', 'ui.bootstrap'])
+angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'app.main.templates', 'oasp.validation', 'oasp.oaspI18n', 'ui.bootstrap'])
     .constant('SIGN_IN_DLG_PATH', '/main/sign-in')
     .constant('ROLES', {
         COOK: 'COOK',
         WAITER: 'WAITER'
     })
-    .config(function (SIGN_IN_DLG_PATH, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, oaspTranslationProvider) {
+    .config(function (SIGN_IN_DLG_PATH, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, oaspTranslationProvider, valdrProvider) {
         'use strict';
 
+
+        // --------- Routing ---------
 
         $urlMatcherFactoryProvider.strictMode(false);
         $urlRouterProvider.rule(function ($injector, $location) {
@@ -58,6 +60,8 @@ angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'ap
                 controllerAs: 'SIC'
             });
 
+        // --------- Translations ---------
+
         oaspTranslationProvider.enableTranslationForModule('main', true);
         oaspTranslationProvider.setSupportedLanguages(
             [
@@ -72,4 +76,27 @@ angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'ap
                 }
             ]
         );
+
+
+        // --------- validation ---------
+
+
+        valdrProvider.addConstraints({
+            'LoginData': {
+                'userName': {
+                    'required': {
+                        'message': 'Please enter your user name!'
+                    }
+                },
+                'password': {
+                    'required': {
+                        'message': 'Please enter your password!'
+                    }
+                }
+            }
+        });
+
+
+
+
     });
