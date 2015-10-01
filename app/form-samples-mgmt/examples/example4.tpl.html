@@ -1,0 +1,25 @@
+<div ng-controller="Example4Ctrl as E4C">
+    <h2>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE4.NAME' | translate}}</h2>
+    <p>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE4.DESCRIPTION' | translate}}</p>
+
+    <form name="example4Form" novalidate>
+
+        <div class="form-group">
+            <label>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE4.PASSWORD.LABEL' | translate}}</label>
+
+            <div with-validation-messages="E4C.customMessageRepo.password">
+                <input class="form-control" name="password" type="text" ng-model="password"
+                       required
+                       placeholder="{{'OASP.VALIDATION.SHOWCASE.EXAMPLE4.PASSWORD.PLACEHOLDER' | translate}}">
+            </div>
+
+            <div with-validation-messages="E4C.customMessageRepo.password">
+                <input class="form-control" name="confirm_password" type="text" ng-model="confirm_password"
+                       required
+                       ui-validate="{equal: '$value==password'}" ui-validate-watch=" 'password' "
+                       placeholder="{{'OASP.VALIDATION.SHOWCASE.EXAMPLE4.PASSWORD.CONFIRM_PLACEHOLDER' | translate}}">
+            </div>
+
+        </div>
+    </form>
+</div>

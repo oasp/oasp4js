@@ -34,11 +34,11 @@ angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'ap
 
         // For any unmatched url, redirect to notFound state but keep old URL
         $urlRouterProvider.otherwise(
-            function($injector, $location){
-            var state = $injector.get('$state');
-            state.go('notFound');
-            return $location.path();
-        });
+            function ($injector, $location) {
+                var state = $injector.get('$state');
+                state.go('notFound');
+                return $location.path();
+            });
 
         $urlRouterProvider.when('', function (homePageRedirector) {
             homePageRedirector.redirect();
@@ -82,21 +82,19 @@ angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'ap
 
 
         valdrProvider.addConstraints({
-            'LoginData': {
-                'userName': {
-                    'required': {
-                        'message': 'Please enter your user name!'
+            LoginData: {
+                userName: {
+                    required: {
+                        message: 'Please enter your user name!'
                     }
                 },
-                'password': {
-                    'required': {
-                        'message': 'Please enter your password!'
+                password: {
+                    required: {
+                        message: 'Please enter your password!'
                     }
                 }
             }
         });
-
-
 
 
     });
