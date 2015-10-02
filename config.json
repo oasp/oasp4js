@@ -4,7 +4,8 @@
         "dist": "dist",
         "src": "app",
         "testSrc": "app",
-        "testOutput": "test"
+        "testOutput": "test",
+        "docs": "docs"
     },
     "styles": {
         "type": "less",

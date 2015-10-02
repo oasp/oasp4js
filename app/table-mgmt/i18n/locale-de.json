@@ -1,6 +1,23 @@
 {
     "TABLE_MGMT": {
+        "HEADER": "Tabellen",
         "SUBMIT": "Speichern",
-        "CANCEL":"Abbrechen"
+        "CANCEL": "Abbrechen",
+        "DETAILS": "Details zum Tabelle #",
+        "ORDER": "Bestellen",
+        "TABLE": {
+            "STATUS": "Status:",
+            "STATE": "Zustand:",
+            "POSITIONS": "Sortieren Position:"
+        },
+        "NO_ORDER": "Keine Bestellung zur Zeit in dieser Tabelle zugeordnet.",
+        "NEW_ORDER": "Vergeben Sie einen neuen Auftrag ...",
+        "RESERVE": "Reserve",
+        "CANCEL_RESERVATION": "Reservierung aufheben",
+        "OCCUPY": "Besetzen",
+        "EDIT": "Bearbeiten",
+        "FREE": "Frei",
+        "ADD": "+Hinzufügen",
+        "REMOVE": "Herausnehmen"
     }
 }

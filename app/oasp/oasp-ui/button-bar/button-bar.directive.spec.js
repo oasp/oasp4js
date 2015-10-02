@@ -21,7 +21,7 @@ describe('button-bar directive specs', function () {
         element = $compile('<div data-button-bar="" data-button-defs="buttonDefs"></div>')($rootScope);
         $rootScope.$digest();
         // then
-        renderedButtonLabel = element.find('button').eq(0).text();
+        renderedButtonLabel = element.find('span').eq(0).text();
         expect(renderedButtonLabel.trim()).toEqual(buttonLabel);
     });
     it('deactivates a button when isNotActive function returns true', function () {
@@ -36,7 +36,7 @@ describe('button-bar directive specs', function () {
             }
         ];
         // when
-        element = $compile('<div data-button-bar="" data-button-defs="buttonDefs"></div>')($rootScope);
+        element = $compile('<div data-button-bar data-button-defs="buttonDefs"></div>')($rootScope);
         $rootScope.$digest();
         // then
         expect(element.find('button').is(':disabled')).toBeTruthy();

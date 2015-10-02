@@ -13,16 +13,17 @@
             <tr>
                 <th field-name="number" display-name="Number" cell-width="7em"></th>
                 <th field-name="state" display-name="State"></th>
-                <th field-name="waiter" display-name="waiter"></th>
+                <th field-name="waiter" display-name="Waiter"></th>
             </tr>
             </thead>
         </table>
 
-        <button-bar button-defs="buttonDefs"></button-bar>
+        <button-bar is-label-translatable="true" button-defs="buttonDefs"></button-bar>
         <br>
         <br>
         <br>
-        <pagination total-items="totalItems" items-per-page="numPerPage" ng-model="currentPage" num-pages="numPages" class="pagination-sm" boundary-links="true" rotate="false" max-size="maxSize"></pagination>
+        <pagination total-items="totalItems" items-per-page="numPerPage" ng-model="currentPage" num-pages="numPages"
+                    class="pagination-sm" boundary-links="true" rotate="false" max-size="maxSize"></pagination>
     </div>
 </div>
 </body>

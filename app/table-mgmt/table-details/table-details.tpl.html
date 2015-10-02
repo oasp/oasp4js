@@ -1,40 +1,36 @@
 <div>
     <div class="modal-header">
-        <h3 class="modal-title">Details for Table #<span data-ng-bind="TDC.table.number"></span></h3>
+        <h3 class="modal-title" translate>TABLE_MGMT.DETAILS<span data-ng-bind="TDC.table.number"></span></h3>
     </div>
     <div class="modal-body">
         <form name="forms.tableForm" novalidate>
 
             <div class="row">
                 <div class="col-md-12">
-                    <label>Status:</label>&nbsp;
+                    <label translate>TABLE_MGMT.TABLE.STATUS</label>&nbsp;
                     <span data-ng-bind="TDC.table.state"></span>
                 </div>
             </div>
-
-
             <div class="page-header">
-                <h4>Order</h4>
+                <h4 translate>TABLE_MGMT.ORDER</h4>
             </div>
-
             <div class="row" data-ng-show="TDC.noOrderAssigned()">
                 <div class="col-md-12">
-                    <div class="alert alert-info" role="alert">
-                        No order currently assigned to this table. <a data-ng-click="TDC.assignNewOrder()">Assign a new
-                        order...</a>
+                    <div class="alert alert-info" role="alert"> {{'TABLE_MGMT.NO_ORDER' | translate}}
+                        <a data-ng-click="TDC.assignNewOrder()">{{'TABLE_MGMT.NEW_ORDER' | translate}}</a>
                     </div>
                 </div>
             </div>
             <div data-ng-show="TDC.orderAssigned()">
                 <div class="row">
                     <div class="col-md-12">
-                        <label>State:</label>&nbsp;
+                        <label translate>TABLE_MGMT.TABLE.STATE</label>&nbsp;
                         <span data-ng-bind="TDC.table.order.orderState"></span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <label>Order Positions:</label>&nbsp;
+                        <label translate>TABLE_MGMT.POSITION</label>&nbsp;
                     </div>
                     <div class="col-md-4">
                         <ui-select ng-model="TDC.model.selected">
@@ -46,7 +42,9 @@
                         </ui-select>
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-sm btn-primary" data-ng-click="TDC.addPosition(TDC.model.selected)">+Add</button>
+                        <button class="btn btn-sm btn-primary" data-ng-click="TDC.addPosition(TDC.model.selected)"
+                                translate>TABLE_MGMT.ADD
+                        </button>
                         &nbsp;
                     </div>
                 </div>
@@ -68,7 +66,7 @@
                             </thead>
                         </table>
 
-                        <button-bar button-defs="TDC.buttonDefs"></button-bar>
+                        <button-bar is-label-translatable="true" button-defs="TDC.buttonDefs"></button-bar>
                     </div>
                 </div>
                 <pagination total-items="TDC.totalItems" items-per-page="TDC.numPerPage" ng-model="TDC.currentPage"

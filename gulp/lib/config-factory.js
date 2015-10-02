@@ -7,7 +7,7 @@ var configFactory = function (externalConfig) {
     var modulesConfig = moduleParser.parseModules(externalConfig.paths.src, externalConfig.libRegexp || '');
     var pathsBuilder = builderFactory(externalConfig.paths, modulesConfig.modules);
     var currentOutput = function () {
-        return  isBuildForProd() ? externalConfig.paths.dist : externalConfig.paths.tmp;
+        return isBuildForProd() ? externalConfig.paths.dist : externalConfig.paths.tmp;
     };
     return {
         paths: externalConfig.paths,
@@ -21,7 +21,7 @@ var configFactory = function (externalConfig) {
             return externalConfig.paths.testOutput;
         },
         outputs: function () {
-            return [externalConfig.paths.dist, externalConfig.paths.tmp, externalConfig.paths.testOutput];
+            return [externalConfig.paths.dist, externalConfig.paths.tmp, externalConfig.paths.testOutput, externalConfig.paths.docs];
         },
         proxy: {
             url: function () {
