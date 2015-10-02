@@ -3,6 +3,7 @@
             data-ng-click="onButtonClick(buttonDef)"
             data-ng-disabled="isButtonDisabled(buttonDef)"
             class="btn btn-sm btn-default">
-        <span data-ng-bind="buttonDef.label"></span>
+        <span data-ng-hide="isLabelTranslatable" data-ng-bind="buttonDef.label"></span>
+        <span data-ng-show="isLabelTranslatable" translate>{{buttonDef.label}}</span>
     </button>
 </div>

@@ -6,6 +6,7 @@
  * @restrict EA
  * @scope
  * @property  {object} buttonDefs
+ * @property  {object} isLabelTranslatable
  */
 angular.module('oasp.oaspUi.buttonBar')
     .directive('buttonBar', function () {
@@ -15,7 +16,8 @@ angular.module('oasp.oaspUi.buttonBar')
             replace: true,
             templateUrl: 'oasp/oasp-ui/button-bar/button-bar.html',
             scope: {
-                buttonDefs: '='
+                buttonDefs: '=',
+                isLabelTranslatable: '@'
             },
             link: function ($scope) {
                 $scope.onButtonClick = function (buttonDef) {

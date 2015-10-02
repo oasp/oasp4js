@@ -8,7 +8,7 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
         tdcSelf.table = [];
 
         tables.loadTable($stateParams.tableId)
-            .then(function(table){
+            .then(function (table) {
                 tdcSelf.table = table;
             });
         sales.loadOrderForTable($stateParams.tableId)
@@ -82,7 +82,7 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
             });
         };
 
-        tdcSelf.goToSearchView = function(){
+        tdcSelf.goToSearchView = function () {
             $state.go('tableMgmt.search');
         };
 
@@ -101,7 +101,7 @@ angular.module('app.table-mgmt').controller('TableDetailsCntl',
 
         tdcSelf.buttonDefs = [
             {
-                label: 'Remove',
+                label: 'TABLE_MGMT.REMOVE',
                 onClick: function () {
                     tdcSelf.model.order.positions.splice(tdcSelf.model.order.positions.indexOf(tdcSelf.selectedItems[0]), 1);
                     tdcSelf.selectedItems.length = 0;

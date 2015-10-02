@@ -3,18 +3,19 @@
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"
                     data-ng-init="navCollapsed = true" data-ng-click="navCollapsed = !navCollapsed">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only" translate>OASP.TOGGLE_NAV</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Restaurant Sample Application</a>
+            <a class="navbar-brand" href="#" translate>OASP.TITLE</a>
         </div>
         <div class="collapse navbar-collapse" data-ng-class="{'in':!navCollapsed}">
             <ul class="ng-cloak nav navbar-nav" data-ng-show="currentUser.isLoggedIn()">
-                <li><a href="#table-mgmt/table-search">Tables</a></li>
+                <li><a href="#table-mgmt/table-search" translate>OASP.TABLES</a></li>
                 <li><a href="#/sales-mgmt/cook-positions"
-                       data-ng-show="currentUser.getUserName() === 'Carl Cook' || currentUser.getUserName() === 'Charly Chief'">Kitchen</a>
+                       data-ng-show="currentUser.getUserName() === 'Carl Cook' || currentUser.getUserName() === 'Charly Chief'"
+                       translate>OASP.KITCHEN</a>
                 </li>
             </ul>
             <div class="ng-cloak navbar-right" data-ng-show="currentUser.isLoggedIn()">

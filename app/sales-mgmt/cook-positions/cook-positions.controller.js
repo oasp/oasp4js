@@ -29,7 +29,7 @@ angular.module('app.sales-mgmt')
         };
         $scope.buttonDefs = [
             {
-                label: 'Done',
+                label: 'SALES_MGMT.DONE',
                 onClick: function () {
                     if ($scope.assignedPositionSelected()) {
                         globalSpinner.decorateCallOfFunctionReturningPromise(function () {
@@ -42,7 +42,7 @@ angular.module('app.sales-mgmt')
                 }
             },
             {
-                label: 'Reject',
+                label: 'SALES_MGMT.REJECT',
                 onClick: function () {
                     if ($scope.assignedPositionSelected()) {
                         globalSpinner.decorateCallOfFunctionReturningPromise(function () {
