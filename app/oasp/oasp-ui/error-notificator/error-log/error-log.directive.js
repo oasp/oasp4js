@@ -1,6 +1,8 @@
 /**
+ * @ngdoc directive
  * @module oasp.oaspUi.errorNotificator
- * @directive errorLog
+ * @name errorLog
+ * @restrict EA
  *
  * Directive that provides an html template for error log collection.
  */

@@ -1,11 +1,11 @@
 /**
  * @module oasp.oaspUi.errorNotificator
- * @controller errorLogCntl
+ * @name errorLogCntl
+ * @requires $scope
+ * @requires errorNotificator.oaspErrorNotificatorService
+ * @property errorLog error log
  *
- * Controller that simply provides error log collection using {@link oaspErrorNotificatorService}.
- *
- * @field errorLog
- *          holds actual error log collection
+ * Controller that simply provides error log collection using {@link app/oasp/oasp-ui/error-notificator/error-notificator.service.js}.
  */
 angular.module('oasp.oaspUi.errorNotificator')
     .controller('errorLogCntl', function ($scope, oaspErrorNotificatorService) {
