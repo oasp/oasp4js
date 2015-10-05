@@ -4,6 +4,7 @@
         "LANGUAGE": "Language",
         "LOG_OFF": "Log off",
         "PAGE_NOT_FOUND": "Page Not Found!",
+        "ERROR_LOG": "Error Log",
         "PAGE_NOT_FOUND_DETAILS": "The page you trying to reach could not be found.",
         "TOGGLE_NAV": "Toggle navigation",
         "TITLE": "Restaurant Sample Application",
