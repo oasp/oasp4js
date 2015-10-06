@@ -73,7 +73,7 @@ angular.module('oasp.validation')
                     }
                     newErrors.push({
                         text: customErrorDef ? customErrorDef.msg : ('Unknown: ' + errorProp),
-                        params: customErrorDef ? customErrorDef.params : {}
+                        params: customErrorDef ? customErrorDef.params || {} : {}
                     });
                 }
             });

@@ -17,6 +17,7 @@
                 "EMAIL_MAX_LENGTH": "Email exceeds {{number}} characters, please provide a shorter one.",
                 "DOMAIN_MAX_LENGTH": "Domain name exceeds {{number}} characters, please provide a shorter one.",
                 "DOMAIN_VALID": "Provided domain format is not correct, please have a look at placeholder example",
+                "DOMAIN_DUPLICATE": "Provided domain is already present on the list",
                 "SERVER": {
                     "PENDING": "Pending for response ...",
                     "NO_REQUESTS": "No pending requests.",

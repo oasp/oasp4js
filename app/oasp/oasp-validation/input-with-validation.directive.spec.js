@@ -34,7 +34,7 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
 // --------- HELPERS ---------
 
     function compileAndRun() {
-        var directiveElem = $compile(angular.element(template))($scope);
+        var directiveElem = $compile(template)($scope);
         $scope.$digest();
         $validationScope = directiveElem.find('div.input-with-validation-messages').scope();
         return directiveElem;
@@ -125,7 +125,7 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
 
             //when
             var element = compileAndRun();
-            $scope.myTestForm.requiredField.$touched = true;
+            $scope.myTestForm.requiredField.$setTouched();
 
             // then
             expectValid();
@@ -138,7 +138,7 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
 
             //when
             var element = compileAndRun();
-            $scope.myTestForm.requiredField.$touched = true;
+            $scope.myTestForm.requiredField.$setTouched();
 
             // then
             expectSingleErrorAndReportInvalid();
@@ -184,7 +184,7 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
 
             //when
             var element = compileAndRun();
-            $scope.myTestForm.requiredFieldNotValdr.$touched = true;
+            $scope.myTestForm.requiredFieldNotValdr.$setTouched();
 
             // then
             expectValid();
@@ -197,7 +197,7 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
 
             //when
             var element = compileAndRun();
-            $scope.myTestForm.requiredFieldNotValdr.$touched = true;
+            $scope.myTestForm.requiredFieldNotValdr.$setTouched();
 
             // then
             expectSingleErrorAndReportInvalid();
@@ -226,7 +226,7 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
                 '</form>';
             //when
             var element = compileAndRun();
-            $scope.myTestForm.minLengthFieldNotValdr.$touched = true;
+            $scope.myTestForm.minLengthFieldNotValdr.$setTouched();
 
             // then
             expectSingleErrorAndReportInvalid();
@@ -277,7 +277,7 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
 
             //when
             var element = compileAndRun();
-            $scope.myTestForm.sizeRangeValdrField.$touched = true;
+            $scope.myTestForm.sizeRangeValdrField.$setTouched();
 
             // then
             expectSingleErrorAndReportInvalid();
@@ -298,7 +298,7 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
 
             //when
             var element = compileAndRun();
-            $scope.myTestForm.minMaxRangeValdrField.$touched = true;
+            $scope.myTestForm.minMaxRangeValdrField.$setTouched();
             expectSingleErrorAndReportInvalid();
             expect($validationScope.items()[0].text).toEqual(sizeConstraint.myTestType.minMaxRangeValdrField.minLength.message);
             expect($validationScope.items()[0].params).toEqual({number: 30});
@@ -333,8 +333,8 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
                 $sizeRangeValidationScope = validationElem.eq(1).scope();
 
 
-            $scope.myTestForm.minMaxRangeValdrField.$touched = true;
-            $scope.myTestForm.sizeRangeValdrField.$touched = true;
+            $scope.myTestForm.minMaxRangeValdrField.$setTouched();
+            $scope.myTestForm.sizeRangeValdrField.$setTouched();
 
 
 
@@ -377,7 +377,7 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
 
             //when
             var element = compileAndRun();
-            $scope.myTestForm.requiredField.$touched = true;
+            $scope.myTestForm.requiredField.$setTouched();
 
             // then
             expect($validationScope.isInputInvalid()).toBeTruthy();
@@ -395,7 +395,7 @@ describe('Module: \'oasp.validation\', directive: \'with-validation-messages\'',
 
             //when
             var element = compileAndRun();
-            $scope.myTestForm.requiredField.$touched = true;
+            $scope.myTestForm.requiredField.$setTouched();
             expect($validationScope.items().length).toEqual(2);
             $scope.modelVal = 'Now this value is valid (not empty)';
             $scope.$digest();

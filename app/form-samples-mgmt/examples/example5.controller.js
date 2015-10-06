@@ -38,7 +38,7 @@ angular.module('app.form-samples-mgmt')
                     msg: 'OASP.VALIDATION.SHOWCASE.DOMAIN_VALID'
                 },
                 notDuplicate: {
-                    msg: 'OASP.VALIDATION.SHOWCASE.DOMAIN_VALID'
+                    msg: 'OASP.VALIDATION.SHOWCASE.DOMAIN_DUPLICATE'
                 }
             },
             asyncEmail: {
@@ -73,8 +73,8 @@ angular.module('app.form-samples-mgmt')
 
         //----- Manage blacklist ----
 
-        this.addToBlacklist = function () {
-            self.forbiddenDomains.push(self.forbiddenDomainCandidate);
+        this.addToBlacklist = function (domainToForbid) {
+            self.forbiddenDomains.push(domainToForbid);
             self.forbiddenDomainCandidate = undefined;
         };
 

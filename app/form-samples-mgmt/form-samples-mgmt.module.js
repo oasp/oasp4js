@@ -1,4 +1,4 @@
-angular.module('app.form-samples-mgmt', ['oasp.validation', 'oasp.oaspI18n', 'app.form-samples-mgmt.templates'])
+angular.module('app.form-samples-mgmt', ['oasp.validation', 'oasp.oaspI18n', 'ui.router', 'app.form-samples-mgmt.templates'])
     .config(function ($stateProvider, oaspTranslationProvider, $translatePartialLoaderProvider) {
         'use strict';
 

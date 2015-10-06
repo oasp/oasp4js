@@ -9,7 +9,7 @@ angular.module('app.form-samples-mgmt')
                 },
                 maxlength: {
                     msg: 'OASP.VALIDATION.SHOWCASE.USER_MAX_LENGTH',
-                    param: {
+                    params: {
                         number: 20
                     }
                 }
