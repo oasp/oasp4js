@@ -29,15 +29,28 @@
                                ui-validate-async="{forbidden : 'E3C.isAllowedOnServer($value, example3Form.asyncEmail)' }"
                                placeholder="{{'OASP.VALIDATION.SHOWCASE.EXAMPLE3.EMAIL.PLACEHOLDER' | translate}}">
                     </div>
-                    <span ng-show="example5Form.asyncEmail.$pending">
+
+
+                    <span ng-show="E3C.waitingForServer">
                         {{'OASP.VALIDATION.SHOWCASE.SERVER.PENDING' | translate}}
                     </span>
-                    <span ng-show="!example5Form.asyncEmail.$pending">
+                    <span ng-show="!E3C.waitingForServer">
                         {{'OASP.VALIDATION.SHOWCASE.SERVER.NO_REQUESTS' | translate}}
                     </span>
-                    <span ng-show="!example5Form.asyncEmail.$pending && example5Form.asyncEmail.$touched">
+                    <span ng-show="!E3C.waitingForServer && example3Form.asyncEmail.$touched">
                         {{'OASP.VALIDATION.SHOWCASE.SERVER.COMPLETED' | translate}}
                     </span>
+
+                    <!-- with Angular version > 1.4.1 you can use $pending on a field (please check the docs for async validation)  -->
+                    <!--span ng-show="example3Form.asyncEmail.$pending">
+                        {{'OASP.VALIDATION.SHOWCASE.SERVER.PENDING' | translate}}
+                    </span>
+                    <span ng-show="!example3Form.asyncEmail.$pending">
+                        {{'OASP.VALIDATION.SHOWCASE.SERVER.NO_REQUESTS' | translate}}
+                    </span>
+                    <span ng-show="!example3Form.asyncEmail.$pending && example3Form.asyncEmail.$touched">
+                        {{'OASP.VALIDATION.SHOWCASE.SERVER.COMPLETED' | translate}}
+                    </span-->
                 </div>
 
             </form>

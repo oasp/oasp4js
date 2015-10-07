@@ -95,20 +95,38 @@ angular.module('app.form-samples-mgmt')
         };
 
         //## email ##
-        this.isAllowedOnServer = function ($value, formField) {
+        // Angular version >= 1.4.1
+        //this.isAllowedOnServer = function ($value, formField) {
+        //    return $q(function (resolve, reject) {
+        //        $timeout(function afterTimeout(val) {
+        //            if (val) {
+        //                formField.$touched = true;
+        //            }
+        //            if (isForbiddenDomain(val)) {
+        //                reject();
+        //            } else {
+        //                resolve();
+        //            }
+        //        }, 1500, false, $value);
+        //    });
+        //};
 
-            return $q(function (resolve, reject) {
-                $timeout(function afterTimeout(val) {
-                    if (val) {
-                        formField.$touched = true;
-                    }
-                    if (isForbiddenDomain(val)) {
-                        reject();
-                    } else {
-                        resolve();
-                    }
-                }, 1500, false, $value);
-            });
+        this.isAllowedOnServer = function ($value, formField) {
+            var deferred = $q.defer();
+            self.waitingForServer = true;
+            $timeout(function afterTimeout() {
+                if ($value) {
+                    formField.$touched = true;
+                }
+                if (isForbiddenDomain($value)) {
+                    self.waitingForServer = false;
+                    deferred.reject();
+                } else {
+                    self.waitingForServer = false;
+                    deferred.resolve();
+                }
+            }, 1500, false);
+            return deferred.promise;
         };
 
     });
