@@ -29,7 +29,7 @@ angular.module('oasp.validation')
             return hasError;
         }
 
-        function isPropertyForTranslation(property) {
+        function isTranslationParameter(property) {
             return VALDR_PROPERTIES.indexOf(property) === -1;
         }
 
@@ -40,7 +40,7 @@ angular.module('oasp.validation')
                 var params = {};
                 if (hasValdrErrorMessage(valdrError.validator, formItem)) {
                     angular.forEach(valdrError, function (val, errorProp) {
-                        if (isPropertyForTranslation(errorProp)) {
+                        if (isTranslationParameter(errorProp)) {
                             params[errorProp] = valdrError[errorProp];
                         }
                     });
@@ -73,7 +73,7 @@ angular.module('oasp.validation')
                     }
                     newErrors.push({
                         text: customErrorDef ? customErrorDef.msg : ('Unknown: ' + errorProp),
-                        params: customErrorDef ? customErrorDef.params : {}
+                        params: customErrorDef ? customErrorDef.params || {} : {}
                     });
                 }
             });
@@ -181,7 +181,7 @@ angular.module('oasp.validation')
                     if (angular.isUndefined(getFormItem())) {
                         return false;
                     }
-                    return (getFormItem().$touched || form.$submitted) && !getFormItem().$valid;
+                    return (getFormItem().$touched || form.$submitted) && getFormItem().$valid === false;
                 };
 
                 scope.items = function () {

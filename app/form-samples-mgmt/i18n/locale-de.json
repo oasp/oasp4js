@@ -1,0 +1,82 @@
+{
+    "OASP": {
+        "VALIDATION": {
+            "SHOWCASE": {
+                "DEMO_HEADER": "Demo page for OASP localized validation directives.",
+                "INTRO_PART1": "This page was created to provide a set of examples that can be applied into project specific domain/business requirements. Please note that OASP validation directives are based on:",
+                "INTRO_PART2": "so it might be necessary to get familiar with some basics of those libraries (especially valdr rules configurations).",
+
+
+                "USER_REQUIRED": "Please enter a user name, it is an obligatory field.",
+                "USER_MAX_LENGTH": "User name exceeds {{number}} characters, please provide a shorter one.",
+                "PSWD_REQUIRED": "Please enter a password, it is an obligatory field.",
+                "PSWD_EQUAL": "Passwords should be equal.",
+                "EMAIL_REQUIRED": "Please enter an email, it is an obligatory field.",
+                "EMAIL_FORBIDDEN": "Please provide an email from domain other than '{{domain}}'",
+                "EMAIL_FORMAT": "Provided input is not a valid email",
+                "EMAIL_MAX_LENGTH": "Email exceeds {{number}} characters, please provide a shorter one.",
+                "DOMAIN_MAX_LENGTH": "Domain name exceeds {{number}} characters, please provide a shorter one.",
+                "DOMAIN_VALID": "Provided domain format is not correct, please have a look at placeholder example",
+                "DOMAIN_DUPLICATE": "Provided domain is already present on the list",
+                "SERVER": {
+                    "PENDING": "Pending for response ...",
+                    "NO_REQUESTS": "No pending requests.",
+                    "COMPLETED": " Validation completed."
+                },
+                "EXAMPLE": {
+                    "USER": {
+                        "LABEL":"User name:",
+                        "PLACEHOLDER":"Enter user name here"
+                    },
+                    "PASSWORD": {
+                        "LABEL": "Password:",
+                        "PLACEHOLDER": "Enter password here"
+                    }
+                },
+                "EXAMPLE1": {
+                    "NAME": "Example 1",
+                    "DESCRIPTION": "Here only valdr validation is being used. Both fields are considered to be required."
+                },
+                "EXAMPLE2": {
+                    "NAME": "Example 2",
+                    "DESCRIPTION": " In this example only angular validation is being used. Both fields are considered to be required.",
+                    "EXPLANATION": "Angular default validators are treated by 'with-validation-messages' directive as custom ones, because those require custom definition of message repository for each field. Only valdr validators are considered not to be custom, as those are configured globally."
+                },
+                "EXAMPLE3": {
+                    "NAME": "Example 3",
+                    "DESCRIPTION": "In this example 'ui-validator' directive is used. It basically works in a way similar to angular validators, but 'ui-validator' provides additional flexibility for defining validators.",
+                    "HINT": "If you want to see the validator in action, please provide any email from '@forbidden.com' domain.",
+                    "EMAIL": {
+                        "LABEL": "Email:",
+                        "LABEL_ASYNC": "Email async:",
+                        "PLACEHOLDER": "Try '@forbidden.com' domain"
+                    }
+                },
+                "EXAMPLE4": {
+                    "NAME": "Example 4",
+                    "DESCRIPTION": "Example shows simple cross field validation with usage of 'ui-validate-watch'",
+                    "PASSWORD": {
+                        "LABEL": "Password:",
+                        "PLACEHOLDER": "Password",
+                        "CONFIRM_PLACEHOLDER": "Confirm password"
+                    }
+                },
+                "EXAMPLE5": {
+                    "NAME": "Example 5",
+                    "DESCRIPTION": "Now, let`s have some fun and mix it all together.",
+                    "FORBIDDEN_DOMAIN": {
+                        "LABEL": "Enter forbidden domains:",
+                        "PLACEHOLDER": "Example: @forbidden.com",
+                        "ADD_BLACKLIST": "Add blacklisted"
+
+                    },
+                    "EMAIL": {
+                        "LABEL": "Email to validate:",
+                        "PLACEHOLDER": "Please enter a valid email from allowed domain.",
+                        "ADD_BLACKLIST": "Add to blacklist"
+                    }
+                }
+            }
+        }
+    }
+}
