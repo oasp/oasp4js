@@ -11,6 +11,7 @@
         "TABLES": "Tische",
         "KITCHEN": "Küche",
         "LOADING": "Landung...",
-        "CORP": "&copy; OASP 2015"
+        "CORP": "&copy; OASP 2015",
+        "ACCESS_DENIED": "Zugriff verweigert. Jede Rolle der {{requestedRoles}} erforderlich, um diesen Zustand zu gehen"
     }
 }
