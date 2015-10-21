@@ -7,7 +7,8 @@
  * @requires app.main
  * @requires table-mgmt.templates
  */
-angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main', 'app.table-mgmt.templates'], function ($stateProvider, oaspTranslationProvider) {
+angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main', 'app.table-mgmt.templates'])
+    .config(function ($stateProvider, oaspTranslationProvider) {
     'use strict';
     oaspTranslationProvider.enableTranslationForModule('table-mgmt');
 
