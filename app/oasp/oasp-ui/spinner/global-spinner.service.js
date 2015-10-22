@@ -36,16 +36,19 @@ angular.module('oasp.oaspUi.spinner')
              */
             showOnRouteChangeStartAndHideWhenComplete: function () {
                 /*jslint unparam: true*/
-                $rootScope.$on('$routeChangeStart', function (event, currentRoute) {
-                    if (currentRoute.resolve) {
+                $rootScope.$on('$stateChangeStart', function (event, toState/*toParams, fromState, fromParams*/) {
+                    if (toState.resolve) {
                         that.show();
                     }
                 });
                 /*jslint unparam: false*/
-                $rootScope.$on('$routeChangeSuccess', function () {
+                $rootScope.$on('$stateChangeSuccess', function () {
                     that.hide();
                 });
-                $rootScope.$on('$routeChangeError', function () {
+                $rootScope.$on('$stateChangeError', function () {
+                    that.hide();
+                });
+                $rootScope.$on('$stateNotFound', function () {
                     that.hide();
                 });
             },
