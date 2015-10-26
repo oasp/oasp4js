@@ -38,4 +38,18 @@ angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main'
         controller: 'TableDetailsCntl',
         controllerAs: 'TDC'
     });
-});
+})
+    .run(['$rootScope', '$state', 'appContext', function ($rootScope, $state, appContext) {
+        var bypass;
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+            if (bypass) {
+                return;
+            }
+            event.preventDefault();
+            appContext.getCurrentUser().then(function () {
+                bypass = true;
+                $state.go(toState, toParams);
+            });
+        });
+    }]
+);

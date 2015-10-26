@@ -4,7 +4,7 @@
  * @module app.table-mgmt
  * @requires table-mgmt.tableManagementRestService
  */
-angular.module('app.table-mgmt').factory('tables', function (tableManagementRestService,appContext,$q) {
+angular.module('app.table-mgmt').factory('tables', function (tableManagementRestService) {
     'use strict';
     var paginatedTables = {};
     return {
@@ -18,17 +18,10 @@ angular.module('app.table-mgmt').factory('tables', function (tableManagementRest
          * @return {promise} promise
          */
         getPaginatedTables: function (pagenumber, pagesize) {
-            var deferred = $q.defer();
-            appContext.getCurrentUser().then(function(){
-                tableManagementRestService.getPaginatedTables(pagenumber, pagesize).then(function (response) {
-                    angular.copy(response.data, paginatedTables);
-                    deferred.resolve(paginatedTables);
-                }, function (reject) {
-                    deferred.reject(reject);
-                });
+            return tableManagementRestService.getPaginatedTables(pagenumber, pagesize).then(function (response) {
+                angular.copy(response.data, paginatedTables);
+                return paginatedTables;
             });
-
-            return deferred.promise;
         },
         /**
          * @ngdoc method
