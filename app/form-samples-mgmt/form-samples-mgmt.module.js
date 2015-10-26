@@ -23,6 +23,9 @@ angular.module('app.form-samples-mgmt', ['oasp.validation', 'oasp.oaspI18n', 'ui
                         }
                         return $translate.use();
                     }
+                },
+                ncyBreadcrumb: {
+                    label: 'Validation showcase'
                 }
             }
         );

@@ -9,15 +9,19 @@
  * @requires oasp.oaspI18n
  * @requires ui.bootstrap
  */
-angular.module('app.main', ['ui.router', 'oasp.oaspUi', 'oasp.oaspSecurity', 'app.main.templates', 'oasp.validation', 'oasp.oaspI18n', 'ui.bootstrap'])
+angular.module('app.main', ['ui.router', 'ncy-angular-breadcrumb', 'oasp.oaspUi', 'oasp.oaspSecurity', 'app.main.templates', 'oasp.validation', 'oasp.oaspI18n', 'ui.bootstrap'])
     .constant('SIGN_IN_DLG_PATH', '/main/sign-in')
     .constant('ROLES', {
         COOK: 'COOK',
         WAITER: 'WAITER'
     })
-    .config(function (SIGN_IN_DLG_PATH, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, oaspTranslationProvider, valdrProvider) {
+    .config(function (SIGN_IN_DLG_PATH, $breadcrumbProvider, $stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, oaspTranslationProvider, valdrProvider) {
         'use strict';
 
+        $breadcrumbProvider.setOptions({
+            includeAbstract: true,
+            templateUrl: 'main/layout/breadcrumb.html'
+        });
 
         // --------- Routing ---------
 
