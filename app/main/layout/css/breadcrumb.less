@@ -1,0 +1,94 @@
+#breadcrumb {
+    list-style: none;
+    display: inline-block;
+    margin-top: 10px;
+    padding: 0px;
+    .icon {
+        font-size: 14px;
+    }
+    li {
+        float: left;
+        a {
+            color: #FFF;
+            display: block;
+            background: #3498db;
+            text-decoration: none;
+            position: relative;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 10px 0 5px;
+            text-align: center;
+            margin-right: 23px;
+        }
+        &:nth-child(even) {
+            a {
+                background-color: #2980b9;
+                &:before {
+                    border-color: #2980b9;
+                    border-left-color: transparent;
+                }
+                &:after {
+                    border-left-color: #2980b9;
+                }
+            }
+        }
+        &:first-child {
+            a {
+                padding-left: 15px;
+                border-radius: 4px 0 0 4px;
+                &:before {
+                    border: none;
+                }
+            }
+        }
+        &:last-child {
+            a {
+                padding-right: 15px;
+                border-radius: 0 4px 4px 0;
+                &:after {
+                    border: none;
+                }
+            }
+        }
+        a {
+            &:before, &:after {
+                content: "";
+                position: absolute;
+                top: 0;
+                border: 0 solid #3498db;
+                border-width: 20px 10px;
+                width: 0;
+                height: 0;
+            }
+            &:before {
+                left: -20px;
+                border-left-color: transparent;
+            }
+            &:after {
+                left: 100%;
+                border-color: transparent;
+                border-left-color: #3498db;
+            }
+            &:hover {
+                background-color: #1abc9c;
+                &:before {
+                    border-color: #1abc9c;
+                    border-left-color: transparent;
+                }
+                &:after {
+                    border-left-color: #1abc9c;
+                }
+            }
+            &:active {
+                background-color: #16a085;
+                &:before {
+                    border-color: #16a085;
+                    border-left-color: transparent;
+                }
+                &:after {
+                    border-left-color: #16a085;
+                }
+            }
+        }
+    }
+}

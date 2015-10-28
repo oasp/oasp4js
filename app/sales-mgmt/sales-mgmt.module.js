@@ -14,7 +14,10 @@ angular.module('app.sales-mgmt', ['app.main', 'app.offer-mgmt', 'app.sales-mgmt.
         $stateProvider.state('salesMgmt', {
             abstract: true,
             url: '/sales-mgmt',
-            template: '<ui-view/>'
+            template: '<ui-view/>',
+            ncyBreadcrumb: {
+                label: 'Sales Management'
+            }
         });
 
         $stateProvider.state('salesMgmt.cookPositions',
@@ -28,6 +31,9 @@ angular.module('app.sales-mgmt', ['app.main', 'app.offer-mgmt', 'app.sales-mgmt.
                         currentPositions: ['positions', function (positions) {
                             return positions.get();
                         }]
+                    },
+                    ncyBreadcrumb: {
+                        label: 'Cook Positions'
                     }
                 }
             )

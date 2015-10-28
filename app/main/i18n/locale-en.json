@@ -11,6 +11,7 @@
         "TABLES": "Tables",
         "KITCHEN": "Kitchen",
         "LOADING": "Loading ...",
-        "CORP": "&copy; OASP 2015"
+        "CORP": "&copy; OASP 2015",
+        "ACCESS_DENIED": "Access denied. Any role of {{requestedRoles}} required to go to this state"
     }
 }

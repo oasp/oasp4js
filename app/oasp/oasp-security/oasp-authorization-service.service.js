@@ -43,7 +43,7 @@ angular.module('oasp.oaspSecurity')
                     }
                 };
             },
-            $get: function ($q, $log, $injector) {
+            $get: function ($q, $log, $injector, growl, $filter) {
                 var getAppContextService = function () {
                         return $injector.get(config.appContextServiceName);
                     },
@@ -80,14 +80,13 @@ angular.module('oasp.oaspSecurity')
                             if (authorized) {
                                 deferredAuthorizationCheck.resolve(true);
                             } else {
-                                $log.warn('Access denied. Any role of \'' + requestedRoles + '\' required to go to this state');
                                 deferredAuthorizationCheck.reject();
+                                growl.warning($filter('translate')('OASP.ACCESS_DENIED', {requestedRoles: requestedRoles}));
                             }
                         });
 
                         return deferredAuthorizationCheck.promise;
                     },
-
                     /**
                      * @ngdoc method
                      * @name oaspSecurity.oaspAuthorizationService#userHasAnyRole

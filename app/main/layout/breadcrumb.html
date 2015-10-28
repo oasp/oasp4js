@@ -1,0 +1,5 @@
+<ul id="breadcrumb">
+    <li ng-repeat="step in steps" ng-class="{active: $last}" ng-switch="$last || !!step.abstract"><a
+        ng-switch-when="false" href="{{step.ncyBreadcrumbLink}}"><span class="icon icon-beaker"> </span>{{step.ncyBreadcrumbLabel}}</a><a
+        ng-switch-when="true"><span class="icon icon-beaker"> </span>{{step.ncyBreadcrumbLabel}}</a></li>
+</ul>

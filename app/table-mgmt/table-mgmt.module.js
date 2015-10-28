@@ -14,7 +14,10 @@ angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main'
     $stateProvider.state('tableMgmt', {
         abstract: true,
         url: '/table-mgmt',
-        template: '<ui-view/>'
+        template: '<ui-view/>',
+        ncyBreadcrumb: {
+            label: 'Table Management'
+        }
     });
 
     $stateProvider.state('tableMgmt.search', {
@@ -28,6 +31,9 @@ angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main'
                     return paginatedTables;
                 });
             }]
+        },
+        ncyBreadcrumb: {
+            label: 'Search'
         }
     });
 
@@ -35,6 +41,10 @@ angular.module('app.table-mgmt', ['app.offer-mgmt', 'app.sales-mgmt', 'app.main'
         url: '/table-details/:tableId',
         templateUrl: 'table-mgmt/table-details/table-details.html',
         controller: 'TableDetailsCntl',
-        controllerAs: 'TDC'
+        controllerAs: 'TDC',
+        ncyBreadcrumb: {
+            parent:'tableMgmt.search',
+            label: 'Details'
+        }
     });
 });
