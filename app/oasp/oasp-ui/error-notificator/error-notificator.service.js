@@ -1,8 +1,8 @@
 /**
  * @ngdoc service
- * @name oaspErrorNotificatorService
+ * @name errorNotificator.oaspErrorNotificatorService
  * @module oasp.oaspUi.errorNotificator
- *
+ * @description
  * This service is desired to provide an features to run an error notification log called error log.
  *
  * You can log a new error notifications, set a limit of log size and retrieve an error log as a collection.
@@ -38,10 +38,9 @@ angular.module('oasp.oaspUi.errorNotificator')
         return {
             /**
              * @ngdoc method
-             * @name setErrorLogLimit
-             * @methodOf oaspErrorNotificatorService
-             * Sets an error log size limit.
-             * @param {number} limit represents a new error log size limit
+             * @name errorNotificator.oaspErrorNotificatorService#setErrorLogLimit
+             * @methodOf errorNotificator.oaspErrorNotificatorService
+             * @param {Number} limit error log size limit
              */
             setErrorLogLimit: function(limit) {
                 logLimit = limit;
@@ -50,9 +49,9 @@ angular.module('oasp.oaspUi.errorNotificator')
 
             /**
              * @ngdoc method
-             * @name getErrorLogLimit
-             * @methodOf oaspErrorNotificatorService
-             * @returns {number} current error log size limit
+             * @name errorNotificator.oaspErrorNotificatorService#getErrorLogLimit
+             * @methodOf errorNotificator.oaspErrorNotificatorService
+             * @returns {Number} current error log size limit
              */
             getErrorLogLimit: function() {
                 return logLimit;
@@ -60,10 +59,9 @@ angular.module('oasp.oaspUi.errorNotificator')
 
             /**
              * @ngdoc method
-             * @name logError
-             * @methodOf oaspErrorNotificatorService
-             * Logs a new error response into error log.
-             * @param errorResponse error response message from server
+             * @name errorNotificator.oaspErrorNotificatorService#logError
+             * @methodOf errorNotificator.oaspErrorNotificatorService
+             * @param {Object} errorResponse error response from server
              */
             logError: function(errorResponse) {
                 var error = errorResponse;
@@ -73,9 +71,9 @@ angular.module('oasp.oaspUi.errorNotificator')
 
             /**
              * @ngdoc method
-             * @name getErrorLog
-             * @methodOf oaspErrorNotificatorService
-             * @returns {*[]} whole error log
+             * @name errorNotificator.oaspErrorNotificatorService#getErrorLog
+             * @methodOf errorNotificator.oaspErrorNotificatorService
+             * @returns {Array} error log collection with logged error responses
              */
             getErrorLog: function() {
                 return errorLog;

@@ -1,12 +1,7 @@
 /**
- * @ngdoc directive
- * @module oasp.oaspUi.errorNotificator
- * @name errorLog
- * @restrict EA
- *
  * Directive that provides an html template for error log collection.
  */
-angular.module('oasp.oaspUi.errorNotificator')
+angular.module('app.main')
     .directive('errorLog', function () {
     'use strict';
     return {
@@ -14,6 +9,6 @@ angular.module('oasp.oaspUi.errorNotificator')
         scope: true,
         replace: true,
         controller: 'errorLogCntl',
-        templateUrl: 'oasp/oasp-ui/error-notificator/error-log/error-log.html'
+        templateUrl: 'main/error-log/error-log.html'
     };
 });

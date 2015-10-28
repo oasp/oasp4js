@@ -1,16 +1,13 @@
 /**
  * @ngdoc service
- * @name oaspErrorNotificatorInterceptor
+ * @name errorNotificator.oaspErrorNotificatorInterceptor
  * @module oasp.oaspUi.errorNotificator
- * @requires $q
- * @requires growl
- * @requires errorNotificator.oaspErrorNotificatorService
- *
+ * @description
  * This interceptor service is desired to log an error response into error log and notify in real time current error
  * responses from the server.
  *
- * For logging an error responses it uses an {@link app/oasp/oasp-ui/error-notificator/error-notificator.service.js}.
- * For notify error responses it uses an {@link bower_components/angular-growl-v2/build/angular-growl.js} plugin.
+ * For logging an error responses it uses an error notificator service.
+ * For notify error responses it uses an angular growl plugin.
  */
 angular.module('oasp.oaspUi.errorNotificator')
     .service('oaspErrorNotificatorInterceptor', function ($q, growl, oaspErrorNotificatorService) {
@@ -19,8 +16,8 @@ angular.module('oasp.oaspUi.errorNotificator')
             /**
              * @ngdoc method
              * @name responseError
-             * @methodOf oaspErrorNotificatorInterceptor
-             * @param {object} response error response from server
+             * @methodOf errorNotificator.oaspErrorNotificatorInterceptor
+             * @params {object} response error response from server
              * @returns {promise} promise
              */
             responseError: function (response) {

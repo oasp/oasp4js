@@ -1,12 +1,14 @@
 /**
- * @ngdoc module
- * @name errorNotificator
- * @requires $httpProvider
- * @requires angular-growl.growlProvider
- *
+ * @ngdoc object
+ * @name oaspUi.errorNotificator
+ * @module oasp.oaspUi
+ * @requires oasp.templates
+ * @requires angular-growl
+ * @requires ngAnimate
+ * @description
  * Module of an error notificator services that are designed to handle an error responses from the server.
- * It contains an configuration of {@link bower_components/angular-growl-v2/build/angular-growl.js} plugin.
- * Pushes an {@link app/oasp/oasp-ui/error-notificator/error-notificator-interceptor.service.js} service into {@link $httpProvider} interceptors.
+ * It contains an configuration of angular-growl plugin.
+ * Pushes an error-notificator-interceptor service into $httpProvider interceptors.
  */
 angular.module('oasp.oaspUi.errorNotificator', ['oasp.templates', 'angular-growl', 'ngAnimate'])
     .config(function ($httpProvider, growlProvider) {
