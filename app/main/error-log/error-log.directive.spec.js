@@ -2,7 +2,7 @@ describe('error-log directive specs', function () {
     'use strict';
     var $compile, $scope, $timeout, element;
 
-    beforeEach(module('oasp.oaspUi.errorNotificator', function($controllerProvider) {
+    beforeEach(module('app.main', function($controllerProvider) {
     }));
 
     beforeEach(function () {

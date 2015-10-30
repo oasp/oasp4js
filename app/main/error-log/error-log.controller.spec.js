@@ -3,7 +3,7 @@ describe('Controller: errorLogCntl', function () {
     var $scope;
 
     beforeEach(
-        module('oasp.oaspUi.errorNotificator')
+        module('app.main')
     );
 
     beforeEach(inject(function ($rootScope, $controller, _oaspErrorNotificatorService_) {

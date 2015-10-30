@@ -3,7 +3,7 @@ describe('Module: \'oasp.oaspUi\', service: \'globalSpinner\'', function () {
 
     var globalSpinner, $rootScope,
         broadcastRouteChangeSuccess = function ($rootScope) {
-            $rootScope.$broadcast('$routeChangeStart', {
+            $rootScope.$broadcast('$stateChangeStart', {
                 resolve: []
             });
         };
@@ -50,7 +50,7 @@ describe('Module: \'oasp.oaspUi\', service: \'globalSpinner\'', function () {
         globalSpinner.showOnRouteChangeStartAndHideWhenComplete($rootScope);
         broadcastRouteChangeSuccess($rootScope);
         // when
-        $rootScope.$broadcast('$routeChangeSuccess');
+        $rootScope.$broadcast('$stateChangeSuccess');
         // then
         expect($rootScope.globalSpinner).toBeFalsy();
     });
@@ -60,8 +60,31 @@ describe('Module: \'oasp.oaspUi\', service: \'globalSpinner\'', function () {
         globalSpinner.showOnRouteChangeStartAndHideWhenComplete($rootScope);
         broadcastRouteChangeSuccess($rootScope);
         // when
-        $rootScope.$broadcast('$routeChangeError');
+        $rootScope.$broadcast('$stateChangeError');
         // then
         expect($rootScope.globalSpinner).toBeFalsy();
+    });
+
+    it('hides the spinner when a route change not found', function () {
+        // given
+        globalSpinner.showOnRouteChangeStartAndHideWhenComplete($rootScope);
+        broadcastRouteChangeSuccess($rootScope);
+        // when
+        $rootScope.$broadcast('$stateNotFound');
+        // then
+        expect($rootScope.globalSpinner).toBeFalsy();
+    });
+
+    it('does not define the spinner when event has no resolve', function () {
+        spyOn(globalSpinner, 'show').and.callThrough();
+        // given
+        globalSpinner.showOnRouteChangeStartAndHideWhenComplete($rootScope);
+        // when
+        $rootScope.$broadcast('$stateChangeStart', {
+            resolve: undefined
+        });
+        // then
+        expect($rootScope.globalSpinner).not.toBeDefined();
+        expect(globalSpinner.show).not.toHaveBeenCalled();
     });
 });
