@@ -6,7 +6,7 @@
  * @requires sales-mgmt.templates
  * @module app
  */
-angular.module('app.sales-mgmt', ['app.main', 'app.offer-mgmt', 'app.sales-mgmt.templates'])
+angular.module('app.sales-mgmt', ['app.main', 'app.offer-mgmt', 'app.sales-mgmt.templates', 'ui.grid', 'ui.grid.selection'])
     .config(function ($stateProvider, oaspAuthorizationServiceProvider, ROLES, oaspTranslationProvider) {
         'use strict';
         oaspTranslationProvider.enableTranslationForModule('sales-mgmt');
@@ -24,6 +24,22 @@ angular.module('app.sales-mgmt', ['app.main', 'app.offer-mgmt', 'app.sales-mgmt.
                     templateUrl: 'sales-mgmt/cook-positions/cook-positions.html',
                     controller: 'CookPositionsCntl',
                     controllerAs: 'CPC',
+                    resolve: {
+                        currentPositions: ['positions', function (positions) {
+                            return positions.get();
+                        }]
+                    }
+                }
+            )
+        );
+
+        $stateProvider.state('salesMgmt.cookAssigment',
+            oaspAuthorizationServiceProvider.usersHavingAnyRoleOf(ROLES.COOK).mayGoToStateDefinedAs(
+                {
+                    url: '/cook-assigment',
+                    templateUrl: 'sales-mgmt/cook-assigment/cook-assigment.html',
+                    controller: 'CookAssigmentCntl',
+                    controllerAs: 'CAC',
                     resolve: {
                         currentPositions: ['positions', function (positions) {
                             return positions.get();
