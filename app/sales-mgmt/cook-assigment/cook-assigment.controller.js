@@ -49,7 +49,7 @@ angular.module('app.sales-mgmt')
                 if (row.isSelected) {
                     $scope.positionsAssignedSelected.push(row.entity);
                 } else {
-                    $scope.positionsAssignedSelected.splice($scope.positionsAssignedSelected.indexOf(row.entity), 1)
+                    $scope.positionsAssignedSelected.splice($scope.positionsAssignedSelected.indexOf(row.entity), 1);
                 }
             });
         };
