@@ -82,8 +82,9 @@ angular.module('oasp.oaspSecurity')
                         return getSecurityRestService().getCsrfToken()
                             .then(function (response) {
                                 var csrfProtection = response.data;
-                                // from now on a CSRF token will be added to all HTTP requests
-                                $http.defaults.headers.common[csrfProtection.headerName] = csrfProtection.token;
+                                // from now on a CSRF token will be added only to POST and PUT HTTP requests
+                                $http.defaults.headers.post[csrfProtection.headerName] = csrfProtection.token;
+                                $http.defaults.headers.put[csrfProtection.headerName] = csrfProtection.token;
                                 currentCsrfProtection.set(csrfProtection.headerName, csrfProtection.token);
                                 return csrfProtection;
                             }, function () {
