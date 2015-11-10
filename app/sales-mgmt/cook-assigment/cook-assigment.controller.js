@@ -24,11 +24,13 @@ angular.module('app.sales-mgmt')
             {name: 'mealName', displayName: 'Meal', minWidth: 100},
             {name: 'sideDishName', displayName: 'Side Dish', minWidth: 100}
         ];
+        function assignPositionsToGrid() {
+            $scope.gridOptions.data = currentPositions ? currentPositions.availablePositions : [];
+            $scope.gridOptionsAssigned.data = currentPositions ? currentPositions.positionsAssignedToCurrentUser : [];
+        }
 
         $scope.gridOptionsAssigned = angular.copy($scope.gridOptions);
-
-        $scope.gridOptions.data = currentPositions.availablePositions;
-        $scope.gridOptionsAssigned.data = currentPositions.positionsAssignedToCurrentUser;
+        assignPositionsToGrid();
 
         $scope.gridOptions.onRegisterApi = function (gridApi) {
             $scope.gridApi = gridApi;
@@ -36,7 +38,7 @@ angular.module('app.sales-mgmt')
                 if (row.isSelected) {
                     $scope.positionsAvailableSelected.push(row.entity);
                 } else {
-                    $scope.positionsAvailableSelected.splice($scope.positionsAvailableSelected.indexOf(row.entity), 1)
+                    $scope.positionsAvailableSelected.splice($scope.positionsAvailableSelected.indexOf(row.entity), 1);
                 }
             });
         };
@@ -62,9 +64,10 @@ angular.module('app.sales-mgmt')
         $scope.isAssignedPositionSelected = function () {
             return ($scope.positionsAssignedSelected && $scope.positionsAssignedSelected.length > 0) ? true : false;
         };
+
+
         function refreshTable() {
-            $scope.gridOptions.data = currentPositions.availablePositions;
-            $scope.gridOptionsAssigned.data = currentPositions.positionsAssignedToCurrentUser;
+            assignPositionsToGrid();
             $scope.gridApi.core.refresh();
             return currentPositions;
         }
@@ -76,7 +79,7 @@ angular.module('app.sales-mgmt')
                     angular.forEach($scope.positionsAvailableSelected, function (element) {
                         promises.push(positions.assignCookToPosition(element.id));
                     });
-                    return $q.all(promises).then(function (dane) {
+                    return $q.all(promises).then(function () {
                         $scope.positionsAssignedSelected.length = 0;
                         $scope.positionsAvailableSelected.length = 0;
                         return refreshTable();
@@ -97,7 +100,7 @@ angular.module('app.sales-mgmt')
                             angular.forEach($scope.positionsAssignedSelected, function (element) {
                                 promises.push(positions.setPositionStatusToPrepared(element.id));
                             });
-                            return $q.all(promises).then(function (dane) {
+                            return $q.all(promises).then(function () {
                                 $scope.positionsAssignedSelected.length = 0;
                                 $scope.positionsAvailableSelected.length = 0;
                                 return refreshTable();
@@ -120,7 +123,7 @@ angular.module('app.sales-mgmt')
                             angular.forEach($scope.positionsAssignedSelected, function (element) {
                                 promises.push(positions.makePositionAvailable(element.id));
                             });
-                            return $q.all(promises).then(function (dane) {
+                            return $q.all(promises).then(function () {
                                 $scope.positionsAssignedSelected.length = 0;
                                 $scope.positionsAvailableSelected.length = 0;
                                 return refreshTable();

@@ -1,137 +1,116 @@
-angular.module('app.sales-mgmt')
-    .controller('CookAssigmentCntl', function ($scope, currentPositions, positions, globalSpinner, positionStateNotification, $q) {
-        'use strict';
+describe('Module: salesMgmt, Controller: cook-assigment', function () {
+    'use strict';
+    var $scope, currentPositionsMock, deferred, positionStateNotification, positions;
+    beforeEach(module('app.sales-mgmt'));
 
-        positionStateNotification.connect().then(function () {
-            positionStateNotification.subscribe(function () {
-                positions.get();
-            });
+    beforeEach(inject(function ($rootScope, $controller, _positionStateNotification_, _positions_, $q) {
+        //given
+        deferred = $q.defer();
+        positionStateNotification = _positionStateNotification_;
+        positions = _positions_;
+        spyOn(positionStateNotification, 'connect').and.returnValue(deferred.promise);
+        spyOn(positionStateNotification, 'subscribe').and.callThrough();
+        spyOn(positions, 'assignCookToPosition').and.returnValue(deferred.promise);
+        spyOn(positions, 'setPositionStatusToPrepared').and.returnValue(deferred.promise);
+        spyOn(positions, 'makePositionAvailable').and.returnValue(deferred.promise);
+        $scope = $rootScope.$new();
+        $controller('CookAssigmentCntl', {$scope: $scope, currentPositions: currentPositionsMock, positionStateNotification: positionStateNotification, positions: positions});
+    }));
+
+    it('should call positionStateNotification functions on controller initialization', function () {
+        //given when
+        deferred.resolve();
+        $scope.$digest();
+        //then
+        expect(positionStateNotification.connect).toHaveBeenCalled();
+        expect(positionStateNotification.subscribe).toHaveBeenCalled();
+    });
+
+    describe('testing $scope functions', function () {
+        it('should return true when there are available positions selected', function () {
+            //given
+            $scope.positionsAvailableSelected = [];
+            $scope.positionsAvailableSelected.push({id: 1});
+            //when then
+            expect($scope.isAvailablePositionSelected()).toBeTruthy();
+
+            //when
+            $scope.positionsAvailableSelected.length = 0;
+            //then
+            expect($scope.isAvailablePositionSelected()).toBeFalsy();
         });
 
-        $scope.gridOptions = {
-            enableRowSelection: true,
-            enableSelectAll: true,
-            selectionRowHeaderWidth: 35,
-            rowHeight: 35,
-            multiSelect: true,
-            enableFullRowSelection: true,
-            enableColumnMenus: false
-        };
+        it('should return true when there are assigned positions selected', function () {
+            //given
+            $scope.positionsAssignedSelected = [];
+            $scope.positionsAssignedSelected.push({id: 1});
+            //when then
+            expect($scope.isAssignedPositionSelected()).toBeTruthy();
 
-        $scope.gridOptions.columnDefs = [
-            {name: 'id', displayName: 'ID', minWidth: 80},
-            {name: 'orderId', displayName: 'Order ID', minWidth: 80},
-            {name: 'mealName', displayName: 'Meal', minWidth: 100},
-            {name: 'sideDishName', displayName: 'Side Dish', minWidth: 100}
-        ];
+            //when
+            $scope.positionsAssignedSelected.length = 0;
+            //then
+            expect($scope.isAssignedPositionSelected()).toBeFalsy();
+        });
 
-        $scope.gridOptionsAssigned = angular.copy($scope.gridOptions);
-
-        $scope.gridOptions.data = currentPositions.availablePositions;
-        $scope.gridOptionsAssigned.data = currentPositions.positionsAssignedToCurrentUser;
-
-        $scope.gridOptions.onRegisterApi = function (gridApi) {
-            $scope.gridApi = gridApi;
-            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                if (row.isSelected) {
-                    $scope.positionsAvailableSelected.push(row.entity);
-                } else {
-                    $scope.positionsAvailableSelected.splice($scope.positionsAvailableSelected.indexOf(row.entity), 1);
-                }
-            });
-        };
-
-        $scope.gridOptionsAssigned.onRegisterApi = function (gridApi) {
-            $scope.gridApi = gridApi;
-            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                if (row.isSelected) {
-                    $scope.positionsAssignedSelected.push(row.entity);
-                } else {
-                    $scope.positionsAssignedSelected.splice($scope.positionsAssignedSelected.indexOf(row.entity), 1)
-                }
-            });
-        };
-
-        $scope.positionsAvailableSelected = [];
-        $scope.positionsAssignedSelected = [];
-
-        $scope.isAvailablePositionSelected = function () {
-            return ($scope.positionsAvailableSelected && $scope.positionsAvailableSelected.length > 0) ? true : false;
-        };
-
-        $scope.isAssignedPositionSelected = function () {
-            return ($scope.positionsAssignedSelected && $scope.positionsAssignedSelected.length > 0) ? true : false;
-        };
-        function refreshTable() {
-            $scope.gridOptions.data = currentPositions.availablePositions;
-            $scope.gridOptionsAssigned.data = currentPositions.positionsAssignedToCurrentUser;
-            $scope.gridApi.core.refresh();
-            return currentPositions;
-        }
-
-        $scope.assignCookToPosition = function () {
-            if ($scope.isAvailablePositionSelected()) {
-                globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                    var promises = [];
-                    angular.forEach($scope.positionsAvailableSelected, function (element) {
-                        promises.push(positions.assignCookToPosition(element.id));
-                    });
-                    return $q.all(promises).then(function () {
-                        $scope.positionsAssignedSelected.length = 0;
-                        $scope.positionsAvailableSelected.length = 0;
-                        return refreshTable();
-                    });
-                });
-            }
-        };
-
-        $scope.buttonDefs = [
-            {
-                label: 'SALES_MGMT.DONE',
-                onClick: function () {
-                    if ($scope.isAssignedPositionSelected()) {
-                        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-
-
-                            var promises = [];
-                            angular.forEach($scope.positionsAssignedSelected, function (element) {
-                                promises.push(positions.setPositionStatusToPrepared(element.id));
-                            });
-                            return $q.all(promises).then(function () {
-                                $scope.positionsAssignedSelected.length = 0;
-                                $scope.positionsAvailableSelected.length = 0;
-                                return refreshTable();
-                            });
-
-
-                        });
-                    }
-                },
-                isActive: function () {
-                    return $scope.isAssignedPositionSelected();
-                }
-            },
-            {
-                label: 'SALES_MGMT.REJECT',
-                onClick: function () {
-                    if ($scope.isAssignedPositionSelected()) {
-                        globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                            var promises = [];
-                            angular.forEach($scope.positionsAssignedSelected, function (element) {
-                                promises.push(positions.makePositionAvailable(element.id));
-                            });
-                            return $q.all(promises).then(function () {
-                                $scope.positionsAssignedSelected.length = 0;
-                                $scope.positionsAvailableSelected.length = 0;
-                                return refreshTable();
-                            });
-
-                        });
-                    }
-                },
-                isActive: function () {
-                    return $scope.isAssignedPositionSelected();
-                }
-            }
-        ];
+        it('should assign cook to positions', inject(function (globalSpinner) {
+            //given
+            spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
+            $scope.positionsAvailableSelected = [];
+            $scope.positionsAvailableSelected.push({id: 1});
+            $scope.positionsAvailableSelected.push({id: 2});
+            //when
+            $scope.assignCookToPosition();
+            //then
+            expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
+            expect(positions.assignCookToPosition).toHaveBeenCalledWith($scope.positionsAvailableSelected[0].id);
+            expect(positions.assignCookToPosition).toHaveBeenCalledWith($scope.positionsAvailableSelected[1].id);
+        }));
     });
+
+    describe('testing button definitions', function () {
+        it('should call positions.setPositionStatusToPrepared when Done button is clicked', inject(function (globalSpinner) {
+            //given
+            spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
+            $scope.positionsAssignedSelected = [];
+            $scope.positionsAssignedSelected.push({id: 1});
+            $scope.positionsAssignedSelected.push({id: 2});
+            //when
+            $scope.buttonDefs[0].onClick();
+            //then
+            expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
+            expect(positions.setPositionStatusToPrepared).toHaveBeenCalledWith($scope.positionsAssignedSelected[0].id);
+            expect(positions.setPositionStatusToPrepared).toHaveBeenCalledWith($scope.positionsAssignedSelected[1].id);
+        }));
+
+        it('should activate Done button where there is an assigned position selected', function () {
+            //given
+            $scope.positionsAssignedSelected = [];
+            $scope.positionsAssignedSelected.push({id: 1});
+            //when then
+            expect($scope.buttonDefs[0].isActive()).toBeTruthy();
+        });
+
+        it('should call positions.makePositionAvailable when Reject button is clicked', inject(function (globalSpinner) {
+            //given
+            spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
+            $scope.positionsAssignedSelected = [];
+            $scope.positionsAssignedSelected.push({id: 1});
+            $scope.positionsAssignedSelected.push({id: 2});
+            //when
+            $scope.buttonDefs[1].onClick();
+            //then
+            expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
+            expect(positions.makePositionAvailable).toHaveBeenCalledWith($scope.positionsAssignedSelected[0].id);
+            expect(positions.makePositionAvailable).toHaveBeenCalledWith($scope.positionsAssignedSelected[1].id);
+        }));
+
+        it('should activate Reject button where there is an assigned position selected', function () {
+            //given
+            $scope.positionsAssignedSelected = [];
+            $scope.positionsAssignedSelected.push({id: 1});
+            //when then
+            expect($scope.buttonDefs[1].isActive()).toBeTruthy();
+        });
+    });
+});
