@@ -85,6 +85,8 @@ angular.module('oasp.oaspSecurity')
                                 // from now on a CSRF token will be added only to POST and PUT HTTP requests
                                 $http.defaults.headers.post[csrfProtection.headerName] = csrfProtection.token;
                                 $http.defaults.headers.put[csrfProtection.headerName] = csrfProtection.token;
+                                $http.defaults.headers.delete = {};
+                                $http.defaults.headers.delete[csrfProtection.headerName] = csrfProtection.token;
                                 currentCsrfProtection.set(csrfProtection.headerName, csrfProtection.token);
                                 return csrfProtection;
                             }, function () {
@@ -97,7 +99,7 @@ angular.module('oasp.oaspSecurity')
                      * @ngdoc method
                      * @name oaspSecurity.oaspSecurityService#logIn
                      * @methodOf oaspSecurity.oaspSecurityService
-                     * 
+                     *
                      * @params {string} username
                      * @params {string} password
                      * @return {promise} promise
