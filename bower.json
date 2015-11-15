@@ -2,23 +2,23 @@
     "name": "oasp-js",
     "version": "0.0.1",
     "dependencies": {
-        "modernizr": "3.2.x",
-        "respond": "1.4.x",
-        "bootstrap": "3.3.x",
-        "angular": "1.4.x",
-        "angular-route": "1.4.x",
-        "angular-ui-select": "0.13.x",
-        "autofill-event": "1.0.x",
-        "angular-ui-bootstrap-bower": "0.14.x",
-        "angular-translate": "2.8.x",
-        "angular-translate-loader-partial": "2.8.x",
-        "angular-spinner": "0.8.x",
-        "trNgGrid": "3.1.x",
-        "sockjs-client": "1.0.x",
-        "stomp-websocket": "2.3.x"
+        "modernizr": "3.2.0",
+        "respond": "1.4.2",
+        "bootstrap": "3.3.5",
+        "angular": "1.4.7",
+        "angular-route": "1.4.7",
+        "angular-ui-select": "0.13.2",
+        "autofill-event": "1.0.0",
+        "angular-ui-bootstrap-bower": "0.14.3",
+        "angular-translate": "2.8.1",
+        "angular-translate-loader-partial": "2.8.1",
+        "angular-spinner": "0.8.0",
+        "trNgGrid": "3.1.5",
+        "sockjs-client": "1.0.3",
+        "stomp-websocket": "2.3.4"
     },
     "devDependencies": {
-        "angular-mocks": "1.4.x"
+        "angular-mocks": "1.4.7"
     },
     "resolutions": {
         "angular": ">=1.3"
