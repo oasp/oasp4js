@@ -20,6 +20,36 @@ angular.module('oasp.oaspSecurity')
                 }
             };
 
+        function wrapResolveFunction(resolve) {
+            angular.forEach(resolve, function (elem, key) {
+                if (Array.isArray(elem)) {
+                    var oldFunc = resolve[key].pop();
+                    var func;
+                    resolve[key] = elem.concat([config.appContextServiceName, "$q"]);
+                    if (typeof oldFunc === "function") {
+                        func = function () {
+                            var callArguments = arguments;
+                            var appContext = callArguments[callArguments.length - 2];
+                            var $q = callArguments[callArguments.length - 1];
+                            var defer = $q.defer();
+                            appContext.getCurrentUser().then(
+                                function () {
+                                    oldFunc.apply(this, callArguments).then(
+                                        defer.resolve,
+                                        defer.reject
+                                    );
+                                }, defer.reject
+                            );
+                            return defer.promise;
+                        }
+                    } else {
+                        func = oldFunc;
+                    }
+                    resolve[key].push(func);
+                }
+            });
+        }
+
         return {
             setAppContextServiceName: function (appContextServiceName) {
                 config.appContextServiceName = appContextServiceName || config.appContextServiceName;
@@ -34,6 +64,7 @@ angular.module('oasp.oaspSecurity')
                         var resolve;
                         if (stateDef) {
                             resolve = stateDef.resolve || {};
+                            wrapResolveFunction(resolve);
                             /* @ngInject */
                             resolve.authorize = function (oaspAuthorizationService) {
                                 return oaspAuthorizationService.authorizationCheckResolver(roleList);
@@ -84,8 +115,8 @@ angular.module('oasp.oaspSecurity')
                                 deferredAuthorizationCheck.reject();
                             }
                         });
-
                         return deferredAuthorizationCheck.promise;
+
                     },
 
                     /**
