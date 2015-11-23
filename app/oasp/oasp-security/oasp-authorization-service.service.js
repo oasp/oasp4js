@@ -25,8 +25,8 @@ angular.module('oasp.oaspSecurity')
                 if (Array.isArray(elem)) {
                     var oldFunc = resolve[key].pop();
                     var func;
-                    resolve[key] = elem.concat([config.appContextServiceName, "$q"]);
-                    if (typeof oldFunc === "function") {
+                    resolve[key] = elem.concat([config.appContextServiceName, '$q']);
+                    if (typeof oldFunc === 'function') {
                         func = function () {
                             var callArguments = arguments;
                             var appContext = callArguments[callArguments.length - 2];
@@ -41,7 +41,7 @@ angular.module('oasp.oaspSecurity')
                                 }, defer.reject
                             );
                             return defer.promise;
-                        }
+                        };
                     } else {
                         func = oldFunc;
                     }
