@@ -1,22 +1,24 @@
 describe('error-log directive specs', function () {
     'use strict';
     var $compile, $scope, $timeout, element;
-
-    beforeEach(module('app.main', function($controllerProvider) {
+    var mockErrorLog = [];
+    beforeEach(module('app.main', function ($provide) {
+        $provide.value('oaspErrorNotificatorService', {
+            getErrorLog: function () {
+                return mockErrorLog;
+            }
+        });
     }));
-
-    beforeEach(function () {
-        module('ui.bootstrap');
-    });
 
     /*jslint nomen: true*/
     beforeEach(inject(function (_$compile_, _$rootScope_, _$timeout_) {
         $compile = _$compile_;
         $scope = _$rootScope_.$new();
+        $scope.errorLog = [];
         $timeout = _$timeout_;
     }));
 
-    afterEach(function() {
+    afterEach(function () {
         $scope.$destroy();
         jasmine.clock().uninstall();
     });
@@ -26,7 +28,7 @@ describe('error-log directive specs', function () {
         $timeout.flush();
     }
 
-    function compileErrorLog () {
+    function compileErrorLog() {
         element = $compile(angular.element('<error-log></error-log>'))($scope);
         digest();
     }
@@ -36,31 +38,31 @@ describe('error-log directive specs', function () {
         digest();
     }
 
-    function clickOnLogFooter() {
-        element.find('li').click();
-        digest();
-    }
 
-    it('should have "collapse" class in error log list', function () {
+    it('should display list without errors', function () {
         // when
         compileErrorLog();
         clickErrorLog();
-        clickOnLogFooter();
 
         // then
-        expect(element.find('ul').attr('class')).toContain('collapse');
-        expect(element.find('ul').attr('class')).not.toContain('in');
-        expect(element.find('li').length).toBe(2);
+        expect(element.find('ul').attr('class')).toContain('dropdown-menu');
+        expect(element.find('ul').html()).toContain('OASP.NO_ERROR');
+        expect(element.find('li').length).toBe(1);
     });
 
-    it('should have "in" class in error log list', function () {
+    it('should display error', function () {
+        //given
+        var date = new Date();
+
+        mockErrorLog.push({statusText: 'new error', date: date});
         // when
         compileErrorLog();
         clickErrorLog();
 
         // then
-        expect(element.find('ul').attr('class')).toContain('in');
-        expect(element.find('ul').attr('class')).not.toContain('collapse');
+        expect($scope.errorLog.length).toBe(1);
+        expect(element.find('ul').html()).toContain('new error');
+        expect(element.find('li').length).toBe(2);
     });
 
 });

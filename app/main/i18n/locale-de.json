@@ -5,6 +5,7 @@
         "LOG_OFF": "Abmelden",
         "PAGE_NOT_FOUND": "Seite nicht gefunden!",
         "ERROR_LOG": "Fehler Log",
+        "NO_ERROR": "Keine Fehler",
         "PAGE_NOT_FOUND_DETAILS": "Die Seite, die Sie versuchen zu erreichen, konnte nicht gefunden werden.",
         "TOGGLE_NAV": "Toggle-Navigation",
         "TITLE": "Restaurant-Beispielanwendung",
