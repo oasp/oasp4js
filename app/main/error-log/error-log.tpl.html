@@ -10,13 +10,13 @@
                 <span translate="">OASP.NO_ERROR</span>
             </div>
         </li>
-        <li class="list-group-item" ng-repeat="errorr in errorLog">
-            <div style="width: 300px;display: block;">
+        <li ng-repeat="errorr in errorLog">
+            <a style="width: 300px;display: block;">
                 <h5><strong>{{errorr.statusText}}</strong>
                     <small>{{errorr.date.toLocaleTimeString()}}</small>
                 </h5>
                 <h5>{{errorr.data.message}}</h5>
-            </div>
+            </a>
         </li>
     </ul>
 </li>
