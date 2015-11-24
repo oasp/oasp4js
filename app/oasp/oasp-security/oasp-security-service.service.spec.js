@@ -171,5 +171,4 @@ describe('Module: \'oasp-security\', service: \'oaspSecurityService\'', function
         expect(currentCsrfToken.getToken()).toBeUndefined();
     });
 
-
 });

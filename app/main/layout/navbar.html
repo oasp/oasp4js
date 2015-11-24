@@ -12,7 +12,7 @@
         </div>
         <div class="collapse navbar-collapse" data-ng-class="{'in':!navCollapsed}">
             <ul class="ng-cloak nav navbar-nav" data-ng-show="currentUser.isLoggedIn()">
-                <li><a href="#table-mgmt/table-search" translate>OASP.TABLES</a></li>
+                <li><a href="#table-mgmt/table-search" data-ng-show="currentUser.getUserName() === 'Willy Waiter'" translate>OASP.TABLES</a></li>
                 <li><a href="#/sales-mgmt/cook-positions"
                        data-ng-show="currentUser.getUserName() === 'Carl Cook' || currentUser.getUserName() === 'Charly Chief'"
                        translate>OASP.KITCHEN</a>
