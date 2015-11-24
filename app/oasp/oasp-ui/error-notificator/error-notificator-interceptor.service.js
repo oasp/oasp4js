@@ -21,8 +21,10 @@ angular.module('oasp.oaspUi.errorNotificator')
              * @returns {promise} promise
              */
             responseError: function (response) {
-                oaspErrorNotificatorService.logError(response);
-                growl.error(response.data.message ? response.data.message : '', {title: response.statusText});
+                if (response) {
+                    oaspErrorNotificatorService.logError(response);
+                    growl.error(response.data.message ? response.data.message : '', {title: response.statusText});
+                }
                 return $q.reject(response);
             }
         };
