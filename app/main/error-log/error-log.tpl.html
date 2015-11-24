@@ -1,22 +1,26 @@
-<li class="dropdown language-dropdown" dropdown>
-    <a href class="dropdown-toggle" dropdown-toggle>
+<li>
+    <a href ng-click="errorLogIsCollapsed = !errorLogIsCollapsed">
         <span class="icon-container"><span class="icon glyphicon glyphicon-comment"></span></span>
         <span translate="">OASP.ERROR_LOG</span>
         <span class="caret"></span>
     </a>
-    <ul class="dropdown-menu" role="menu error-log-group">
-        <li class="list-group-item" data-ng-show="errorLog.length==0">
-            <div style="width: 300px;display: block;">
-                <span translate="">OASP.NO_ERROR</span>
+    <ul collapse="errorLogIsCollapsed" class="error-log-group">
+        <li class="list-group-item error-log-item">
+            <a href  tooltip-placement="left" tooltip="Settings" tooltip-popup-delay="1500">
+                <span class="icon glyphicon glyphicon-cog"></span>
+            </a>
+        </li>
+        <li class="list-group-item error-log-item" ng-repeat="errorr in errorLog">
+            <div class="text">
+                <h5><strong>{{errorr.statusText}}</strong> <small>{{errorr.date.toLocaleTimeString()}}</small></h5>
+                <h5>{{errorr.data.message}}</h5>
             </div>
         </li>
-        <li ng-repeat="errorr in errorLog">
-            <a style="width: 300px;display: block;">
-                <h5><strong>{{errorr.statusText}}</strong>
-                    <small>{{errorr.date.toLocaleTimeString()}}</small>
-                </h5>
-                <h5>{{errorr.data.message}}</h5>
-            </a>
+        <li class="list-group-item error-log-item" ng-click="errorLogIsCollapsed = !errorLogIsCollapsed">
+            <span class="icon glyphicon  glyphicon-menu-up"></span>
+            <span class="icon glyphicon  glyphicon-menu-up"></span>
+            <span class="icon glyphicon  glyphicon-menu-up"></span>
         </li>
     </ul>
 </li>
+

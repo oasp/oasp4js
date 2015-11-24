@@ -20,16 +20,16 @@ angular.module('oasp.oaspUi.errorNotificator')
             logLimit = 10;
 
         function log(error) {
-            if (errorLog.length === logLimit) {
+            if(errorLog.length === logLimit) {
                 errorLog.pop();
             }
             errorLog.unshift(error);
         }
 
-        function trimLog(limit) {
+        function trimLog(limit){
             if (errorLog.length > limit) {
-                var diff = errorLog.length - limit;
-                for (var i = 0; i < diff; i++) {
+                var diff = errorLog.length-limit;
+                for(var i=0; i<diff; i++) {
                     errorLog.pop();
                 }
             }
@@ -42,7 +42,7 @@ angular.module('oasp.oaspUi.errorNotificator')
              * @methodOf errorNotificator.oaspErrorNotificatorService
              * @param {Number} limit error log size limit
              */
-            setErrorLogLimit: function (limit) {
+            setErrorLogLimit: function(limit) {
                 logLimit = limit;
                 trimLog(logLimit);
             },
@@ -53,7 +53,7 @@ angular.module('oasp.oaspUi.errorNotificator')
              * @methodOf errorNotificator.oaspErrorNotificatorService
              * @returns {Number} current error log size limit
              */
-            getErrorLogLimit: function () {
+            getErrorLogLimit: function() {
                 return logLimit;
             },
 
@@ -63,9 +63,10 @@ angular.module('oasp.oaspUi.errorNotificator')
              * @methodOf errorNotificator.oaspErrorNotificatorService
              * @param {Object} errorResponse error response from server
              */
-            logError: function (errorResponse) {
-                errorResponse.date = new Date();
-                log(errorResponse);
+            logError: function(errorResponse) {
+                var error = errorResponse;
+                error.date = new Date();
+                log(error);
             },
 
             /**
@@ -74,7 +75,7 @@ angular.module('oasp.oaspUi.errorNotificator')
              * @methodOf errorNotificator.oaspErrorNotificatorService
              * @returns {Array} error log collection with logged error responses
              */
-            getErrorLog: function () {
+            getErrorLog: function() {
                 return errorLog;
             }
         };
