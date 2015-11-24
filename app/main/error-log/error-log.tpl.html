@@ -5,10 +5,10 @@
         <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" role="menu error-log-group">
-        <li class="list-group-item" data-ng-show="errorLog.length==0">
-            <div style="width: 300px;display: block;">
+        <li data-ng-show="errorLog.length==0">
+            <a style="width: 300px;display: block;">
                 <span translate="">OASP.NO_ERROR</span>
-            </div>
+            </a>
         </li>
         <li ng-repeat="errorr in errorLog">
             <a style="width: 300px;display: block;">
