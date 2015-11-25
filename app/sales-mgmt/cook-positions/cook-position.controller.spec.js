@@ -70,13 +70,14 @@ describe('Module: salesMgmt, Controller: cook-position', function () {
         it('should call positions.setPositionStatusToPrepared when Done button is clicked', inject(function (globalSpinner) {
             //given
             spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
+            var elem = {id: 1};
             $scope.positionsAssignedSelected = [];
-            $scope.positionsAssignedSelected.push({id: 1});
+            $scope.positionsAssignedSelected.push(elem);
             //when
             $scope.buttonDefs[0].onClick();
             //then
             expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
-            expect(positions.setPositionStatusToPrepared).toHaveBeenCalledWith($scope.positionsAssignedSelected[0].id);
+            expect(positions.setPositionStatusToPrepared).toHaveBeenCalledWith(elem.id);
         }));
 
         it('should activate Done button where there is an assigned position selected', function () {
@@ -90,13 +91,14 @@ describe('Module: salesMgmt, Controller: cook-position', function () {
         it('should call positions.makePositionAvailable when Reject button is clicked', inject(function (globalSpinner) {
             //given
             spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
+            var elem = {id: 1};
             $scope.positionsAssignedSelected = [];
-            $scope.positionsAssignedSelected.push({id: 1});
+            $scope.positionsAssignedSelected.push(elem);
             //when
             $scope.buttonDefs[1].onClick();
             //then
             expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
-            expect(positions.makePositionAvailable).toHaveBeenCalledWith($scope.positionsAssignedSelected[0].id);
+            expect(positions.makePositionAvailable).toHaveBeenCalledWith(elem.id);
         }));
 
         it('should activate Reject button where there is an assigned position selected', function () {

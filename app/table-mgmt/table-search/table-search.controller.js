@@ -46,7 +46,9 @@ angular.module('app.table-mgmt')
                 label: 'TABLE_MGMT.RESERVE',
                 onClick: function () {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return tables.reserve(selectedTable()).then($scope.reloadTables);
+                        var result = tables.reserve(selectedTable()).then($scope.reloadTables);
+                        $scope.selectedItems.length = 0;
+                        return result;
                     });
                 },
                 isActive: function () {
@@ -57,7 +59,9 @@ angular.module('app.table-mgmt')
                 label: 'TABLE_MGMT.CANCEL_RESERVATION',
                 onClick: function () {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return tables.cancelReservation(selectedTable()).then($scope.reloadTables);
+                        var result = tables.cancelReservation(selectedTable()).then($scope.reloadTables);
+                        $scope.selectedItems.length = 0;
+                        return result;
                     });
                 },
                 isActive: function () {
@@ -68,7 +72,9 @@ angular.module('app.table-mgmt')
                 label: 'TABLE_MGMT.OCCUPY',
                 onClick: function () {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return tables.occupy(selectedTable()).then($scope.reloadTables);
+                        var result = tables.occupy(selectedTable()).then($scope.reloadTables);
+                        $scope.selectedItems.length = 0;
+                        return result;
                     });
                 },
                 isActive: function () {
@@ -79,7 +85,9 @@ angular.module('app.table-mgmt')
                 label: 'TABLE_MGMT.FREE',
                 onClick: function () {
                     globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                        return tables.free(selectedTable()).then($scope.reloadTables);
+                        var result = tables.free(selectedTable()).then($scope.reloadTables);
+                        $scope.selectedItems.length = 0;
+                        return result;
                     });
                 },
                 isActive: function () {

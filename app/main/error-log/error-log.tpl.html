@@ -6,12 +6,12 @@
     </a>
     <ul class="dropdown-menu" role="menu error-log-group">
         <li data-ng-show="errorLog.length==0">
-            <a style="width: 300px;display: block;">
+            <a>
                 <span translate="">OASP.NO_ERROR</span>
             </a>
         </li>
         <li ng-repeat="errorr in errorLog">
-            <a style="width: 300px;display: block;">
+            <a>
                 <h5><strong>{{errorr.statusText}}</strong>
                     <small>{{errorr.date.toLocaleTimeString()}}</small>
                 </h5>

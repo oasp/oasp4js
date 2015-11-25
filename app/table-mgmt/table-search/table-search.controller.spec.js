@@ -48,7 +48,17 @@ describe('Module: tableMgmt, Controller: table-search', function () {
             cancelReservation: angular.noop,
             occupy: angular.noop,
             free: angular.noop,
-            getPaginatedTables: function() { return {then: function() { return {then: function(callback) { return callback({});}};}};}
+            getPaginatedTables: function () {
+                return {
+                    then: function () {
+                        return {
+                            then: function (callback) {
+                                return callback({});
+                            }
+                        };
+                    }
+                };
+            }
         },
         offersMock = {
             loadAllOffers: jasmine.createSpy()
@@ -69,7 +79,7 @@ describe('Module: tableMgmt, Controller: table-search', function () {
         spyOn(tablesMock, 'occupy').and.returnValue(deferred.promise);
         spyOn(tablesMock, 'free').and.returnValue(deferred.promise);
         spyOn(tablesMock, 'getPaginatedTables').and.callThrough();//and.callFake(function() {return {then: function(callback) { return callback(res); } };});
-        $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock, sales: salesMock, offers: offersMock, paginatedTableList: tableResults });
+        $controller('TableSearchCntl', {$scope: $scope, tables: tablesMock, sales: salesMock, offers: offersMock, paginatedTableList: tableResults});
     }));
 
     it('exposes tables referencing tables from service on $scope', function () {
@@ -120,15 +130,14 @@ describe('Module: tableMgmt, Controller: table-search', function () {
 
         it('should call tables.reserve when reserve button is clicked', inject(function (globalSpinner) {
             //given
-            $scope.selectedItems = [
-                {id: 1}
-            ];
+            var elem = {id: 1};
+            $scope.selectedItems = [elem];
             spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
             //when
             $scope.buttonDefs[1].onClick();
             //then
             expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
-            expect(tablesMock.reserve).toHaveBeenCalledWith($scope.selectedItems[0]);
+            expect(tablesMock.reserve).toHaveBeenCalledWith(elem);
         }));
 
         it('should activate reserve button when there is a selected item in the FREE state', function () {
@@ -145,15 +154,14 @@ describe('Module: tableMgmt, Controller: table-search', function () {
 
         it('should call tables.cancelReservation when reserve button is clicked', inject(function (globalSpinner) {
             //given
-            $scope.selectedItems = [
-                {id: 1}
-            ];
+            var elem = {id: 1};
+            $scope.selectedItems = [elem];
             spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
             //when
             $scope.buttonDefs[2].onClick();
             //then
             expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
-            expect(tablesMock.cancelReservation).toHaveBeenCalledWith($scope.selectedItems[0]);
+            expect(tablesMock.cancelReservation).toHaveBeenCalledWith(elem);
         }));
 
         it('should activate cancel reservation button when there is a selected item in the RESERVED state', function () {
@@ -170,15 +178,14 @@ describe('Module: tableMgmt, Controller: table-search', function () {
 
         it('should call tables.occupy when occupy button is clicked', inject(function (globalSpinner) {
             //given
-            $scope.selectedItems = [
-                {id: 1}
-            ];
+            var elem = {id: 1};
+            $scope.selectedItems = [elem];
             spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
             //when
             $scope.buttonDefs[3].onClick();
             //then
             expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
-            expect(tablesMock.occupy).toHaveBeenCalledWith($scope.selectedItems[0]);
+            expect(tablesMock.occupy).toHaveBeenCalledWith(elem);
         }));
 
         it('should activate occupy button when there is a selected item in the RESERVED or FREE state', function () {
@@ -199,15 +206,14 @@ describe('Module: tableMgmt, Controller: table-search', function () {
 
         it('should call tables.free when free button is clicked', inject(function (globalSpinner) {
             //given
-            $scope.selectedItems = [
-                {id: 1}
-            ];
+            var elem = {id: 1};
+            $scope.selectedItems = [elem];
             spyOn(globalSpinner, 'decorateCallOfFunctionReturningPromise').and.callThrough();
             //when
             $scope.buttonDefs[4].onClick();
             //then
             expect(globalSpinner.decorateCallOfFunctionReturningPromise).toHaveBeenCalled();
-            expect(tablesMock.free).toHaveBeenCalledWith($scope.selectedItems[0]);
+            expect(tablesMock.free).toHaveBeenCalledWith(elem);
         }));
 
         it('should activate free button when there is a selected item in the OCCUPIED state', function () {
@@ -221,7 +227,7 @@ describe('Module: tableMgmt, Controller: table-search', function () {
             //when then
             expect($scope.buttonDefs[4].isActive()).toBeTruthy();
         });
-        
+
         it('should reload displayed tables when the page selected on the pagination element changes', function () {
             //given
             //when

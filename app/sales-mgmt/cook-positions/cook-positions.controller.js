@@ -33,7 +33,9 @@ angular.module('app.sales-mgmt')
                 onClick: function () {
                     if ($scope.assignedPositionSelected()) {
                         globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                            return positions.setPositionStatusToPrepared($scope.positionsAssignedSelected[0].id);
+                            var result = positions.setPositionStatusToPrepared($scope.positionsAssignedSelected[0].id);
+                            $scope.positionsAssignedSelected.length = 0;
+                            return result;
                         });
                     }
                 },
@@ -46,7 +48,9 @@ angular.module('app.sales-mgmt')
                 onClick: function () {
                     if ($scope.assignedPositionSelected()) {
                         globalSpinner.decorateCallOfFunctionReturningPromise(function () {
-                            return positions.makePositionAvailable($scope.positionsAssignedSelected[0].id);
+                            var result = positions.makePositionAvailable($scope.positionsAssignedSelected[0].id);
+                            $scope.positionsAssignedSelected.length = 0;
+                            return result;
                         });
                     }
                 },
