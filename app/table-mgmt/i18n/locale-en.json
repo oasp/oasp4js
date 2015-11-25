@@ -10,6 +10,7 @@
             "STATE": "State:",
             "POSITIONS": "Order Positions:"
         },
+        "POSITION": "Position:",
         "NO_ORDER": "No order currently assigned to this table. ",
         "NEW_ORDER": "Assign a new order...",
         "EDIT": "Edit...",

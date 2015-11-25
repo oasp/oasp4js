@@ -12,12 +12,13 @@
         },
         "NO_ORDER": "Keine Bestellung zur Zeit in dieser Tabelle zugeordnet.",
         "NEW_ORDER": "Vergeben Sie einen neuen Auftrag ...",
+        "POSITION": "Position:",
         "RESERVE": "Reserve",
         "CANCEL_RESERVATION": "Reservierung aufheben",
         "OCCUPY": "Besetzen",
         "EDIT": "Bearbeiten",
         "FREE": "Frei",
-        "ADD": "+Hinzufügen",
+        "ADD": "+HinzufÃ¼gen",
         "REMOVE": "Herausnehmen"
     }
 }
