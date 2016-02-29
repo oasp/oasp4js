@@ -44,7 +44,7 @@ mvn clean install
 After a successful build go to the following directory
 
 ``` 
-<oasp_dir>\oasp4j\oasp4j-samples\core\target
+cd samples\core\target
 
 ```
 Start the oasp4j-samples-core project as spring boot application by running following command in your console:
@@ -66,12 +66,7 @@ If you change the Tomcat's port, then see the _[hint about how to configure a di
 Set up the client part of the application
 ---
 
-Go back to the `<oasp_dir>` directory: 
-
-```
-cd ..
-
-```
+We asume you are back in the `<oasp_dir>` directory.
 
 Clone the oasp4js repository:
 
@@ -91,7 +86,7 @@ During npm install process bower downloads some libraries and uses git for it. G
 ``` 
 git config --global url."https://".insteadOf git://
 ```
-and to rerund npm install command.
+and to rerun npm install command.
 
 
 <a name="howToChangeTomcatsPortInConfigJson"></a> 
