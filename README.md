@@ -17,6 +17,12 @@ OASP IDE already contains software (Node.js, Gulp, Bower, Maven) required to run
 If OASP IDE is not used additional software must be installed manually so you need a Git client to clone the repositories and the Node.js platform (including its package manager - npm) which allows Gulp and Bower to install the dependencies and build the application. [Here](https://github.com/oasp/oasp4js/wiki/Prerequisites) you can learn how to install the prerequisites. 
 Also, for the server part you need Maven (required version: 3.x) to be installed. For installation details please refer to the [Maven's](http://maven.apache.org/download.cgi) home page. 
 
+Please note that this client version was tested with following versions of the additional software:
+- node.js version 5.0.0
+- npm version 3.3.6
+- gulp version 3.9.1
+- bower version 1.7.7
+
 Create the `<oasp_dir>` directory for the sample application
 ---
 
@@ -31,7 +37,7 @@ Set up the server part of the application
 Clone the oasp4j repository:
 
 ```  
-git clone https://github.com/oasp/oasp4j.git
+git clone --recursive https://github.com/oasp/oasp4j.git
 ```
 
 Let Maven build the server part:
