@@ -1,6 +1,8 @@
 {
-    "TABLE_MGMT": {
-        "SUBMIT": "Speichern",
-        "CANCEL":"Abbrechen"
+    "SALES_MGMT": {
+        "AVAILABLE": "Verfügbar",
+        "ASSIGNED": "Zugewiesen",
+        "REJECT": "Zurückweisen",
+        "DONE": "Fertig"
     }
 }

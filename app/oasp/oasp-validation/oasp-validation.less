@@ -1,0 +1,25 @@
+.input-with-validation-messages {
+    height: 35px; //a bit dirty quick fix - allows to avoid height quirks when validation button is displayed
+    .input-group-btn {
+        &.multiline-popover {
+            ol {
+                padding-left: 25px;
+            }
+
+            .popover-inner {
+                width: 250px;
+            }
+            .popover {
+                background: @state-danger-bg;
+                color: @state-danger-text;
+            }
+            .popover.top > .arrow {
+                border-top-color: @state-danger-bg;
+                border-top-color: rgba(0, 0, 0, .25);
+            }
+            .popover.top > .arrow:after {
+                border-top-color: @state-danger-bg;
+            }
+        }
+    }
+}

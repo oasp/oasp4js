@@ -33,24 +33,22 @@ gulp.task('apptemplate:release', [], function () {
 gulp.task('apptemplate:release:internal', gulpsync.sync(['apptemplate:release:prepareRepo', 'build:apptemplate', 'apptemplate:release:publish']));
 
 gulp.task('apptemplate:release:prepareRepo', ['clean'], function (done) {
-    git.clone('https://github.com/oasp/oasp4js-app-template.git', {args: config.app.dist()}, function (err) {
+    git.clone('https://github.com/oasp/generator-oasp.git', {args: config.output()}, function (err) {
         handleGitError(err);
         var conf = [
-            config.builder.build('{dist}/*'),
-            config.builder.build('{dist}/.*'),
-            config.builder.build('!{dist}/.git'),
-            config.builder.build('!{dist}/README.md'),
-            config.builder.build('!{dist}/config.json'),
-            config.builder.build('!**/{dist}/{app}')
+            config.builder.build('{dist}/app/templates/*'),
+            config.builder.build('{dist}/app/templates/.*'),
+            config.builder.build('!{dist}/app/templates/config.json'),
+            config.builder.build('!**/{dist}/app/templates/{app}')
         ];
         del(conf, done);
     });
 });
 
 gulp.task('apptemplate:release:publish', [], function (done) {
-    execGitChain(['config --global core.autocrlf false', 'add -A', 'commit -am "release ' + argv.version + '"', 'tag -a ' + argv.version + ' -f -m "' + argv.version + '"'], config.app.dist(), done);
+    execGitChain(['config --global core.autocrlf false', 'add -A', 'commit -am "release ' + argv.version + '"', 'tag -a ' + argv.version + ' -f -m "' + argv.version + '"'], config.output(), done);
 });
 
 gulp.task('apptemplate:deploy', [], function (done) {
-    execGitChain(['push origin master', 'push origin --tags -f'], config.app.dist(), done);
+    execGitChain(['push origin master', 'push origin --tags -f'], config.output(), done);
 });

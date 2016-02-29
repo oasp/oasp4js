@@ -1,6 +1,24 @@
 {
     "TABLE_MGMT": {
+        "HEADER": "Tables",
         "SUBMIT": "Submit",
-        "CANCEL":"Cancel"
+        "CANCEL": "Cancel",
+        "DETAILS": "Details for Table #",
+        "ORDER": "Order",
+        "TABLE": {
+            "STATUS": "Status:",
+            "STATE": "State:",
+            "POSITIONS": "Order Positions:"
+        },
+        "POSITION": "Position:",
+        "NO_ORDER": "No order currently assigned to this table. ",
+        "NEW_ORDER": "Assign a new order...",
+        "EDIT": "Edit...",
+        "RESERVE": "Reserve",
+        "CANCEL_RESERVATION": "Cancel Reservation",
+        "OCCUPY": "Occupy",
+        "FREE": "Free",
+        "ADD": "+Add",
+        "REMOVE": "Remove"
     }
 }

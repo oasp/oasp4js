@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div class="row">
+    <div class="col-md-12">
+        <!-- process:include table-mgmt/table-search/table-search-header.html --><!-- /process -->
+        <table class="raw-table" tr-ng-grid=""
+               selection-mode="SingleRow"
+               enable-filtering="false"
+               selected-items="selectedItems"
+               items="gridOptions.data">
+            <thead>
+            <tr>
+                <th field-name="number" display-name="Number" cell-width="7em"></th>
+                <th field-name="state" display-name="State"></th>
+                <th field-name="waiter" display-name="Waiter"></th>
+            </tr>
+            </thead>
+        </table>
+
+        <button-bar is-label-translatable="true" button-defs="buttonDefs"></button-bar>
+        <br>
+        <br>
+        <br>
+        <pagination total-items="totalItems" items-per-page="numPerPage" ng-model="currentPage" num-pages="numPages"
+                    class="pagination-sm" boundary-links="true" rotate="false" max-size="maxSize"></pagination>
+    </div>
+</div>
+</body>
+</html>

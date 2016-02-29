@@ -1,6 +1,8 @@
 {
-    "TABLE_MGMT": {
-        "SUBMIT": "Submit",
-        "CANCEL":"Cancel"
+    "SALES_MGMT": {
+        "AVAILABLE": "Available",
+        "ASSIGNED": "Assigned",
+        "REJECT": "Reject",
+        "DONE": "Done"
     }
 }

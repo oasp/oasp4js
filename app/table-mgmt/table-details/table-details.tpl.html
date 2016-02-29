@@ -1,0 +1,84 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title" translate>TABLE_MGMT.DETAILS<span data-ng-bind="TDC.table.number"></span></h3>
+    </div>
+    <div class="modal-body">
+        <form name="forms.tableForm" novalidate>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label translate>TABLE_MGMT.TABLE.STATUS</label>&nbsp;
+                    <span data-ng-bind="TDC.table.state"></span>
+                </div>
+            </div>
+            <div class="page-header">
+                <h4 translate>TABLE_MGMT.ORDER</h4>
+            </div>
+            <div class="row" data-ng-show="TDC.noOrderAssigned()">
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert"> {{'TABLE_MGMT.NO_ORDER' | translate}}
+                        <a data-ng-click="TDC.assignNewOrder()">{{'TABLE_MGMT.NEW_ORDER' | translate}}</a>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-show="TDC.orderAssigned()">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label translate>TABLE_MGMT.TABLE.STATE</label>&nbsp;
+                        <span data-ng-bind="TDC.table.order.orderState"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label translate>TABLE_MGMT.POSITION</label>&nbsp;
+                    </div>
+                    <div class="col-md-4">
+                        <ui-select ng-model="TDC.model.selected">
+                            <ui-select-match placeholder="Select offer...">{{$select.selected.description}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="o in TDC.allOffers | filter: $select.search">
+                                <div ng-bind-html="TDC.trustAsHtml((o.description | highlight: $select.search))"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-sm btn-primary" data-ng-click="TDC.addPosition(TDC.model.selected)"
+                                translate>TABLE_MGMT.ADD
+                        </button>
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="raw-table" tr-ng-grid=""
+                               selection-mode="SingleRow"
+                               enable-filtering="false"
+                               selected-items="TDC.selectedItems"
+                               items="TDC.positionsShown">
+                            <thead>
+                            <tr>
+                                <th field-name="id" display-name="Number" cell-width="7em"></th>
+                                <th field-name="offerName" display-name="Title"></th>
+                                <th field-name="state" display-name="Status"></th>
+                                <th field-name="price" display-name="Price" display-format="price:gridItem"></th>
+                                <th field-name="comment" display-name="Comment"></th>
+                            </tr>
+                            </thead>
+                        </table>
+
+                        <button-bar is-label-translatable="true" button-defs="TDC.buttonDefs"></button-bar>
+                    </div>
+                </div>
+                <pagination total-items="TDC.totalItems" items-per-page="TDC.numPerPage" ng-model="TDC.currentPage"
+                            num-pages="TDC.numPages" max-size="TDC.maxSize" class="pagination-sm"
+                            boundary-links="true" rotate="false"></pagination>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-disabled="!TDC.model.order" ng-click="TDC.submit()" translate>
+            TABLE_MGMT.SUBMIT
+        </button>
+        <button class="btn btn-warning" ng-click="TDC.goToSearchView()" translate>TABLE_MGMT.CANCEL</button>
+    </div>
+</div>

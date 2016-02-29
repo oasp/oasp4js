@@ -17,42 +17,31 @@
     <!-- inject:css -->
     <!-- css files will be automaticaly insert here -->
     <!-- endinject -->
-    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.min.css">
+    <link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.min.css">
+    <link rel="stylesheet" href="../bower_components/angular-growl-v2/build/angular-growl.css">
+    <link rel="styleSheet" href="../bower_components/angular-ui-grid/ui-grid.min.css"/>
     <!-- endbuild -->
-    <!-- build:js({.tmp,app}) js/modernizr.js -->
-    <script src="bower_components/modernizr/modernizr.js"></script>
-    <script src="bower_components/respond/respond.min.js"></script>
+    <!-- build:jsModernizr({.tmp,app}) js/modernizr.js -->
+    <script src="../bower_components/modernizr/modernizr.js"></script>
+    <script src="../bower_components/respond/respond.min.js"></script>
     <!-- endbuild -->
 </head>
 <body data-ng-app="app">
-<!-- process:include main/html/layout/browsehappy.html --><!-- /process -->
-<!-- process:include main/html/layout/navbar.html --><!-- /process -->
-<!-- process:include main/html/layout/container.html --><!-- /process -->
+<!-- process:include main/layout/browsehappy.html --><!-- /process -->
+<!-- process:include main/layout/navbar.html --><!-- /process -->
+<!-- process:include main/layout/container.html --><!-- /process -->
 
-<!-- build:js({.tmp,app}) js/vendor.js -->
+<!-- build:jsVendor({.tmp,app}) js/vendor.js -->
 <!-- bower:js -->
-<script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/angular-ui-select/dist/select.js"></script>
-<script src="bower_components/autofill-event/src/autofill-event.js"></script>
-<script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
-<script src="bower_components/angular-translate/angular-translate.js"></script>
-<script src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
-<script src="bower_components/spin.js/spin.js"></script>
-<script src="bower_components/angular-spinner/angular-spinner.js"></script>
-<script src="bower_components/trNgGrid/release/trNgGrid.min.js"></script>
-<script src="bower_components/sockjs-client/dist/sockjs.js"></script>
-<script src="bower_components/stomp-websocket/lib/stomp.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
-<!-- build:js({.tmp,app}) js/app.js -->
+<!-- build:jsApp({.tmp,app}) js/app.js -->
 <!-- inject:js -->
-<!-- js files will be automaticaly insert here -->
+<!-- js files will be automatically insert here -->
 <!-- endinject -->
 <!-- endbuild -->
-
+<div growl></div>
 <div data-spinner="globalSpinner"></div>
 </body>
 </html>

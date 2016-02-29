@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div class="row cook-positions">
+    <div class="col-md-5">
+        <h2 translate>SALES_MGMT.AVAILABLE</h2>
+
+        <table class="raw-table"
+               data-tr-ng-grid=""
+               data-selection-mode="SingleRow"
+               data-enable-filtering="true"
+               data-selected-items="positionsAvailableSelected"
+               data-items="positions.availablePositions">
+        </table>
+    </div>
+    <div class="col-md-2 assignment">
+        <div class="btn-group-vertical" role="group">
+            <button data-ng-click="assignCookToPosition()"
+                    data-ng-disabled="!availablePositionSelected()"
+                    type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <h2 translate>SALES_MGMT.ASSIGNED</h2>
+
+        <table class="raw-table"
+               data-tr-ng-grid=""
+               data-selection-mode="SingleRow"
+               data-selected-items="positionsAssignedSelected"
+               data-enable-filtering="false"
+               data-items="positions.positionsAssignedToCurrentUser">
+        </table>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5 col-md-offset-7">
+        <button-bar is-label-translatable="true" button-defs="buttonDefs"></button-bar>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<div ng-controller="Example1Ctrl as E1C">
+    <h2>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE1.NAME' | translate}}</h2>
+
+    <p>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE1.DESCRIPTION' | translate}}</p>
+
+    <form name="example1Form" novalidate valdr-type="example1LoginType">
+
+        <div class="form-group">
+            <label>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE.USER.LABEL' | translate}}</label>
+
+            <div with-validation-messages>
+                <input class="form-control" type="text" name="userName"
+                       data-ng-model="E1C.username"
+                       placeholder="{{'OASP.VALIDATION.SHOWCASE.EXAMPLE.USER.PLACEHOLDER' | translate}}">
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE.PASSWORD.LABEL' | translate}}</label>
+
+            <div with-validation-messages>
+                <input type="password" name="password" class="form-control"
+                       data-ng-model="E1C.password"
+                       placeholder="{{'OASP.VALIDATION.SHOWCASE.EXAMPLE.PASSWORD.PLACEHOLDER' | translate}}">
+            </div>
+        </div>
+
+    </form>
+</div>

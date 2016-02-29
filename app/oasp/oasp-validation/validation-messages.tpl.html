@@ -1,0 +1,12 @@
+<div>
+  <div class="input-with-validation-messages" data-ng-class="{'input-group': isInputInvalid()}">
+    <span class="input-group-btn multiline-popover" data-ng-show="isInputInvalid()">
+      <button class="btn btn-danger" type="button"
+              popover-template="'oasp/oasp-validation/multiline-popover.html'"
+              popover-placement="auto top"
+              popover-trigger="mouseenter">
+        <i class="glyphicon glyphicon-exclamation-sign"></i>
+      </button>
+    </span>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<div ng-controller="Example5Ctrl as E5C">
+    <h2>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE5.NAME' | translate}}</h2>
+
+    <p>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE5.DESCRIPTION' | translate}}</p>
+
+    <form name="example5Form" novalidate valdr-type="example5AsyncEmail">
+
+        <div class="form-group">
+
+            <label>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE5.FORBIDDEN_DOMAIN.LABEL' | translate}}</label>
+            <!-- ui validate + valdr required and max length -->
+            <div class="container-fluid">
+                <div class="row add-domain">
+                    <div class="col-xs-8 inputDomain">
+                        <div with-validation-messages="E5C.customMessageRepo.forbiddenDomain">
+                            <input name="forbiddenDomain" ng-model="E5C.forbiddenDomainCandidate" class="form-control"
+                                   type="text"
+                                   placeholder="{{'OASP.VALIDATION.SHOWCASE.EXAMPLE5.FORBIDDEN_DOMAIN.PLACEHOLDER' | translate}}"
+                                   ui-validate="{domainValid : 'E5C.isValidDomain($value)', notDuplicate: 'E5C.isNotDuplicate($value)' }">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 buttonDomain">
+                        <button type="button" class='btn btn-success' ng-click="E5C.addToBlacklist(E5C.forbiddenDomainCandidate)"
+                                ng-disabled="!example5Form.forbiddenDomain.$valid">
+                            {{'OASP.VALIDATION.SHOWCASE.EXAMPLE5.FORBIDDEN_DOMAIN.ADD_BLACKLIST' | translate}}
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <alert  ng-repeat="domain in E5C.forbiddenDomains" class="col-xs-6 col-md-4" type="danger"
+                           close="E5C.removeFromBlacklist($index)">
+                        {{domain}}
+                    </alert>
+                </div>
+            </div>
+
+            <label>{{'OASP.VALIDATION.SHOWCASE.EXAMPLE5.EMAIL.LABEL' | translate}}</label>
+            <!-- async ui validate + angular email + valdr required + cross field dependent-->
+            <div with-validation-messages="E5C.customMessageRepo.asyncEmail">
+                <input name="asyncEmail" type="email" class="form-control" ng-model="E5C.asyncEmail"
+                       ng-model-options="{ debounce: 400 }"
+                       ui-validate-watch-collection=" 'E5C.forbiddenDomains' "
+                       ui-validate-async="{forbidden : 'E5C.isAllowedOnServer($value, example5Form.asyncEmail)' }"
+                       placeholder="{{'OASP.VALIDATION.SHOWCASE.EXAMPLE5.EMAIL.PLACEHOLDER' | translate}}">
+            </div>
+
+            <span ng-show="E5C.waitingForServer">
+                {{'OASP.VALIDATION.SHOWCASE.SERVER.PENDING' | translate}}
+            </span>
+            <span ng-show="!E5C.waitingForServer">
+                {{'OASP.VALIDATION.SHOWCASE.SERVER.NO_REQUESTS' | translate}}
+            </span>
+            <span ng-show="!E5C.waitingForServer && example5Form.asyncEmail.$touched">
+                {{'OASP.VALIDATION.SHOWCASE.SERVER.COMPLETED' | translate}}
+            </span>
+
+            <!-- with Angular version > 1.4.1 you can use $pending on a field (please check the docs for async validation)  -->
+            <!--span ng-show="example5Form.asyncEmail.$pending">
+                {{'OASP.VALIDATION.SHOWCASE.SERVER.PENDING' | translate}}
+            </span>
+            <span ng-show="!example5Form.asyncEmail.$pending">
+                {{'OASP.VALIDATION.SHOWCASE.SERVER.NO_REQUESTS' | translate}}
+            </span>
+            <span ng-show="!example5Form.asyncEmail.$pending && example5Form.asyncEmail.$touched">
+                {{'OASP.VALIDATION.SHOWCASE.SERVER.COMPLETED' | translate}}
+            </span-->
+
+        </div>
+    </form>
+</div>

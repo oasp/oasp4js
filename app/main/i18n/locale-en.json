@@ -2,6 +2,16 @@
     "OASP": {
         "LOGGED_IN_AS": "Logged in as",
         "LANGUAGE": "Language",
-        "LOG_OFF": "Log off"
+        "LOG_OFF": "Log off",
+        "PAGE_NOT_FOUND": "Page Not Found!",
+        "ERROR_LOG": "Error Log",
+        "NO_ERROR": "No Errors",
+        "PAGE_NOT_FOUND_DETAILS": "The page you trying to reach could not be found.",
+        "TOGGLE_NAV": "Toggle navigation",
+        "TITLE": "Restaurant Sample Application",
+        "TABLES": "Tables",
+        "KITCHEN": "Kitchen",
+        "LOADING": "Loading ...",
+        "CORP": "&copy; OASP 2015"
     }
 }

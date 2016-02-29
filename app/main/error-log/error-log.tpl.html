@@ -1,0 +1,22 @@
+<li class="dropdown language-dropdown" dropdown>
+    <a href class="dropdown-toggle" dropdown-toggle>
+        <span class="icon-container"><span class="icon glyphicon glyphicon-comment"></span></span>
+        <span translate="">OASP.ERROR_LOG</span>
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu error-log-group">
+        <li data-ng-show="errorLog.length==0">
+            <a>
+                <span translate="">OASP.NO_ERROR</span>
+            </a>
+        </li>
+        <li ng-repeat="errorr in errorLog">
+            <a>
+                <h5><strong>{{errorr.statusText}}</strong>
+                    <small>{{errorr.date.toLocaleTimeString()}}</small>
+                </h5>
+                <h5>{{errorr.data.message}}</h5>
+            </a>
+        </li>
+    </ul>
+</li>

@@ -1,12 +1,29 @@
 'use strict';
 
 var gulp = require('gulp');
-global.config = require('./gulp/configFactory.js')(require('./config.json'));
-global.isProd = function () {
+var fs = require('fs');
+
+global.bowerConfig = JSON.parse(fs.readFileSync('./.bowerrc', 'utf8'));
+
+global.isBuildForProd = function () {
     return process.env.NODE_ENV === 'prod';
 };
+
+global.config = require('./gulp/lib/config-factory.js')(require('./config.json'));
+
 require('require-dir')('./gulp', {recurse: true});
 
 gulp.task('default', ['clean'], function () {
     gulp.start('build:dist');
+});
+
+gulp.task('ngdocs', [], function () {
+    var gulpDocs = require('gulp-ngdocs');
+    var options = {
+        html5Mode: true,
+        title: "OASP4JS"
+    };
+    return gulp.src('app/**/*.js')
+        .pipe(gulpDocs.process())
+        .pipe(gulp.dest('./docs'));
 });

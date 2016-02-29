@@ -8,9 +8,27 @@ module.exports = function (config) {
     //merge libraries configured by bower, application sources, and specs
     var libs = require('wiredep')({
         devDependencies: true
-    }).js, _ = require('lodash'), pathsConf = require('./gulp/configFactory.js')(require('./config.json'));
+    }).js, _ = require('lodash'), pathsConf = require('./gulp/lib/config-factory.js')(require('./config.json'));
 
-    config.set({
+    var coverageConfig = {
+        plugins: [
+            'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-junit-reporter', 'karma-jasmine', 'karma-coverage'
+        ],
+        // coverage reporter generates the coverage
+        reporters: ['progress', 'coverage', 'junit'],
+
+        preprocessors: {},
+
+        // optionally, configure the reporter
+        coverageReporter: {
+            type: 'lcov',
+            dir: pathsConf.paths.testOutput + '/coverage',
+            subdir: '/'
+        }
+    };
+    coverageConfig.preprocessors[pathsConf.paths.src + '/**/!(*spec|*mock).js'] = ['coverage'];
+
+    var karmaDefaultConfig = {
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
 
@@ -21,7 +39,7 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
 
         // list of files / patterns to load in the browser
-        files: _.flatten([libs, pathsConf.js.src(), pathsConf.js.testSrc()]),
+        files: _.flatten([libs, pathsConf.scripts.src(), pathsConf.scripts.testSrc()]),
 
         // list of files / patterns to exclude
         exclude: [],
@@ -43,7 +61,7 @@ module.exports = function (config) {
 
         // Which plugins to enable
         plugins: [
-            'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-junit-reporter', 'karma-jasmine', 'karma-coverage'
+            'karma-phantomjs-launcher', 'karma-chrome-launcher', 'karma-junit-reporter', 'karma-jasmine'
         ],
 
         // Continuous Integration mode
@@ -57,20 +75,17 @@ module.exports = function (config) {
         logLevel: config.LOG_INFO,
 
         // coverage reporter generates the coverage
-        reporters: ['progress', 'coverage'],
-
-        preprocessors: {
-            'app/!(bower_components)/**/!(*spec|*mock).js': ['coverage']
-        },
+        reporters: ['progress', 'junit'],
 
         // optionally, configure the reporter
-        coverageReporter: {
-            type: 'lcov',
-            dir: 'test/coverage',
-            subdir: '/'
-        },
         junitReporter: {
-            outputFile: 'test/test-results.xml'
+            outputDir: pathsConf.paths.testOutput,
+            outputFile: 'test-results.xml'
         }
-    });
+    };
+    if (process.env.generateCoverage === 'true') {
+        config.set(_.assign(karmaDefaultConfig, coverageConfig));
+    } else {
+        config.set(karmaDefaultConfig);
+    }
 };
