@@ -60,7 +60,7 @@ By default tomcat server will use port 8081. This can be changed by creating new
 server.port=8888.
 ```
 Replace '8888' with the port number which you want to use for your Tomcat.
-If you change the Tomcat's port, then see the _[hint about how to configure a different port on the client side](#howToChangeTomcatsPortInConfigJson)_): 
+If you change the Tomcat's port, then see the _[hint about how to configure a different port on the client side](#howToChangeTomcatsPortInConfigJson)_. 
 
 
 Set up the client part of the application
