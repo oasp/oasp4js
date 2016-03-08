@@ -7,13 +7,17 @@ Getting Started
 ---
 
 To get started you need to clone the oasp4j repository containing the server part, build and deploy it on a Tomcat server. To get started with the client part you need to clone the oasp4js repository, build the client and start it.
-
-Install prerequisites
----
-
 There are two ways to get sample application working: eighter by getting OASP IDE and running it from there or without installing IDE. 
 
-OASP IDE already contains software (Node.js, Gulp, Bower, Maven) required to run sample application so only Git must be additionally installed.
+#Full OASP IDE installation
+---
+
+If you want to install full OASP IDE and get both server and client code please follow steps described in [oasp ide setup](https://github.com/oasp/oasp4j/wiki/oasp-ide-setup). OASP IDE already contains software (Node.js, Gulp, Bower, Maven) required to run sample application so only Git must be additionally installed. 
+
+#Getting oasp4js client working
+##Install prerequisites
+---
+
 If OASP IDE is not used additional software must be installed manually so you need a Git client to clone the repositories and the Node.js platform (including its package manager - npm) which allows Gulp and Bower to install the dependencies and build the application. [Here](https://github.com/oasp/oasp4js/wiki/Prerequisites) you can learn how to install the prerequisites. 
 Also, for the server part you need Maven (required version: 3.x) to be installed. For installation details please refer to the [Maven's](http://maven.apache.org/download.cgi) home page. 
 
@@ -97,7 +101,7 @@ During npm install process bower downloads some libraries and uses git for it. G
 ``` 
 git config --global url."https://".insteadOf git://
 ```
-and to rerund npm install command.
+and to rerun npm install command.
 
 
 <a name="howToChangeTomcatsPortInConfigJson"></a> 
