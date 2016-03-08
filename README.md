@@ -55,21 +55,25 @@ After a successful build go to the following directory
 <oasp_dir>\oasp4j\oasp4j-samples\core\target
 
 ```
+
+Configure port number which should be used by the tomcat server and context in which server application should be registered.
+To do that create new application.properties file in <oasp_dir>\oasp4j\oasp4j-samples\core\target directory and add following entries:
+
+```
+server.port=8888
+server.context-path=/oasp4j-sample-server
+
+```
+
+Replace '8888' with the port number which you want to use for your Tomcat.
+After that see the _[hint about how to configure a different port on the client side](#howToChangeTomcatsPortInConfigJson)_. 
+
 Start the oasp4j-samples-core project as spring boot application by running following command in your console:
 
 ``` 
 java -jar oasp4j-sample-core-dev-SNAPSHOT.jar
 
 ```
-
-By default tomcat server will use port 8081. This can be changed by creating new application.properties file in <oasp_dir>\oasp4j\oasp4j-samples\core\target directory and adding following entry:
-
-```
-server.port=8888.
-```
-Replace '8888' with the port number which you want to use for your Tomcat.
-If you change the Tomcat's port, then see the _[hint about how to configure a different port on the client side](#howToChangeTomcatsPortInConfigJson)_. 
-
 
 Set up the client part of the application
 ---
