@@ -54,7 +54,7 @@ After a successful build go to the following directory
 cd samples\core\target
 ```
 
-Configure the port number which should be used by the embedded tomcat server and its context path. To do this, create a new `application.properties` file in the `<oasp_dir>\oasp4j\samples\core\target` directory and add following entries:
+Configure the port number which should be used by the embedded tomcat server and its context path. To do this, create a new `application.properties` file in the `<oasp_dir>\oasp4j\samples\core\target` directory and add the following entries:
 
 ```
 server.port=8081
@@ -102,7 +102,7 @@ The above Gulp's task opens the client part of the application in your default b
  
 You can sign in using the following credentials: waiter/waiter or cook/cook.
 
-If for some reason your clent should talk to the server configured in a different way, you can configure the server details in the client's configuration file, `<oasp_dir>\oasp4js\config.json`, in the `proxy` part:
+If for some reason your client should talk to the server configured in a different way, you can configure the server details in the client's configuration file, `<oasp_dir>\oasp4js\config.json`, in the `proxy` part:
 
 ``` 
 {
