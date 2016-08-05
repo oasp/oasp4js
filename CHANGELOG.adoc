@@ -1,0 +1,16 @@
+= 1.4.0 (2016-02-29)
+
+== Bug Fixes
+
+* error-log template not found (https://github.com/oasp/oasp4js/issues/83[#83])
+* Technical architecture link is broken (https://github.com/oasp/oasp4js/issues/44[#44])
+
+=== Features
+* Releasing OASP4JS with shrinkwrap (https://github.com/oasp/oasp4js/issues/87[#87])
+* Security 401 unauthorized vs 403 forbidden (https://github.com/oasp/oasp4js/issues/56[#56])
+* Error handling (https://github.com/oasp/oasp4js/issues/54[#54])
+* Authorization (in the client) (https://github.com/oasp/oasp4js/issues/53[#53])
+* Accessibility (https://github.com/oasp/oasp4js/issues/52[#52])
+* Migration to ui-router (https://github.com/oasp/oasp4js/issues/51[#51])
+* Validation (https://github.com/oasp/oasp4js/issues/50[#50])
+* Remove all calls to @Deprecated getAll methods on server (https://github.com/oasp/oasp4js/issues/37[#37])
