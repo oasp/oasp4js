@@ -67,7 +67,7 @@
   },
   "engine": "node >= 0.10.0",
   "scripts": {
-      "postinstall": "bower install -F",
+      "postinstall": "bower install -F -–allow-root",
       "test": "gulp test"
   }
 }
