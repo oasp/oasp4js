@@ -7,7 +7,7 @@ angular.module('app.main')
         return {
             restrict: 'EA',
             replace: true,
-            templateUrl: 'main/error-log/error-log.html',
+            templateUrl: 'main/error-log/error-log.tpl.html',
             link: function ($scope) {
                 $scope.errorLog = oaspErrorNotificatorService.getErrorLog();
             }
