@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Project
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    name="oasp.4.js"
+    label="oasp4js">
+  <setupTask
+      xsi:type="setup:VariableTask"
+      name="github.project.name"
+      value="oasp4js"
+      storageURI="scope://Workspace"/>
+  <stream name="development"
+      label="Development"/>
+  <stream name="master"
+      label="Master"/>
+  <logicalProjectContainer
+      xsi:type="setup:ProjectCatalog"
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']"/>
+  <description>OASP4JS Sample Application making use of the Application Template and ng-modules</description>
+</setup:Project>
