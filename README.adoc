@@ -65,20 +65,20 @@ mvn clean install
 After a successful build go to the following directory
 
 ....
-cd samples\core\target
+cd samples\server\target
 ....
 
-Configure the port number which should be used by the embedded tomcat server and its context path. To do this, create a new `application.properties` file in the `<oasp_dir>\oasp4j\samples\core\target` directory and add the following entries:
+Configure the port number which should be used by the embedded tomcat server and its context path. To do this, create a new `application.properties` file in the `<oasp_dir>\oasp4j\samples\server\target` directory and add the following entries:
 
 ....
 server.port=8081
 server.context-path=/oasp4j-sample-server
 ....
 
-Start the oasp4j-samples-core project as a Spring Boot application by running the following command in your console:
+Start the oasp4j-samples-server project as a Spring Boot application by running the following command in your console:
 
 ....
-java -jar oasp4j-sample-core-dev-SNAPSHOT.jar
+java -jar  oasp4j-sample-server-bootified.war
 ....
 
 == Set up the client part of the application
