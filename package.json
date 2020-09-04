@@ -43,7 +43,7 @@
       "gulp-usemin": "0.3.11",
       "gulp-util": "3.0.6",
       "gulp.spritesmith": "3.8.2",
-      "http-proxy": "1.11.1",
+      "http-proxy": "1.18.1",
       "jasmine-core": "2.3.4",
       "jshint-stylish": "2.0.1",
       "karma": "0.12.37",
